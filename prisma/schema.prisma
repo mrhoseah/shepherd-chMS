@@ -1,0 +1,2561 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum UserRole {
+  ADMIN
+  PASTOR
+  LEADER
+  MEMBER
+  GUEST
+  FINANCE
+  USHER
+  PROTOCOL
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  PENDING
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  EXCUSED
+  LATE
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+  SEPARATED
+}
+
+enum GivingCategory {
+  TITHE
+  OFFERING
+  MISSIONS
+  BUILDING_FUND
+  SPECIAL_PROJECT
+  OTHER
+}
+
+enum PaymentMethod {
+  MPESA
+  PAYPAL
+  CARD
+  BANK_TRANSFER
+  CASH
+  CHECK
+}
+
+enum ExpenseStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+  COMPLETED
+}
+
+enum EventType {
+  SERVICE
+  MEETING
+  CONFERENCE
+  OUTREACH
+  SOCIAL
+  TRAINING
+  OTHER
+}
+
+enum MediaType {
+  VIDEO
+  AUDIO
+  IMAGE
+  DOCUMENT
+  PODCAST
+}
+
+enum LivestreamStatus {
+  SCHEDULED
+  LIVE
+  ENDED
+  CANCELLED
+}
+
+enum NotificationType {
+  EMAIL
+  SMS
+  PUSH
+  IN_APP
+}
+
+enum DocumentType {
+  POLICY
+  REPORT
+  FORM
+  CONTRACT
+  OTHER
+}
+
+enum AssetStatus {
+  ACTIVE
+  MAINTENANCE
+  RETIRED
+  DISPOSED
+}
+
+enum LeaveType {
+  ANNUAL
+  SICK
+  MATERNITY
+  PATERNITY
+  UNPAID
+  OTHER
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+// ============================================================================
+// 1. USER & ROLE MANAGEMENT
+// ============================================================================
+
+model User {
+  id           String  @id @default(cuid())
+  email        String? @unique
+  phone        String? @unique
+  passwordHash String? // Deprecated: Passwords are stored in Cognito only
+
+  // Profile
+  title         String? // Dr, Rev, Prof, etc.
+  firstName     String
+  lastName      String
+  middleName    String?
+  gender        Gender?
+  dateOfBirth   DateTime?
+  maritalStatus MaritalStatus?
+  profession    String?
+  profileImage  String?
+  bio           String?
+
+  // Contact
+  address          String?
+  city             String?
+  state            String?
+  county           String?
+  zipCode          String?
+  country          String?
+  residence        String?
+  emergencyContact String?
+  emergencyPhone   String?
+
+  // Church Info
+  role               UserRole   @default(GUEST)
+  status             UserStatus @default(PENDING)
+  canLogin           Boolean    @default(false) // Permission to login to dashboard
+  enableFollowUps    Boolean    @default(true) // Whether to track follow-ups for this guest
+  permissions        Json? // Additional permissions stored as JSON
+  campusId           String?
+  campus             Campus?    @relation(fields: [campusId], references: [id])
+  memberSince        DateTime?
+  baptismDate        DateTime?
+  baptismLocation    String?
+  dedicationDate     DateTime?
+  weddingAnniversary DateTime?
+
+  // Family Relations
+  spouseId      String? @unique
+  spouse        User?   @relation("SpouseRelation", fields: [spouseId], references: [id])
+  spouseOf      User?   @relation("SpouseRelation")
+  parentId      String?
+  parent        User?   @relation("ParentChild", fields: [parentId], references: [id])
+  children      User[]  @relation("ParentChild")
+  familyPhoto   String? // Cloudinary URL for family photo
+  familyHeadId  String? // ID of the family head
+  familyHead    User?   @relation("FamilyHead", fields: [familyHeadId], references: [id])
+  familyMembers User[]  @relation("FamilyHead") // Members who have this user as family head
+  familyName    String? // Family name (e.g., "The Smith Family")
+
+  // Authentication
+  emailVerified    Boolean @default(false)
+  phoneVerified    Boolean @default(false)
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+
+  // Social Login
+  socialLogins SocialLogin[]
+
+  // Sessions & Activity
+  userSessions UserSession[]
+  activityLogs ActivityLog[]
+
+  // NextAuth
+  authAccounts AuthAccount[]
+  sessions     Session[]
+
+  // Invitations
+  invitations Invitation[] @relation("UserInvitations")
+  invitation  Invitation? // User created from invitation
+
+  // Groups & Ministry
+  groupMemberships     GroupMember[]
+  volunteerAssignments VolunteerAssignment[]
+  serviceAssignments   ServiceAssignment[]
+
+  // Departments
+  departmentLeader      Department[]           @relation("DepartmentLeader")
+  inventoryTransactions InventoryTransaction[] @relation("InventoryTransactionPerformer")
+
+  // Attendance
+  attendances Attendance[]
+
+  // Giving
+  donations Donation[]
+
+  // Events
+  eventRegistrations EventRegistration[]
+  eventCheckIns      EventCheckIn[]
+
+  // Communication
+  notifications        Notification[]
+  notificationsAboutMe Notification[]     @relation("NotificationRelatedUser")
+  announcementsRead    AnnouncementRead[]
+
+  // Children/Youth
+  childrenMinistryMembers ChildrenMinistryMember[]
+  youthGroupMembers       YouthGroupMember[]
+
+  // Staff
+  staffRecord Staff?
+
+  // Additional Relations
+  mediaUploads            Media[]                  @relation("MediaUploader")
+  expenseSubmissions      Expense[]                @relation("ExpenseSubmitter")
+  expenseApprovals        Expense[]                @relation("ExpenseApprover")
+  eventOrganizations      Event[]                  @relation("EventOrganizer")
+  facilityBookings        FacilityBooking[]        @relation("FacilityBooker")
+  childrenLeadership      ChildrenClass[]          @relation("ChildrenLeader")
+  childrenParent          ChildrenMinistryMember[] @relation("ChildrenParent")
+  youthLeadership         YouthGroup[]             @relation("YouthLeader")
+  outreachOrganizations   Outreach[]               @relation("OutreachOrganizer")
+  outreachParticipations  OutreachParticipant[]    @relation("OutreachParticipant")
+  testimonyAuthors        OutreachTestimony[]      @relation("TestimonyAuthor")
+  projectDonations        ProjectDonation[]        @relation("ProjectDonor")
+  projectUpdateAuthors    ProjectUpdate[]          @relation("ProjectUpdateAuthor")
+  documentUploads         Document[]               @relation("DocumentUploader")
+  assetAssignments        Asset[]                  @relation("AssetAssignee")
+  leaveApprovals          Leave[]                  @relation("LeaveApprover")
+  appraisalReviews        PerformanceAppraisal[]   @relation("AppraisalReviewer")
+  recurringDonations      RecurringDonation[]      @relation("RecurringDonor")
+  groupAttendances        GroupMeetingAttendance[] @relation("GroupAttendance")
+  payrollProcessed        Payroll[]                @relation("PayrollProcessor")
+  payslipsGenerated       Payslip[]                @relation("PayslipGenerator")
+  checksReceived          Check[]                  @relation("CheckReceiver")
+  checksDeposited         Check[]                  @relation("CheckDepositor")
+  checksDonated           Check[]                  @relation("CheckDonor")
+  guestVisits             GuestVisit[]             @relation("GuestVisits")
+  guestVisitsRecorded     GuestVisit[]             @relation("GuestVisitRecorder")
+  guestFollowUps          GuestFollowUp[]          @relation("GuestFollowUps")
+  followUpsAssigned       GuestFollowUp[]          @relation("FollowUpAssignee")
+  followUpsCreated        GuestFollowUp[]          @relation("FollowUpCreator")
+  discipleshipEnrollments DiscipleshipEnrollment[] @relation("DiscipleshipEnrollment")
+  mentorRelations         Mentorship[]             @relation("Mentor")
+  menteeRelations         Mentorship[]             @relation("Mentee")
+  announcementAuthors     Announcement[]           @relation("AnnouncementAuthor")
+  discussionAuthors       GroupDiscussion[]        @relation("DiscussionAuthor")
+  replyAuthors            GroupDiscussionReply[]   @relation("ReplyAuthor")
+  groupLeadership         SmallGroup[]             @relation("GroupLeader")
+  campusPastor            Campus[]                 @relation("CampusPastor")
+  hostedGroupMeetings     GroupMeetingRotation[]   @relation("GroupMeetingHost")
+
+  // Prayer Requests
+  prayerRequests       PrayerRequest[]       @relation("PrayerRequestAuthor")
+  prayers              Prayer[]              @relation("PrayerUser")
+  prayerRequestUpdates PrayerRequestUpdate[] @relation("PrayerRequestUpdateAuthor")
+
+  // Messaging
+  conversations ConversationParticipant[] @relation("ConversationParticipant")
+  sentMessages  Message[]                 @relation("MessageSender")
+  messageReads  MessageRead[]             @relation("MessageRead")
+
+  // Surveys
+  surveys         Survey[]         @relation("SurveyAuthor")
+  surveyResponses SurveyResponse[] @relation("SurveyResponseUser")
+
+  // Forms
+  forms           Form[]           @relation("FormAuthor")
+  formSubmissions FormSubmission[] @relation("FormSubmissionUser")
+
+  // Workflows
+  workflows Workflow[] @relation("WorkflowAuthor")
+
+  // Engagement
+  engagementScores MemberEngagementScore[] @relation("MemberEngagement")
+
+  // Connections
+  connections MemberConnection[] @relation("MemberConnectionUser")
+  connectedTo MemberConnection[] @relation("MemberConnectionConnected")
+
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+  deletedAt   DateTime?
+
+  @@index([email])
+  @@index([phone])
+  @@index([role])
+  @@index([status])
+  @@index([campusId])
+}
+
+model SocialLogin {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider   String // google, facebook, apple, etc.
+  providerId String
+  email      String?
+  createdAt  DateTime @default(now())
+
+  @@unique([provider, providerId])
+  @@index([userId])
+}
+
+// Custom session tracking (separate from NextAuth sessions)
+model UserSession {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token          String   @unique
+  ipAddress      String?
+  userAgent      String?
+  expiresAt      DateTime
+  createdAt      DateTime @default(now())
+  lastActivityAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+}
+
+// User invitations for Cognito-based authentication
+model Invitation {
+  id        String   @id @default(cuid())
+  token     String   @unique // Unique invitation token
+  email     String
+  phone     String?
+  firstName String
+  lastName  String
+  role      UserRole @default(GUEST)
+  campusId  String?
+  campus    Campus?  @relation(fields: [campusId], references: [id])
+
+  // Invitation details
+  invitedById String? // Admin who sent the invitation
+  invitedBy   User?   @relation("UserInvitations", fields: [invitedById], references: [id])
+  message     String? // Optional message from inviter
+
+  // Status tracking
+  status        InvitationStatus @default(PENDING)
+  acceptedAt    DateTime?
+  expiresAt     DateTime // Invitation expiration
+  cognitoUserId String? // Cognito user ID after acceptance
+
+  // User created from this invitation (if exists)
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([token])
+  @@index([email])
+  @@index([status])
+  @@index([invitedById])
+  @@index([expiresAt])
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  CANCELLED
+}
+
+// ============================================================================
+// NEXTAUTH MODELS
+// ============================================================================
+
+model AuthAccount {
+  id                String  @id @default(cuid())
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model ActivityLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action     String
+  resource   String?
+  resourceId String?
+  ipAddress  String?
+  userAgent  String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Campus {
+  id          String       @id @default(cuid())
+  name        String
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  phone       String?
+  email       String?
+  pastorId    String?
+  pastor      User?        @relation("CampusPastor", fields: [pastorId], references: [id])
+  invitations Invitation[]
+  churchId    String
+  church      Church       @relation(fields: [churchId], references: [id])
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  users         User[]
+  groups        SmallGroup[]
+  events        Event[]
+  announcements Announcement[] @relation("AnnouncementCampus")
+  services      ServicePlan[]  @relation("ServiceCampus")
+  facilities    Facility[]     @relation("FacilityCampus")
+  assets        Asset[]        @relation("AssetCampus")
+
+  @@index([churchId])
+}
+
+// ============================================================================
+// 2. SMALL GROUPS / CELL GROUPS
+// ============================================================================
+
+model SmallGroup {
+  id              String       @id @default(cuid())
+  name            String
+  description     String?
+  type            String? // zone, connect-group, cell-group, etc.
+  campusId        String?
+  campus          Campus?      @relation(fields: [campusId], references: [id])
+  parentId        String? // For hierarchical groups (e.g., Zone -> Connect Groups -> Cell Groups)
+  parent          SmallGroup?  @relation("GroupHierarchy", fields: [parentId], references: [id])
+  subgroups       SmallGroup[] @relation("GroupHierarchy")
+  leaderId        String? // Primary leader (for backward compatibility)
+  leader          User?        @relation("GroupLeader", fields: [leaderId], references: [id])
+  meetingDay      String? // Monday, Tuesday, etc.
+  meetingTime     String?
+  meetingLocation String? // Legacy field - kept for backward compatibility
+  latitude        Float?
+  longitude       Float?
+  useRotation     Boolean      @default(false) // Whether to use rotational meeting locations
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  members          GroupMember[]
+  meetings         GroupMeeting[]
+  discussions      GroupDiscussion[]
+  meetingRotations GroupMeetingRotation[]
+
+  @@index([campusId])
+  @@index([leaderId])
+  @@index([parentId])
+  @@index([type])
+}
+
+model GroupMember {
+  id       String     @id @default(cuid())
+  groupId  String
+  group    SmallGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role     String     @default("member") // leader, co-leader, assistant-leader, member
+  isLeader Boolean    @default(false) // Quick flag for leader filtering
+  joinedAt DateTime   @default(now())
+  leftAt   DateTime?
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([userId])
+  @@index([role])
+  @@index([isLeader])
+}
+
+model GroupMeeting {
+  id         String                   @id @default(cuid())
+  groupId    String
+  group      SmallGroup               @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  date       DateTime
+  location   String? // Legacy field - kept for backward compatibility
+  rotationId String? // Link to rotation if using rotational system
+  rotation   GroupMeetingRotation?    @relation(fields: [rotationId], references: [id], onDelete: SetNull)
+  notes      String?
+  attendance GroupMeetingAttendance[]
+  createdAt  DateTime                 @default(now())
+  updatedAt  DateTime                 @updatedAt
+
+  @@index([groupId])
+  @@index([date])
+  @@index([rotationId])
+}
+
+model GroupMeetingRotation {
+  id           String     @id @default(cuid())
+  groupId      String
+  group        SmallGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  locationType String // "member-house", "church", "other"
+  memberId     String? // If locationType is "member-house", this is the member's user ID
+  member       User?      @relation("GroupMeetingHost", fields: [memberId], references: [id], onDelete: SetNull)
+  locationName String? // For "other" type or display name
+  address      String?
+  month        Int // 1-12 (January = 1, December = 12)
+  year         Int // e.g., 2024
+  notes        String?
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  meetings GroupMeeting[]
+
+  @@unique([groupId, month, year])
+  @@index([groupId])
+  @@index([memberId])
+  @@index([year, month])
+}
+
+model GroupMeetingAttendance {
+  id        String           @id @default(cuid())
+  meetingId String
+  meeting   GroupMeeting     @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User             @relation("GroupAttendance", fields: [userId], references: [id], onDelete: Cascade)
+  status    AttendanceStatus @default(PRESENT)
+  notes     String?
+  createdAt DateTime         @default(now())
+
+  @@unique([meetingId, userId])
+  @@index([meetingId])
+  @@index([userId])
+}
+
+model GroupDiscussion {
+  id        String     @id @default(cuid())
+  groupId   String
+  group     SmallGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  authorId  String
+  author    User       @relation("DiscussionAuthor", fields: [authorId], references: [id])
+  isPinned  Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  replies GroupDiscussionReply[]
+
+  @@index([groupId])
+  @@index([authorId])
+}
+
+model GroupDiscussionReply {
+  id           String          @id @default(cuid())
+  discussionId String
+  discussion   GroupDiscussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  content      String
+  authorId     String
+  author       User            @relation("ReplyAuthor", fields: [authorId], references: [id])
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([discussionId])
+  @@index([authorId])
+}
+
+// ============================================================================
+// 3. DISCIPLESHIP & MEMBERSHIP
+// ============================================================================
+
+model DiscipleshipClass {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  duration    Int? // weeks
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  enrollments DiscipleshipEnrollment[]
+}
+
+model DiscipleshipEnrollment {
+  id          String            @id @default(cuid())
+  classId     String
+  class       DiscipleshipClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User              @relation("DiscipleshipEnrollment", fields: [userId], references: [id], onDelete: Cascade)
+  status      String            @default("enrolled") // enrolled, completed, dropped
+  enrolledAt  DateTime          @default(now())
+  completedAt DateTime?
+
+  @@unique([classId, userId])
+  @@index([classId])
+  @@index([userId])
+}
+
+model Mentorship {
+  id        String    @id @default(cuid())
+  mentorId  String
+  mentor    User      @relation("Mentor", fields: [mentorId], references: [id], onDelete: Cascade)
+  menteeId  String
+  mentee    User      @relation("Mentee", fields: [menteeId], references: [id], onDelete: Cascade)
+  status    String    @default("active") // active, completed, ended
+  startDate DateTime  @default(now())
+  endDate   DateTime?
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  meetings MentorshipMeeting[]
+
+  @@unique([mentorId, menteeId])
+  @@index([mentorId])
+  @@index([menteeId])
+}
+
+model MentorshipMeeting {
+  id           String     @id @default(cuid())
+  mentorshipId String
+  mentorship   Mentorship @relation(fields: [mentorshipId], references: [id], onDelete: Cascade)
+  date         DateTime
+  notes        String?
+  createdAt    DateTime   @default(now())
+
+  @@index([mentorshipId])
+}
+
+// ============================================================================
+// 4. COMMUNICATION
+// ============================================================================
+
+model Announcement {
+  id             String    @id @default(cuid())
+  title          String
+  content        String
+  authorId       String
+  author         User      @relation("AnnouncementAuthor", fields: [authorId], references: [id])
+  priority       String    @default("normal") // low, normal, high, urgent
+  targetAudience String? // all, members, leaders, etc.
+  campusId       String?
+  campus         Campus?   @relation("AnnouncementCampus", fields: [campusId], references: [id])
+  publishAt      DateTime?
+  expiresAt      DateTime?
+  isPublished    Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  reads         AnnouncementRead[]
+  notifications Notification[]
+
+  @@index([authorId])
+  @@index([isPublished])
+  @@index([publishAt])
+}
+
+model AnnouncementRead {
+  id             String       @id @default(cuid())
+  announcementId String
+  announcement   Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  readAt         DateTime     @default(now())
+
+  @@unique([announcementId, userId])
+  @@index([announcementId])
+  @@index([userId])
+}
+
+model Notification {
+  id             String           @id @default(cuid())
+  userId         String?
+  user           User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type           NotificationType
+  title          String
+  content        String
+  link           String?
+  isRead         Boolean          @default(false)
+  readAt         DateTime?
+  announcementId String?
+  announcement   Announcement?    @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  relatedUserId  String? // ID of the user this notification is about (e.g., new guest)
+  relatedUser    User?            @relation("NotificationRelatedUser", fields: [relatedUserId], references: [id], onDelete: Cascade)
+  metadata       Json?
+  createdAt      DateTime         @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+  @@index([relatedUserId])
+}
+
+enum MessageTemplateCategory {
+  PAYMENT_CONFIRMATION
+  DONATION_RECEIPT
+  PAYPAL_RECEIPT
+  MPESA_RECEIPT
+  WELCOME
+  EVENT_REMINDER
+  BIRTHDAY
+  ANNIVERSARY
+  WEDDING_ANNIVERSARY
+  THANK_YOU
+  APPRECIATION
+  PRAYER_REQUEST
+  FOLLOW_UP
+  GENERAL
+}
+
+model MessageTemplate {
+  id        String                  @id @default(cuid())
+  name      String
+  category  MessageTemplateCategory @default(GENERAL)
+  type      NotificationType
+  subject   String?
+  content   String
+  variables Json? // Available template variables
+  trigger   String? // e.g., "paypal_payment_received", "mpesa_payment_received"
+  isActive  Boolean                 @default(true)
+  isDefault Boolean                 @default(false) // Default template for category
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+
+  @@index([type])
+  @@index([category])
+  @@index([trigger])
+}
+
+// ============================================================================
+// 5. SERVICE PLANNING
+// ============================================================================
+
+model ServicePlan {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  campusId    String?
+  campus      Campus?  @relation("ServiceCampus", fields: [campusId], references: [id])
+  notes       String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items       ServicePlanItem[]
+  assignments ServiceAssignment[]
+  livestreams Livestream[]        @relation("LivestreamService")
+
+  @@index([date])
+  @@index([campusId])
+}
+
+model ServicePlanItem {
+  id          String      @id @default(cuid())
+  planId      String
+  plan        ServicePlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  type        String // song, prayer, scripture, sermon, offering, etc.
+  title       String
+  description String?
+  order       Int
+  duration    Int? // minutes
+  lyrics      String?
+  chords      String?
+  notes       String?
+  mediaId     String?
+  media       Media?      @relation(fields: [mediaId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([planId])
+  @@index([order])
+}
+
+model ServiceAssignment {
+  id        String      @id @default(cuid())
+  planId    String
+  plan      ServicePlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String // worship leader, instrumentalist, reader, usher, etc.
+  notes     String?
+  confirmed Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([planId])
+  @@index([userId])
+}
+
+// ============================================================================
+// 6. MEDIA LIBRARY
+// ============================================================================
+
+model Media {
+  id            String    @id @default(cuid())
+  title         String
+  description   String?
+  type          MediaType
+  category      String? // sermon, worship, teaching, etc.
+  series        String?
+  speaker       String?
+  url           String
+  thumbnailUrl  String?
+  duration      Int? // seconds
+  fileSize      BigInt?
+  mimeType      String?
+  externalId    String? // YouTube, Vimeo, etc. ID
+  externalUrl   String?
+  tags          String[]
+  isPublic      Boolean   @default(true)
+  viewCount     Int       @default(0)
+  downloadCount Int       @default(0)
+  uploadedById  String?
+  uploadedBy    User?     @relation("MediaUploader", fields: [uploadedById], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  servicePlanItems ServicePlanItem[]
+
+  @@index([type])
+  @@index([category])
+  @@index([series])
+  @@index([createdAt])
+}
+
+// ============================================================================
+// 7. LIVESTREAM / ONLINE CHURCH
+// ============================================================================
+
+model Livestream {
+  id            String           @id @default(cuid())
+  title         String
+  description   String?
+  servicePlanId String?
+  servicePlan   ServicePlan?     @relation("LivestreamService", fields: [servicePlanId], references: [id])
+  platform      String // youtube, facebook, recastly, etc.
+  streamUrl     String
+  embedUrl      String?
+  status        LivestreamStatus @default(SCHEDULED)
+  scheduledAt   DateTime
+  startedAt     DateTime?
+  endedAt       DateTime?
+  viewCount     Int              @default(0)
+  peakViewers   Int              @default(0)
+  isMembersOnly Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  chatMessages LivestreamChat[]
+  analytics    LivestreamAnalytics[]
+
+  @@index([status])
+  @@index([scheduledAt])
+}
+
+model LivestreamChat {
+  id              String     @id @default(cuid())
+  livestreamId    String
+  livestream      Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+  userId          String?
+  userName        String?
+  message         String
+  isPrayerRequest Boolean    @default(false)
+  isModerated     Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+
+  @@index([livestreamId])
+  @@index([createdAt])
+}
+
+model LivestreamAnalytics {
+  id           String     @id @default(cuid())
+  livestreamId String
+  livestream   Livestream @relation(fields: [livestreamId], references: [id], onDelete: Cascade)
+  timestamp    DateTime
+  viewCount    Int
+  watchTime    Int? // seconds
+  engagement   Float? // percentage
+  metadata     Json?
+
+  @@index([livestreamId])
+  @@index([timestamp])
+}
+
+// ============================================================================
+// 8. ATTENDANCE TRACKING
+// ============================================================================
+
+model Attendance {
+  id            String           @id @default(cuid())
+  userId        String
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date          DateTime
+  type          String // service, event, group, etc.
+  referenceId   String? // ID of service, event, or group
+  status        AttendanceStatus @default(PRESENT)
+  checkInMethod String? // manual, qr, nfc, etc.
+  notes         String?
+  createdAt     DateTime         @default(now())
+
+  @@index([userId])
+  @@index([date])
+  @@index([type, referenceId])
+}
+
+// ============================================================================
+// 9. GIVING & DONATIONS
+// ============================================================================
+
+model Donation {
+  id                  String             @id @default(cuid())
+  userId              String?
+  user                User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+  amount              Decimal            @db.Decimal(10, 2)
+  category            GivingCategory
+  paymentMethod       PaymentMethod
+  transactionId       String?            @unique
+  reference           String?
+  notes               String?
+  isRecurring         Boolean            @default(false)
+  recurringId         String?
+  receiptSent         Boolean            @default(false)
+  receiptSentAt       DateTime?
+  status              String             @default("pending") // pending, completed, failed, refunded
+  metadata            Json?
+  // QR Code & M-Pesa
+  qrCodeId            String?            @unique
+  qrCode              GivingQRCode?      @relation(fields: [qrCodeId], references: [id])
+  mpesaRequestId      String? // M-Pesa STK push request ID
+  mpesaCheckoutId     String? // M-Pesa checkout request ID
+  // PayPal
+  paypalTransactionId String?            @unique
+  paypalOrderId       String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  recurringDonation   RecurringDonation? @relation(fields: [recurringDonationId], references: [id])
+  recurringDonationId String?
+  check               Check? // Link to check if payment method is CHECK
+
+  @@index([userId])
+  @@index([category])
+  @@index([createdAt])
+  @@index([status])
+  @@index([paymentMethod])
+}
+
+model GivingQRCode {
+  id         String          @id @default(cuid())
+  donationId String?         @unique
+  donation   Donation?
+  amount     Decimal?        @db.Decimal(10, 2)
+  category   GivingCategory?
+  qrCodeData String // Base64 or URL of QR code
+  qrCodeUrl  String? // URL to scan
+  expiresAt  DateTime?
+  isUsed     Boolean         @default(false)
+  usedAt     DateTime?
+  createdAt  DateTime        @default(now())
+
+  @@index([donationId])
+  @@index([isUsed])
+}
+
+model RecurringDonation {
+  id            String         @id @default(cuid())
+  userId        String
+  user          User           @relation("RecurringDonor", fields: [userId], references: [id], onDelete: Cascade)
+  amount        Decimal        @db.Decimal(10, 2)
+  category      GivingCategory
+  frequency     String // weekly, monthly, quarterly, annually
+  dayOfMonth    Int? // For monthly donations
+  dayOfWeek     String? // For weekly donations
+  paymentMethod PaymentMethod
+  nextDate      DateTime
+  isActive      Boolean        @default(true)
+  endDate       DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  donations Donation[]
+
+  @@index([userId])
+  @@index([isActive])
+  @@index([nextDate])
+}
+
+// ============================================================================
+// 10. EXPENSE MANAGEMENT
+// ============================================================================
+
+model Expense {
+  id            String        @id @default(cuid())
+  title         String
+  description   String?
+  amount        Decimal       @db.Decimal(10, 2)
+  category      String // missions, staff, utilities, maintenance, etc.
+  vendor        String?
+  submittedById String
+  submittedBy   User          @relation("ExpenseSubmitter", fields: [submittedById], references: [id])
+  approvedById  String?
+  approvedBy    User?         @relation("ExpenseApprover", fields: [approvedById], references: [id])
+  status        ExpenseStatus @default(PENDING)
+  receiptUrl    String?
+  notes         String?
+  expenseDate   DateTime
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([submittedById])
+  @@index([status])
+  @@index([expenseDate])
+}
+
+model Budget {
+  id        String   @id @default(cuid())
+  name      String
+  category  String
+  amount    Decimal  @db.Decimal(10, 2)
+  period    String // monthly, quarterly, annually
+  startDate DateTime
+  endDate   DateTime
+  churchId  String
+  church    Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([churchId])
+  @@index([startDate, endDate])
+}
+
+// ============================================================================
+// 11. ACCOUNTING & REPORTS
+// ============================================================================
+
+model Account {
+  id        String   @id @default(cuid())
+  name      String
+  type      String // asset, liability, equity, income, expense
+  code      String? // Chart of accounts code
+  balance   Decimal  @default(0) @db.Decimal(10, 2)
+  churchId  String
+  church    Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions Transaction[]
+
+  @@index([churchId])
+  @@index([type])
+}
+
+model Transaction {
+  id            String    @id @default(cuid())
+  accountId     String
+  account       Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  type          String // debit, credit
+  amount        Decimal   @db.Decimal(10, 2)
+  description   String
+  reference     String? // Link to donation, expense, etc.
+  referenceType String? // donation, expense, transfer, etc.
+  date          DateTime
+  reconciled    Boolean   @default(false)
+  reconciledAt  DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([accountId])
+  @@index([date])
+  @@index([reconciled])
+}
+
+// ============================================================================
+// 12. EVENTS MANAGEMENT
+// ============================================================================
+
+model Event {
+  id                   String      @id @default(cuid())
+  title                String
+  description          String?
+  type                 EventType
+  status               EventStatus @default(DRAFT)
+  startDate            DateTime
+  endDate              DateTime?
+  location             String?
+  address              String?
+  campusId             String?
+  campus               Campus?     @relation(fields: [campusId], references: [id])
+  capacity             Int?
+  isPublic             Boolean     @default(true)
+  requiresRegistration Boolean     @default(false)
+  isPaid               Boolean     @default(false)
+  price                Decimal?    @db.Decimal(10, 2)
+  imageUrl             String?
+  posterUrl            String? // Cloudinary poster URL
+  organizerId          String?
+  organizer            User?       @relation("EventOrganizer", fields: [organizerId], references: [id])
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  registrations EventRegistration[]
+  checkIns      EventCheckIn[]
+  guestVisits   GuestVisit[]
+
+  @@index([type])
+  @@index([status])
+  @@index([startDate])
+  @@index([campusId])
+}
+
+model EventRegistration {
+  id            String   @id @default(cuid())
+  eventId       String
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        String   @default("registered") // registered, confirmed, cancelled, waitlisted
+  paymentStatus String? // pending, paid, refunded
+  paymentAmount Decimal? @db.Decimal(10, 2)
+  notes         String?
+  registeredAt  DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+}
+
+model EventCheckIn {
+  id          String   @id @default(cuid())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  checkedInAt DateTime @default(now())
+  method      String? // manual, qr, nfc
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+}
+
+// ============================================================================
+// 13. CALENDAR & SCHEDULING
+// ============================================================================
+
+model CalendarEvent {
+  id             String    @id @default(cuid())
+  title          String
+  description    String?
+  startDate      DateTime
+  endDate        DateTime?
+  allDay         Boolean   @default(false)
+  location       String?
+  type           String? // service, meeting, outreach, etc.
+  color          String?
+  isRecurring    Boolean   @default(false)
+  recurrenceRule String? // RRULE format
+  churchId       String
+  church         Church    @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([churchId])
+  @@index([startDate])
+}
+
+model Facility {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  capacity    Int?
+  amenities   String[]
+  campusId    String?
+  campus      Campus?  @relation("FacilityCampus", fields: [campusId], references: [id])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bookings FacilityBooking[]
+
+  @@index([campusId])
+}
+
+model FacilityBooking {
+  id         String   @id @default(cuid())
+  facilityId String
+  facility   Facility @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation("FacilityBooker", fields: [userId], references: [id], onDelete: Cascade)
+  startDate  DateTime
+  endDate    DateTime
+  purpose    String?
+  status     String   @default("pending") // pending, approved, rejected, cancelled
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([facilityId])
+  @@index([userId])
+  @@index([startDate, endDate])
+}
+
+// ============================================================================
+// 14. VOLUNTEER MANAGEMENT
+// ============================================================================
+
+model VolunteerRole {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  department   String? // worship, children, ushering, etc.
+  requirements String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assignments VolunteerAssignment[]
+}
+
+model VolunteerAssignment {
+  id        String        @id @default(cuid())
+  roleId    String
+  role      VolunteerRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String        @default("active") // active, inactive, pending
+  startDate DateTime      @default(now())
+  endDate   DateTime?
+  notes     String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  shifts VolunteerShift[]
+
+  @@index([roleId])
+  @@index([userId])
+}
+
+model VolunteerShift {
+  id           String              @id @default(cuid())
+  assignmentId String
+  assignment   VolunteerAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  date         DateTime
+  startTime    DateTime
+  endTime      DateTime?
+  status       String              @default("scheduled") // scheduled, completed, cancelled, no-show
+  notes        String?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([assignmentId])
+  @@index([date])
+}
+
+// ============================================================================
+// 15. CHILDREN'S MINISTRY
+// ============================================================================
+
+model ChildrenClass {
+  id        String   @id @default(cuid())
+  name      String
+  ageMin    Int
+  ageMax    Int
+  capacity  Int?
+  leaderId  String?
+  leader    User?    @relation("ChildrenLeader", fields: [leaderId], references: [id])
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members ChildrenMinistryMember[]
+  lessons ChildrenLesson[]
+}
+
+model ChildrenMinistryMember {
+  id           String        @id @default(cuid())
+  classId      String
+  class        ChildrenClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId     String?
+  parent       User?         @relation("ChildrenParent", fields: [parentId], references: [id])
+  allergies    String?
+  specialNeeds String?
+  checkInCode  String?       @unique
+  enrolledAt   DateTime      @default(now())
+  leftAt       DateTime?
+
+  attendances ChildrenAttendance[]
+
+  @@unique([classId, userId])
+  @@index([classId])
+  @@index([userId])
+  @@index([parentId])
+}
+
+model ChildrenAttendance {
+  id           String                 @id @default(cuid())
+  memberId     String
+  member       ChildrenMinistryMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  date         DateTime
+  checkedInAt  DateTime?
+  checkedOutAt DateTime?
+  checkedInBy  String?
+  checkedOutBy String?
+  notes        String?
+
+  @@index([memberId])
+  @@index([date])
+}
+
+model ChildrenLesson {
+  id        String        @id @default(cuid())
+  classId   String
+  class     ChildrenClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  title     String
+  content   String?
+  scripture String?
+  materials String[]
+  date      DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([classId])
+}
+
+// ============================================================================
+// 16. YOUTH & TEENS
+// ============================================================================
+
+model YouthGroup {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  ageMin      Int
+  ageMax      Int
+  leaderId    String?
+  leader      User?    @relation("YouthLeader", fields: [leaderId], references: [id])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members YouthGroupMember[]
+  events  YouthEvent[]
+}
+
+model YouthGroupMember {
+  id       String     @id @default(cuid())
+  groupId  String
+  group    YouthGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  joinedAt DateTime   @default(now())
+  leftAt   DateTime?
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([userId])
+}
+
+model YouthEvent {
+  id          String     @id @default(cuid())
+  groupId     String
+  group       YouthGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  date        DateTime
+  location    String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([groupId])
+  @@index([date])
+}
+
+// ============================================================================
+// 17. OUTREACH & MISSIONS
+// ============================================================================
+
+model Outreach {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  type        String // evangelism, mission trip, community service, etc.
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  budget      Decimal?  @db.Decimal(10, 2)
+  status      String    @default("planned") // planned, active, completed, cancelled
+  organizerId String?
+  organizer   User?     @relation("OutreachOrganizer", fields: [organizerId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  participants OutreachParticipant[]
+  testimonies  OutreachTestimony[]
+
+  @@index([status])
+  @@index([startDate])
+}
+
+model OutreachParticipant {
+  id         String   @id @default(cuid())
+  outreachId String
+  outreach   Outreach @relation(fields: [outreachId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation("OutreachParticipant", fields: [userId], references: [id], onDelete: Cascade)
+  role       String? // leader, volunteer, etc.
+  status     String   @default("registered") // registered, confirmed, completed
+  createdAt  DateTime @default(now())
+
+  @@unique([outreachId, userId])
+  @@index([outreachId])
+  @@index([userId])
+}
+
+model OutreachTestimony {
+  id         String   @id @default(cuid())
+  outreachId String
+  outreach   Outreach @relation(fields: [outreachId], references: [id], onDelete: Cascade)
+  authorId   String
+  author     User     @relation("TestimonyAuthor", fields: [authorId], references: [id])
+  title      String
+  content    String
+  isPublic   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([outreachId])
+  @@index([authorId])
+}
+
+model CommunityProject {
+  id            String    @id @default(cuid())
+  title         String
+  description   String?
+  goal          Decimal?  @db.Decimal(10, 2)
+  currentAmount Decimal   @default(0) @db.Decimal(10, 2)
+  status        String    @default("active") // active, completed, cancelled
+  startDate     DateTime
+  endDate       DateTime?
+  isPublic      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  donations ProjectDonation[]
+  updates   ProjectUpdate[]
+
+  @@index([status])
+}
+
+model ProjectDonation {
+  id        String           @id @default(cuid())
+  projectId String
+  project   CommunityProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?            @relation("ProjectDonor", fields: [userId], references: [id], onDelete: SetNull)
+  amount    Decimal          @db.Decimal(10, 2)
+  anonymous Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@index([projectId])
+  @@index([userId])
+}
+
+model ProjectUpdate {
+  id        String           @id @default(cuid())
+  projectId String
+  project   CommunityProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  imageUrl  String?
+  authorId  String
+  author    User             @relation("ProjectUpdateAuthor", fields: [authorId], references: [id])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([projectId])
+  @@index([authorId])
+}
+
+// ============================================================================
+// 18. DOCUMENT MANAGEMENT
+// ============================================================================
+
+model Document {
+  id                String       @id @default(cuid())
+  title             String
+  description       String?
+  type              DocumentType
+  category          String?
+  fileUrl           String
+  fileSize          BigInt?
+  mimeType          String?
+  version           Int          @default(1)
+  previousVersionId String?
+  previousVersion   Document?    @relation("DocumentVersion", fields: [previousVersionId], references: [id])
+  nextVersions      Document[]   @relation("DocumentVersion")
+  isPublic          Boolean      @default(false)
+  accessLevel       String       @default("private") // private, members, leaders, public
+  uploadedById      String
+  uploadedBy        User         @relation("DocumentUploader", fields: [uploadedById], references: [id])
+  churchId          String
+  church            Church       @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([type])
+  @@index([category])
+  @@index([churchId])
+  @@index([uploadedById])
+}
+
+// ============================================================================
+// 19. ASSET MANAGEMENT
+// ============================================================================
+
+model Asset {
+  id             String      @id @default(cuid())
+  name           String
+  description    String?
+  category       String // instrument, vehicle, furniture, equipment, etc.
+  serialNumber   String?
+  purchaseDate   DateTime?
+  purchasePrice  Decimal?    @db.Decimal(10, 2)
+  currentValue   Decimal?    @db.Decimal(10, 2)
+  location       String?
+  campusId       String?
+  campus         Campus?     @relation("AssetCampus", fields: [campusId], references: [id])
+  status         AssetStatus @default(ACTIVE)
+  warrantyExpiry DateTime?
+  assignedToId   String?
+  assignedTo     User?       @relation("AssetAssignee", fields: [assignedToId], references: [id])
+  churchId       String
+  church         Church      @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  maintenanceLogs AssetMaintenance[]
+
+  @@index([category])
+  @@index([status])
+  @@index([churchId])
+  @@index([campusId])
+}
+
+model AssetMaintenance {
+  id              String    @id @default(cuid())
+  assetId         String
+  asset           Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  type            String // repair, service, inspection, etc.
+  description     String
+  cost            Decimal?  @db.Decimal(10, 2)
+  performedBy     String?
+  performedAt     DateTime
+  nextServiceDate DateTime?
+  notes           String?
+  createdAt       DateTime  @default(now())
+
+  @@index([assetId])
+  @@index([performedAt])
+}
+
+// ============================================================================
+// 19. DEPARTMENTS & INVENTORY
+// ============================================================================
+
+model Department {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  leaderId    String?
+  leader      User?    @relation("DepartmentLeader", fields: [leaderId], references: [id])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  inventoryItems InventoryItem[]
+  staff          Staff[]
+
+  @@index([leaderId])
+  @@index([isActive])
+}
+
+model InventoryItem {
+  id            String      @id @default(cuid())
+  name          String
+  description   String?
+  category      String // equipment, supplies, materials, etc.
+  sku           String?     @unique
+  quantity      Int         @default(0)
+  unit          String? // pieces, boxes, kg, liters, etc.
+  minQuantity   Int? // reorder threshold
+  maxQuantity   Int?
+  unitCost      Decimal?    @db.Decimal(10, 2)
+  location      String?
+  departmentId  String?
+  department    Department? @relation(fields: [departmentId], references: [id])
+  supplier      String?
+  lastRestocked DateTime?
+  notes         String?
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  transactions InventoryTransaction[]
+
+  @@index([category])
+  @@index([departmentId])
+  @@index([isActive])
+  @@index([sku])
+}
+
+model InventoryTransaction {
+  id            String                   @id @default(cuid())
+  itemId        String
+  item          InventoryItem            @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  type          InventoryTransactionType
+  quantity      Int
+  reason        String? // restock, usage, adjustment, etc.
+  performedById String?
+  performedBy   User?                    @relation("InventoryTransactionPerformer", fields: [performedById], references: [id])
+  notes         String?
+  createdAt     DateTime                 @default(now())
+
+  @@index([itemId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+enum InventoryTransactionType {
+  IN
+  OUT
+  ADJUSTMENT
+}
+
+// ============================================================================
+// 20. HR & PAYROLL
+// ============================================================================
+
+model Staff {
+  id             String      @id @default(cuid())
+  userId         String      @unique
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  employeeId     String?     @unique
+  departmentId   String?
+  department     Department? @relation(fields: [departmentId], references: [id])
+  position       String?
+  hireDate       DateTime?
+  salary         Decimal?    @db.Decimal(10, 2)
+  employmentType String? // full-time, part-time, contract, volunteer
+  isActive       Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  leaves     Leave[]
+  appraisals PerformanceAppraisal[]
+  payslips   Payslip[]
+
+  @@index([userId])
+  @@index([departmentId])
+  @@index([isActive])
+}
+
+model Payroll {
+  id            String        @id @default(cuid())
+  payPeriod     String // e.g., "2024-01" for January 2024
+  startDate     DateTime
+  endDate       DateTime
+  status        PayrollStatus @default(DRAFT)
+  totalAmount   Decimal       @default(0) @db.Decimal(10, 2)
+  processedById String?
+  processedBy   User?         @relation("PayrollProcessor", fields: [processedById], references: [id])
+  processedAt   DateTime?
+  notes         String?
+  churchId      String
+  church        Church        @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  payslips Payslip[]
+
+  @@unique([churchId, payPeriod])
+  @@index([churchId])
+  @@index([status])
+  @@index([startDate, endDate])
+}
+
+model Payslip {
+  id            String        @id @default(cuid())
+  payrollId     String
+  payroll       Payroll       @relation(fields: [payrollId], references: [id], onDelete: Cascade)
+  staffId       String
+  staff         Staff         @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  baseSalary    Decimal       @db.Decimal(10, 2)
+  allowances    Decimal       @default(0) @db.Decimal(10, 2) // Housing, transport, etc.
+  bonuses       Decimal       @default(0) @db.Decimal(10, 2)
+  deductions    Decimal       @default(0) @db.Decimal(10, 2) // Tax, NHIF, NSSF, etc.
+  netPay        Decimal       @db.Decimal(10, 2)
+  payDate       DateTime
+  status        PayslipStatus @default(PENDING)
+  generatedById String?
+  generatedBy   User?         @relation("PayslipGenerator", fields: [generatedById], references: [id])
+  generatedAt   DateTime?
+  sentAt        DateTime?
+  payslipUrl    String? // PDF URL
+  notes         String?
+  breakdown     Json? // Detailed breakdown of salary components
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([payrollId])
+  @@index([staffId])
+  @@index([status])
+  @@index([payDate])
+}
+
+enum PayrollStatus {
+  DRAFT
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}
+
+enum PayslipStatus {
+  PENDING
+  GENERATED
+  SENT
+  PAID
+  CANCELLED
+}
+
+// ============================================================================
+// 20.1. CHECK PROCESSING
+// ============================================================================
+
+model Check {
+  id            String      @id @default(cuid())
+  checkNumber   String // Check number from the physical check
+  amount        Decimal     @db.Decimal(10, 2)
+  donorId       String?
+  donor         User?       @relation("CheckDonor", fields: [donorId], references: [id], onDelete: SetNull)
+  donorName     String? // Name if not a registered member
+  bankName      String?
+  accountNumber String?
+  checkDate     DateTime? // Date on the check
+  receivedDate  DateTime    @default(now())
+  receivedById  String
+  receivedBy    User        @relation("CheckReceiver", fields: [receivedById], references: [id])
+  status        CheckStatus @default(PENDING)
+  depositedDate DateTime?
+  depositedById String?
+  depositedBy   User?       @relation("CheckDepositor", fields: [depositedById], references: [id])
+  clearedDate   DateTime?
+  donationId    String?     @unique // Link to donation record if applicable
+  donation      Donation?   @relation(fields: [donationId], references: [id], onDelete: SetNull)
+  notes         String?
+  imageUrl      String? // Scanned check image
+  churchId      String
+  church        Church      @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([churchId, checkNumber])
+  @@index([churchId])
+  @@index([status])
+  @@index([receivedDate])
+  @@index([donorId])
+}
+
+enum CheckStatus {
+  PENDING
+  DEPOSITED
+  CLEARED
+  BOUNCED
+  CANCELLED
+}
+
+// ============================================================================
+// 20.2. GUEST TRACKING
+// ============================================================================
+
+model GuestVisit {
+  id           String   @id @default(cuid())
+  guestId      String
+  guest        User     @relation("GuestVisits", fields: [guestId], references: [id], onDelete: Cascade)
+  visitDate    DateTime @default(now())
+  serviceType  String? // Sunday Service, Midweek, Special Event, etc.
+  eventId      String? // If visit was for a specific event
+  event        Event?   @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  notes        String?
+  recordedById String
+  recordedBy   User     @relation("GuestVisitRecorder", fields: [recordedById], references: [id])
+  createdAt    DateTime @default(now())
+
+  @@index([guestId])
+  @@index([visitDate])
+  @@index([eventId])
+}
+
+model GuestFollowUp {
+  id           String         @id @default(cuid())
+  guestId      String
+  guest        User           @relation("GuestFollowUps", fields: [guestId], references: [id], onDelete: Cascade)
+  type         FollowUpType
+  method       FollowUpMethod
+  subject      String?
+  content      String
+  scheduledAt  DateTime? // For scheduled follow-ups
+  completedAt  DateTime? // When follow-up was completed
+  status       FollowUpStatus @default(PENDING)
+  assignedToId String?
+  assignedTo   User?          @relation("FollowUpAssignee", fields: [assignedToId], references: [id])
+  createdById  String
+  createdBy    User           @relation("FollowUpCreator", fields: [createdById], references: [id])
+  notes        String?
+  metadata     Json? // Additional data (email sent, SMS sent, etc.)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([guestId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([assignedToId])
+  @@index([createdById])
+}
+
+enum FollowUpType {
+  WELCOME
+  THANK_YOU
+  INVITATION
+  CHECK_IN
+  PRAYER_REQUEST
+  CONNECTION
+  BAPTISM
+  OTHER
+}
+
+enum FollowUpMethod {
+  EMAIL
+  SMS
+  PHONE_CALL
+  IN_PERSON
+  LETTER
+  OTHER
+}
+
+enum FollowUpStatus {
+  PENDING
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_RESPONSE
+}
+
+model Leave {
+  id           String      @id @default(cuid())
+  staffId      String
+  staff        Staff       @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  type         LeaveType
+  startDate    DateTime
+  endDate      DateTime
+  days         Int
+  reason       String?
+  status       LeaveStatus @default(PENDING)
+  approvedById String?
+  approvedBy   User?       @relation("LeaveApprover", fields: [approvedById], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([staffId])
+  @@index([status])
+  @@index([startDate, endDate])
+}
+
+model PerformanceAppraisal {
+  id           String   @id @default(cuid())
+  staffId      String
+  staff        Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  period       String // e.g., "2024-Q1"
+  rating       Int? // 1-5
+  comments     String?
+  goals        String?
+  reviewedById String?
+  reviewedBy   User?    @relation("AppraisalReviewer", fields: [reviewedById], references: [id])
+  reviewDate   DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([staffId])
+  @@index([period])
+}
+
+// ============================================================================
+// 21. SYSTEM CONFIGURATION
+// ============================================================================
+
+model Church {
+  id           String   @id @default(cuid())
+  name         String
+  denomination String?
+  logo         String?
+  website      String?
+  email        String?
+  phone        String?
+  address      String?
+  city         String?
+  state        String?
+  zipCode      String?
+  country      String?
+  timezone     String   @default("UTC")
+  language     String   @default("en")
+  currency     String   @default("USD")
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  campuses       Campus[]
+  accounts       Account[]
+  budgets        Budget[]
+  calendarEvents CalendarEvent[]
+  documents      Document[]
+  assets         Asset[]
+  settings       ChurchSetting[]
+  customFields   CustomField[]
+  residences     Residence[]
+  payrolls       Payroll[]
+  checks         Check[]
+
+  @@index([isActive])
+}
+
+model ChurchSetting {
+  id          String   @id @default(cuid())
+  churchId    String
+  church      Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  key         String
+  value       String
+  type        String   @default("string") // string, number, boolean, json
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([churchId, key])
+  @@index([churchId])
+}
+
+model CustomField {
+  id         String   @id @default(cuid())
+  churchId   String
+  church     Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  name       String
+  label      String
+  type       String // text, number, date, select, etc.
+  options    Json? // For select fields
+  entity     String // user, event, donation, etc.
+  isRequired Boolean  @default(false)
+  isActive   Boolean  @default(true)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([churchId])
+  @@index([entity])
+}
+
+model Residence {
+  id        String   @id @default(cuid())
+  name      String
+  churchId  String
+  church    Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([churchId, name])
+  @@index([churchId])
+  @@index([name])
+}
+
+// ============================================================================
+// 22. PRAYER REQUESTS
+// ============================================================================
+
+enum PrayerRequestStatus {
+  PENDING
+  ACTIVE
+  ANSWERED
+  CLOSED
+}
+
+enum PrayerRequestCategory {
+  HEALTH
+  FAMILY
+  FINANCIAL
+  SPIRITUAL
+  WORK
+  RELATIONSHIPS
+  OTHER
+}
+
+enum PrayerRequestPrivacy {
+  PUBLIC
+  MEMBERS_ONLY
+  PRIVATE
+  LEADERS_ONLY
+}
+
+model PrayerRequest {
+  id          String                @id @default(cuid())
+  title       String
+  content     String
+  category    PrayerRequestCategory @default(OTHER)
+  status      PrayerRequestStatus   @default(PENDING)
+  privacy     PrayerRequestPrivacy  @default(MEMBERS_ONLY)
+  isAnonymous Boolean               @default(false)
+  authorId    String?
+  author      User?                 @relation("PrayerRequestAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  answeredAt  DateTime?
+  answerNotes String?
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+
+  prayers Prayer[]
+  updates PrayerRequestUpdate[]
+
+  @@index([status])
+  @@index([category])
+  @@index([privacy])
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model Prayer {
+  id              String        @id @default(cuid())
+  prayerRequestId String
+  prayerRequest   PrayerRequest @relation(fields: [prayerRequestId], references: [id], onDelete: Cascade)
+  userId          String?
+  user            User?         @relation("PrayerUser", fields: [userId], references: [id], onDelete: SetNull)
+  notes           String?
+  isAnonymous     Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+
+  @@unique([prayerRequestId, userId])
+  @@index([prayerRequestId])
+  @@index([userId])
+}
+
+model PrayerRequestUpdate {
+  id              String        @id @default(cuid())
+  prayerRequestId String
+  prayerRequest   PrayerRequest @relation(fields: [prayerRequestId], references: [id], onDelete: Cascade)
+  content         String
+  authorId        String?
+  author          User?         @relation("PrayerRequestUpdateAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt       DateTime      @default(now())
+
+  @@index([prayerRequestId])
+  @@index([authorId])
+}
+
+// ============================================================================
+// 23. DIRECT MESSAGING
+// ============================================================================
+
+model Conversation {
+  id        String   @id @default(cuid())
+  type      String   @default("direct") // direct, group
+  name      String? // For group conversations
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@index([updatedAt])
+}
+
+model ConversationParticipant {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation("ConversationParticipant", fields: [userId], references: [id], onDelete: Cascade)
+  lastReadAt     DateTime?
+  isMuted        Boolean      @default(false)
+  joinedAt       DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+  @@index([conversationId])
+  @@index([userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  content        String
+  attachments    Json? // Array of file URLs/metadata
+  isEdited       Boolean      @default(false)
+  editedAt       DateTime?
+  isDeleted      Boolean      @default(false)
+  deletedAt      DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  reads MessageRead[]
+
+  @@index([conversationId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+model MessageRead {
+  id        String   @id @default(cuid())
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation("MessageRead", fields: [userId], references: [id], onDelete: Cascade)
+  readAt    DateTime @default(now())
+
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@index([userId])
+}
+
+// ============================================================================
+// 24. SURVEYS & FEEDBACK
+// ============================================================================
+
+enum SurveyStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+enum QuestionType {
+  TEXT
+  TEXTAREA
+  NUMBER
+  EMAIL
+  PHONE
+  DATE
+  SELECT
+  MULTI_SELECT
+  CHECKBOX
+  RADIO
+  RATING
+  MATRIX
+  FILE
+}
+
+model Survey {
+  id             String       @id @default(cuid())
+  title          String
+  description    String?
+  status         SurveyStatus @default(DRAFT)
+  isAnonymous    Boolean      @default(false)
+  allowMultiple  Boolean      @default(false)
+  startDate      DateTime?
+  endDate        DateTime?
+  targetAudience String? // all, members, leaders, specific groups
+  authorId       String?
+  author         User?        @relation("SurveyAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  questions SurveyQuestion[]
+  responses SurveyResponse[]
+
+  @@index([status])
+  @@index([authorId])
+  @@index([startDate, endDate])
+}
+
+model SurveyQuestion {
+  id          String       @id @default(cuid())
+  surveyId    String
+  survey      Survey       @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  question    String
+  type        QuestionType
+  options     Json? // For select, radio, checkbox, matrix
+  isRequired  Boolean      @default(false)
+  order       Int
+  description String?
+  createdAt   DateTime     @default(now())
+
+  responses SurveyResponseAnswer[]
+
+  @@index([surveyId])
+  @@index([order])
+}
+
+model SurveyResponse {
+  id          String   @id @default(cuid())
+  surveyId    String
+  survey      Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?    @relation("SurveyResponseUser", fields: [userId], references: [id], onDelete: SetNull)
+  isAnonymous Boolean  @default(false)
+  submittedAt DateTime @default(now())
+
+  answers SurveyResponseAnswer[]
+
+  @@unique([surveyId, userId]) // Prevent multiple responses unless allowMultiple is true
+  @@index([surveyId])
+  @@index([userId])
+  @@index([submittedAt])
+}
+
+model SurveyResponseAnswer {
+  id         String         @id @default(cuid())
+  responseId String
+  response   SurveyResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  questionId String
+  question   SurveyQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answer     Json // Flexible answer storage (string, number, array, etc.)
+  createdAt  DateTime       @default(now())
+
+  @@unique([responseId, questionId])
+  @@index([responseId])
+  @@index([questionId])
+}
+
+// ============================================================================
+// 25. MEMBER ENGAGEMENT SCORING
+// ============================================================================
+
+model MemberEngagementScore {
+  id                 String   @id @default(cuid())
+  userId             String
+  user               User     @relation("MemberEngagement", fields: [userId], references: [id], onDelete: Cascade)
+  overallScore       Float // 0-100
+  attendanceScore    Float
+  givingScore        Float
+  groupScore         Float
+  eventScore         Float
+  communicationScore Float
+  volunteerScore     Float
+  calculatedAt       DateTime @default(now())
+  period             String // weekly, monthly, quarterly, yearly
+  periodStart        DateTime
+  periodEnd          DateTime
+  metadata           Json? // Detailed breakdown
+
+  @@unique([userId, period, periodStart])
+  @@index([userId])
+  @@index([calculatedAt])
+  @@index([overallScore])
+}
+
+// ============================================================================
+// 26. WORKFLOW AUTOMATION
+// ============================================================================
+
+enum WorkflowStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum WorkflowTriggerType {
+  MEMBER_CREATED
+  MEMBER_UPDATED
+  ATTENDANCE_MISSED
+  DONATION_RECEIVED
+  EVENT_REGISTERED
+  GROUP_JOINED
+  PRAYER_REQUEST_CREATED
+  CUSTOM
+}
+
+enum WorkflowActionType {
+  SEND_EMAIL
+  SEND_SMS
+  SEND_NOTIFICATION
+  CREATE_TASK
+  ASSIGN_TO_GROUP
+  UPDATE_MEMBER_FIELD
+  CREATE_EVENT
+  TRIGGER_WEBHOOK
+}
+
+model Workflow {
+  id            String              @id @default(cuid())
+  name          String
+  description   String?
+  status        WorkflowStatus      @default(DRAFT)
+  triggerType   WorkflowTriggerType
+  triggerConfig Json? // Trigger-specific configuration
+  authorId      String?
+  author        User?               @relation("WorkflowAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  isActive      Boolean             @default(true)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  actions    WorkflowAction[]
+  executions WorkflowExecution[]
+
+  @@index([status])
+  @@index([triggerType])
+  @@index([authorId])
+}
+
+model WorkflowAction {
+  id         String             @id @default(cuid())
+  workflowId String
+  workflow   Workflow           @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  type       WorkflowActionType
+  order      Int
+  config     Json // Action-specific configuration
+  conditions Json? // Conditional logic
+  delay      Int? // Delay in minutes before executing
+  createdAt  DateTime           @default(now())
+
+  executions WorkflowActionExecution[]
+
+  @@index([workflowId])
+  @@index([order])
+}
+
+model WorkflowExecution {
+  id          String    @id @default(cuid())
+  workflowId  String
+  workflow    Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  triggerData Json? // Data that triggered the workflow
+  status      String    @default("running") // running, completed, failed, cancelled
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  error       String?
+  metadata    Json?
+
+  actionExecutions WorkflowActionExecution[]
+
+  @@index([workflowId])
+  @@index([status])
+  @@index([startedAt])
+}
+
+model WorkflowActionExecution {
+  id          String            @id @default(cuid())
+  executionId String
+  execution   WorkflowExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  actionId    String
+  action      WorkflowAction    @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  status      String            @default("pending") // pending, running, completed, failed, skipped
+  result      Json?
+  error       String?
+  executedAt  DateTime?
+  createdAt   DateTime          @default(now())
+
+  @@index([executionId])
+  @@index([actionId])
+  @@index([status])
+}
+
+// ============================================================================
+// 27. FORM BUILDER
+// ============================================================================
+
+enum FormStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+model Form {
+  id            String     @id @default(cuid())
+  name          String
+  description   String?
+  status        FormStatus @default(DRAFT)
+  isPublic      Boolean    @default(false)
+  allowMultiple Boolean    @default(false)
+  requireAuth   Boolean    @default(true)
+  startDate     DateTime?
+  endDate       DateTime?
+  authorId      String?
+  author        User?      @relation("FormAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  fields      FormField[]
+  submissions FormSubmission[]
+
+  @@index([status])
+  @@index([authorId])
+}
+
+model FormField {
+  id          String       @id @default(cuid())
+  formId      String
+  form        Form         @relation(fields: [formId], references: [id], onDelete: Cascade)
+  label       String
+  type        QuestionType // Reuse from Survey
+  placeholder String?
+  helpText    String?
+  options     Json? // For select, radio, checkbox
+  isRequired  Boolean      @default(false)
+  order       Int
+  validation  Json? // Validation rules
+  conditional Json? // Conditional display logic
+  createdAt   DateTime     @default(now())
+
+  answers FormSubmissionAnswer[]
+
+  @@index([formId])
+  @@index([order])
+}
+
+model FormSubmission {
+  id          String   @id @default(cuid())
+  formId      String
+  form        Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?    @relation("FormSubmissionUser", fields: [userId], references: [id], onDelete: SetNull)
+  isAnonymous Boolean  @default(false)
+  submittedAt DateTime @default(now())
+
+  answers FormSubmissionAnswer[]
+
+  @@index([formId])
+  @@index([userId])
+  @@index([submittedAt])
+}
+
+model FormSubmissionAnswer {
+  id           String         @id @default(cuid())
+  submissionId String
+  submission   FormSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  fieldId      String
+  field        FormField      @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  answer       Json // Flexible answer storage
+  createdAt    DateTime       @default(now())
+
+  @@unique([submissionId, fieldId])
+  @@index([submissionId])
+  @@index([fieldId])
+}
+
+// ============================================================================
+// 28. MEMBER DIRECTORY & DISCOVERY
+// ============================================================================
+
+model MemberConnection {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation("MemberConnectionUser", fields: [userId], references: [id], onDelete: Cascade)
+  connectedUserId String
+  connectedUser   User     @relation("MemberConnectionConnected", fields: [connectedUserId], references: [id], onDelete: Cascade)
+  status          String   @default("pending") // pending, accepted, blocked
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, connectedUserId])
+  @@index([userId])
+  @@index([connectedUserId])
+  @@index([status])
+}
+
+// ============================================================================
+// CASBIN RULES
+// ============================================================================
+
+model CasbinRule {
+  id    Int    @id @default(autoincrement())
+  ptype String // p for policy, g for grouping
+  v0    String // subject/role
+  v1    String // object/resource
+  v2    String // action
+  v3    String // additional field
+  v4    String // additional field
+  v5    String // additional field
+
+  @@index([ptype])
+  @@index([v0])
+}
