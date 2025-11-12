@@ -105,7 +105,7 @@ export function UserManagementWidget({ widgetId }: UserManagementWidgetProps) {
             <p className="text-2xl font-bold text-gray-900">{data.inactive}</p>
           </div>
         </div>
-        <Link href="/dashboard/users" className="block">
+        <Link href="/dashboard/people" className="block">
           <Button 
             variant="outline" 
             className="w-full border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 group/btn transition-all duration-200"

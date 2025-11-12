@@ -39,12 +39,14 @@ export type GivingQRCodeMinAggregateOutputType = {
   donationId: string | null
   amount: runtime.Decimal | null
   category: $Enums.GivingCategory | null
+  paymentMethod: $Enums.PaymentMethod | null
   qrCodeData: string | null
   qrCodeUrl: string | null
   expiresAt: Date | null
   isUsed: boolean | null
   usedAt: Date | null
   createdAt: Date | null
+  sessionId: string | null
 }
 
 export type GivingQRCodeMaxAggregateOutputType = {
@@ -52,12 +54,14 @@ export type GivingQRCodeMaxAggregateOutputType = {
   donationId: string | null
   amount: runtime.Decimal | null
   category: $Enums.GivingCategory | null
+  paymentMethod: $Enums.PaymentMethod | null
   qrCodeData: string | null
   qrCodeUrl: string | null
   expiresAt: Date | null
   isUsed: boolean | null
   usedAt: Date | null
   createdAt: Date | null
+  sessionId: string | null
 }
 
 export type GivingQRCodeCountAggregateOutputType = {
@@ -65,12 +69,14 @@ export type GivingQRCodeCountAggregateOutputType = {
   donationId: number
   amount: number
   category: number
+  paymentMethod: number
   qrCodeData: number
   qrCodeUrl: number
   expiresAt: number
   isUsed: number
   usedAt: number
   createdAt: number
+  sessionId: number
   _all: number
 }
 
@@ -88,12 +94,14 @@ export type GivingQRCodeMinAggregateInputType = {
   donationId?: true
   amount?: true
   category?: true
+  paymentMethod?: true
   qrCodeData?: true
   qrCodeUrl?: true
   expiresAt?: true
   isUsed?: true
   usedAt?: true
   createdAt?: true
+  sessionId?: true
 }
 
 export type GivingQRCodeMaxAggregateInputType = {
@@ -101,12 +109,14 @@ export type GivingQRCodeMaxAggregateInputType = {
   donationId?: true
   amount?: true
   category?: true
+  paymentMethod?: true
   qrCodeData?: true
   qrCodeUrl?: true
   expiresAt?: true
   isUsed?: true
   usedAt?: true
   createdAt?: true
+  sessionId?: true
 }
 
 export type GivingQRCodeCountAggregateInputType = {
@@ -114,12 +124,14 @@ export type GivingQRCodeCountAggregateInputType = {
   donationId?: true
   amount?: true
   category?: true
+  paymentMethod?: true
   qrCodeData?: true
   qrCodeUrl?: true
   expiresAt?: true
   isUsed?: true
   usedAt?: true
   createdAt?: true
+  sessionId?: true
   _all?: true
 }
 
@@ -214,12 +226,14 @@ export type GivingQRCodeGroupByOutputType = {
   donationId: string | null
   amount: runtime.Decimal | null
   category: $Enums.GivingCategory | null
+  paymentMethod: $Enums.PaymentMethod
   qrCodeData: string
   qrCodeUrl: string | null
   expiresAt: Date | null
   isUsed: boolean
   usedAt: Date | null
   createdAt: Date
+  sessionId: string | null
   _count: GivingQRCodeCountAggregateOutputType | null
   _avg: GivingQRCodeAvgAggregateOutputType | null
   _sum: GivingQRCodeSumAggregateOutputType | null
@@ -250,13 +264,16 @@ export type GivingQRCodeWhereInput = {
   donationId?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
   amount?: Prisma.DecimalNullableFilter<"GivingQRCode"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.EnumGivingCategoryNullableFilter<"GivingQRCode"> | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"GivingQRCode"> | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFilter<"GivingQRCode"> | string
   qrCodeUrl?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
   expiresAt?: Prisma.DateTimeNullableFilter<"GivingQRCode"> | Date | string | null
   isUsed?: Prisma.BoolFilter<"GivingQRCode"> | boolean
   usedAt?: Prisma.DateTimeNullableFilter<"GivingQRCode"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"GivingQRCode"> | Date | string
+  sessionId?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
   donation?: Prisma.XOR<Prisma.DonationNullableScalarRelationFilter, Prisma.DonationWhereInput> | null
+  session?: Prisma.XOR<Prisma.AttendanceSessionNullableScalarRelationFilter, Prisma.AttendanceSessionWhereInput> | null
 }
 
 export type GivingQRCodeOrderByWithRelationInput = {
@@ -264,13 +281,16 @@ export type GivingQRCodeOrderByWithRelationInput = {
   donationId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   qrCodeData?: Prisma.SortOrder
   qrCodeUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isUsed?: Prisma.SortOrder
   usedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   donation?: Prisma.DonationOrderByWithRelationInput
+  session?: Prisma.AttendanceSessionOrderByWithRelationInput
 }
 
 export type GivingQRCodeWhereUniqueInput = Prisma.AtLeast<{
@@ -281,13 +301,16 @@ export type GivingQRCodeWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.GivingQRCodeWhereInput | Prisma.GivingQRCodeWhereInput[]
   amount?: Prisma.DecimalNullableFilter<"GivingQRCode"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.EnumGivingCategoryNullableFilter<"GivingQRCode"> | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"GivingQRCode"> | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFilter<"GivingQRCode"> | string
   qrCodeUrl?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
   expiresAt?: Prisma.DateTimeNullableFilter<"GivingQRCode"> | Date | string | null
   isUsed?: Prisma.BoolFilter<"GivingQRCode"> | boolean
   usedAt?: Prisma.DateTimeNullableFilter<"GivingQRCode"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"GivingQRCode"> | Date | string
+  sessionId?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
   donation?: Prisma.XOR<Prisma.DonationNullableScalarRelationFilter, Prisma.DonationWhereInput> | null
+  session?: Prisma.XOR<Prisma.AttendanceSessionNullableScalarRelationFilter, Prisma.AttendanceSessionWhereInput> | null
 }, "id" | "donationId">
 
 export type GivingQRCodeOrderByWithAggregationInput = {
@@ -295,12 +318,14 @@ export type GivingQRCodeOrderByWithAggregationInput = {
   donationId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   qrCodeData?: Prisma.SortOrder
   qrCodeUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isUsed?: Prisma.SortOrder
   usedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.GivingQRCodeCountOrderByAggregateInput
   _avg?: Prisma.GivingQRCodeAvgOrderByAggregateInput
   _max?: Prisma.GivingQRCodeMaxOrderByAggregateInput
@@ -316,12 +341,14 @@ export type GivingQRCodeScalarWhereWithAggregatesInput = {
   donationId?: Prisma.StringNullableWithAggregatesFilter<"GivingQRCode"> | string | null
   amount?: Prisma.DecimalNullableWithAggregatesFilter<"GivingQRCode"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.EnumGivingCategoryNullableWithAggregatesFilter<"GivingQRCode"> | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodWithAggregatesFilter<"GivingQRCode"> | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringWithAggregatesFilter<"GivingQRCode"> | string
   qrCodeUrl?: Prisma.StringNullableWithAggregatesFilter<"GivingQRCode"> | string | null
   expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"GivingQRCode"> | Date | string | null
   isUsed?: Prisma.BoolWithAggregatesFilter<"GivingQRCode"> | boolean
   usedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"GivingQRCode"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"GivingQRCode"> | Date | string
+  sessionId?: Prisma.StringNullableWithAggregatesFilter<"GivingQRCode"> | string | null
 }
 
 export type GivingQRCodeCreateInput = {
@@ -329,6 +356,7 @@ export type GivingQRCodeCreateInput = {
   donationId?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
   qrCodeData: string
   qrCodeUrl?: string | null
   expiresAt?: Date | string | null
@@ -336,6 +364,7 @@ export type GivingQRCodeCreateInput = {
   usedAt?: Date | string | null
   createdAt?: Date | string
   donation?: Prisma.DonationCreateNestedOneWithoutQrCodeInput
+  session?: Prisma.AttendanceSessionCreateNestedOneWithoutQrCodesInput
 }
 
 export type GivingQRCodeUncheckedCreateInput = {
@@ -343,12 +372,14 @@ export type GivingQRCodeUncheckedCreateInput = {
   donationId?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
   qrCodeData: string
   qrCodeUrl?: string | null
   expiresAt?: Date | string | null
   isUsed?: boolean
   usedAt?: Date | string | null
   createdAt?: Date | string
+  sessionId?: string | null
   donation?: Prisma.DonationUncheckedCreateNestedOneWithoutQrCodeInput
 }
 
@@ -357,6 +388,7 @@ export type GivingQRCodeUpdateInput = {
   donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -364,6 +396,7 @@ export type GivingQRCodeUpdateInput = {
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donation?: Prisma.DonationUpdateOneWithoutQrCodeNestedInput
+  session?: Prisma.AttendanceSessionUpdateOneWithoutQrCodesNestedInput
 }
 
 export type GivingQRCodeUncheckedUpdateInput = {
@@ -371,12 +404,14 @@ export type GivingQRCodeUncheckedUpdateInput = {
   donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donation?: Prisma.DonationUncheckedUpdateOneWithoutQrCodeNestedInput
 }
 
@@ -385,12 +420,14 @@ export type GivingQRCodeCreateManyInput = {
   donationId?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
   qrCodeData: string
   qrCodeUrl?: string | null
   expiresAt?: Date | string | null
   isUsed?: boolean
   usedAt?: Date | string | null
   createdAt?: Date | string
+  sessionId?: string | null
 }
 
 export type GivingQRCodeUpdateManyMutationInput = {
@@ -398,6 +435,7 @@ export type GivingQRCodeUpdateManyMutationInput = {
   donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -411,12 +449,24 @@ export type GivingQRCodeUncheckedUpdateManyInput = {
   donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type GivingQRCodeListRelationFilter = {
+  every?: Prisma.GivingQRCodeWhereInput
+  some?: Prisma.GivingQRCodeWhereInput
+  none?: Prisma.GivingQRCodeWhereInput
+}
+
+export type GivingQRCodeOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type GivingQRCodeNullableScalarRelationFilter = {
@@ -429,12 +479,14 @@ export type GivingQRCodeCountOrderByAggregateInput = {
   donationId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   qrCodeData?: Prisma.SortOrder
   qrCodeUrl?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   isUsed?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrder
 }
 
 export type GivingQRCodeAvgOrderByAggregateInput = {
@@ -446,12 +498,14 @@ export type GivingQRCodeMaxOrderByAggregateInput = {
   donationId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   qrCodeData?: Prisma.SortOrder
   qrCodeUrl?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   isUsed?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrder
 }
 
 export type GivingQRCodeMinOrderByAggregateInput = {
@@ -459,16 +513,60 @@ export type GivingQRCodeMinOrderByAggregateInput = {
   donationId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
   qrCodeData?: Prisma.SortOrder
   qrCodeUrl?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   isUsed?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrder
 }
 
 export type GivingQRCodeSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+}
+
+export type GivingQRCodeCreateNestedManyWithoutSessionInput = {
+  create?: Prisma.XOR<Prisma.GivingQRCodeCreateWithoutSessionInput, Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput> | Prisma.GivingQRCodeCreateWithoutSessionInput[] | Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput[]
+  connectOrCreate?: Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput | Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput[]
+  createMany?: Prisma.GivingQRCodeCreateManySessionInputEnvelope
+  connect?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+}
+
+export type GivingQRCodeUncheckedCreateNestedManyWithoutSessionInput = {
+  create?: Prisma.XOR<Prisma.GivingQRCodeCreateWithoutSessionInput, Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput> | Prisma.GivingQRCodeCreateWithoutSessionInput[] | Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput[]
+  connectOrCreate?: Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput | Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput[]
+  createMany?: Prisma.GivingQRCodeCreateManySessionInputEnvelope
+  connect?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+}
+
+export type GivingQRCodeUpdateManyWithoutSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.GivingQRCodeCreateWithoutSessionInput, Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput> | Prisma.GivingQRCodeCreateWithoutSessionInput[] | Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput[]
+  connectOrCreate?: Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput | Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput[]
+  upsert?: Prisma.GivingQRCodeUpsertWithWhereUniqueWithoutSessionInput | Prisma.GivingQRCodeUpsertWithWhereUniqueWithoutSessionInput[]
+  createMany?: Prisma.GivingQRCodeCreateManySessionInputEnvelope
+  set?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  disconnect?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  delete?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  connect?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  update?: Prisma.GivingQRCodeUpdateWithWhereUniqueWithoutSessionInput | Prisma.GivingQRCodeUpdateWithWhereUniqueWithoutSessionInput[]
+  updateMany?: Prisma.GivingQRCodeUpdateManyWithWhereWithoutSessionInput | Prisma.GivingQRCodeUpdateManyWithWhereWithoutSessionInput[]
+  deleteMany?: Prisma.GivingQRCodeScalarWhereInput | Prisma.GivingQRCodeScalarWhereInput[]
+}
+
+export type GivingQRCodeUncheckedUpdateManyWithoutSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.GivingQRCodeCreateWithoutSessionInput, Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput> | Prisma.GivingQRCodeCreateWithoutSessionInput[] | Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput[]
+  connectOrCreate?: Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput | Prisma.GivingQRCodeCreateOrConnectWithoutSessionInput[]
+  upsert?: Prisma.GivingQRCodeUpsertWithWhereUniqueWithoutSessionInput | Prisma.GivingQRCodeUpsertWithWhereUniqueWithoutSessionInput[]
+  createMany?: Prisma.GivingQRCodeCreateManySessionInputEnvelope
+  set?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  disconnect?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  delete?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  connect?: Prisma.GivingQRCodeWhereUniqueInput | Prisma.GivingQRCodeWhereUniqueInput[]
+  update?: Prisma.GivingQRCodeUpdateWithWhereUniqueWithoutSessionInput | Prisma.GivingQRCodeUpdateWithWhereUniqueWithoutSessionInput[]
+  updateMany?: Prisma.GivingQRCodeUpdateManyWithWhereWithoutSessionInput | Prisma.GivingQRCodeUpdateManyWithWhereWithoutSessionInput[]
+  deleteMany?: Prisma.GivingQRCodeScalarWhereInput | Prisma.GivingQRCodeScalarWhereInput[]
 }
 
 export type GivingQRCodeCreateNestedOneWithoutDonationInput = {
@@ -487,16 +585,82 @@ export type GivingQRCodeUpdateOneWithoutDonationNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GivingQRCodeUpdateToOneWithWhereWithoutDonationInput, Prisma.GivingQRCodeUpdateWithoutDonationInput>, Prisma.GivingQRCodeUncheckedUpdateWithoutDonationInput>
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type NullableEnumGivingCategoryFieldUpdateOperationsInput = {
   set?: $Enums.GivingCategory | null
+}
+
+export type GivingQRCodeCreateWithoutSessionInput = {
+  id?: string
+  donationId?: string | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
+  qrCodeData: string
+  qrCodeUrl?: string | null
+  expiresAt?: Date | string | null
+  isUsed?: boolean
+  usedAt?: Date | string | null
+  createdAt?: Date | string
+  donation?: Prisma.DonationCreateNestedOneWithoutQrCodeInput
+}
+
+export type GivingQRCodeUncheckedCreateWithoutSessionInput = {
+  id?: string
+  donationId?: string | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
+  qrCodeData: string
+  qrCodeUrl?: string | null
+  expiresAt?: Date | string | null
+  isUsed?: boolean
+  usedAt?: Date | string | null
+  createdAt?: Date | string
+  donation?: Prisma.DonationUncheckedCreateNestedOneWithoutQrCodeInput
+}
+
+export type GivingQRCodeCreateOrConnectWithoutSessionInput = {
+  where: Prisma.GivingQRCodeWhereUniqueInput
+  create: Prisma.XOR<Prisma.GivingQRCodeCreateWithoutSessionInput, Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput>
+}
+
+export type GivingQRCodeCreateManySessionInputEnvelope = {
+  data: Prisma.GivingQRCodeCreateManySessionInput | Prisma.GivingQRCodeCreateManySessionInput[]
+  skipDuplicates?: boolean
+}
+
+export type GivingQRCodeUpsertWithWhereUniqueWithoutSessionInput = {
+  where: Prisma.GivingQRCodeWhereUniqueInput
+  update: Prisma.XOR<Prisma.GivingQRCodeUpdateWithoutSessionInput, Prisma.GivingQRCodeUncheckedUpdateWithoutSessionInput>
+  create: Prisma.XOR<Prisma.GivingQRCodeCreateWithoutSessionInput, Prisma.GivingQRCodeUncheckedCreateWithoutSessionInput>
+}
+
+export type GivingQRCodeUpdateWithWhereUniqueWithoutSessionInput = {
+  where: Prisma.GivingQRCodeWhereUniqueInput
+  data: Prisma.XOR<Prisma.GivingQRCodeUpdateWithoutSessionInput, Prisma.GivingQRCodeUncheckedUpdateWithoutSessionInput>
+}
+
+export type GivingQRCodeUpdateManyWithWhereWithoutSessionInput = {
+  where: Prisma.GivingQRCodeScalarWhereInput
+  data: Prisma.XOR<Prisma.GivingQRCodeUpdateManyMutationInput, Prisma.GivingQRCodeUncheckedUpdateManyWithoutSessionInput>
+}
+
+export type GivingQRCodeScalarWhereInput = {
+  AND?: Prisma.GivingQRCodeScalarWhereInput | Prisma.GivingQRCodeScalarWhereInput[]
+  OR?: Prisma.GivingQRCodeScalarWhereInput[]
+  NOT?: Prisma.GivingQRCodeScalarWhereInput | Prisma.GivingQRCodeScalarWhereInput[]
+  id?: Prisma.StringFilter<"GivingQRCode"> | string
+  donationId?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
+  amount?: Prisma.DecimalNullableFilter<"GivingQRCode"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: Prisma.EnumGivingCategoryNullableFilter<"GivingQRCode"> | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"GivingQRCode"> | $Enums.PaymentMethod
+  qrCodeData?: Prisma.StringFilter<"GivingQRCode"> | string
+  qrCodeUrl?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"GivingQRCode"> | Date | string | null
+  isUsed?: Prisma.BoolFilter<"GivingQRCode"> | boolean
+  usedAt?: Prisma.DateTimeNullableFilter<"GivingQRCode"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"GivingQRCode"> | Date | string
+  sessionId?: Prisma.StringNullableFilter<"GivingQRCode"> | string | null
 }
 
 export type GivingQRCodeCreateWithoutDonationInput = {
@@ -504,12 +668,14 @@ export type GivingQRCodeCreateWithoutDonationInput = {
   donationId?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
   qrCodeData: string
   qrCodeUrl?: string | null
   expiresAt?: Date | string | null
   isUsed?: boolean
   usedAt?: Date | string | null
   createdAt?: Date | string
+  session?: Prisma.AttendanceSessionCreateNestedOneWithoutQrCodesInput
 }
 
 export type GivingQRCodeUncheckedCreateWithoutDonationInput = {
@@ -517,12 +683,14 @@ export type GivingQRCodeUncheckedCreateWithoutDonationInput = {
   donationId?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
   qrCodeData: string
   qrCodeUrl?: string | null
   expiresAt?: Date | string | null
   isUsed?: boolean
   usedAt?: Date | string | null
   createdAt?: Date | string
+  sessionId?: string | null
 }
 
 export type GivingQRCodeCreateOrConnectWithoutDonationInput = {
@@ -546,12 +714,14 @@ export type GivingQRCodeUpdateWithoutDonationInput = {
   donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session?: Prisma.AttendanceSessionUpdateOneWithoutQrCodesNestedInput
 }
 
 export type GivingQRCodeUncheckedUpdateWithoutDonationInput = {
@@ -559,6 +729,66 @@ export type GivingQRCodeUncheckedUpdateWithoutDonationInput = {
   donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type GivingQRCodeCreateManySessionInput = {
+  id?: string
+  donationId?: string | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: $Enums.GivingCategory | null
+  paymentMethod?: $Enums.PaymentMethod
+  qrCodeData: string
+  qrCodeUrl?: string | null
+  expiresAt?: Date | string | null
+  isUsed?: boolean
+  usedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type GivingQRCodeUpdateWithoutSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation?: Prisma.DonationUpdateOneWithoutQrCodeNestedInput
+}
+
+export type GivingQRCodeUncheckedUpdateWithoutSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  donation?: Prisma.DonationUncheckedUpdateOneWithoutQrCodeNestedInput
+}
+
+export type GivingQRCodeUncheckedUpdateManyWithoutSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  donationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  category?: Prisma.NullableEnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   qrCodeData?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -574,13 +804,16 @@ export type GivingQRCodeSelect<ExtArgs extends runtime.Types.Extensions.Internal
   donationId?: boolean
   amount?: boolean
   category?: boolean
+  paymentMethod?: boolean
   qrCodeData?: boolean
   qrCodeUrl?: boolean
   expiresAt?: boolean
   isUsed?: boolean
   usedAt?: boolean
   createdAt?: boolean
+  sessionId?: boolean
   donation?: boolean | Prisma.GivingQRCode$donationArgs<ExtArgs>
+  session?: boolean | Prisma.GivingQRCode$sessionArgs<ExtArgs>
 }, ExtArgs["result"]["givingQRCode"]>
 
 export type GivingQRCodeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -588,12 +821,15 @@ export type GivingQRCodeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   donationId?: boolean
   amount?: boolean
   category?: boolean
+  paymentMethod?: boolean
   qrCodeData?: boolean
   qrCodeUrl?: boolean
   expiresAt?: boolean
   isUsed?: boolean
   usedAt?: boolean
   createdAt?: boolean
+  sessionId?: boolean
+  session?: boolean | Prisma.GivingQRCode$sessionArgs<ExtArgs>
 }, ExtArgs["result"]["givingQRCode"]>
 
 export type GivingQRCodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -601,12 +837,15 @@ export type GivingQRCodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   donationId?: boolean
   amount?: boolean
   category?: boolean
+  paymentMethod?: boolean
   qrCodeData?: boolean
   qrCodeUrl?: boolean
   expiresAt?: boolean
   isUsed?: boolean
   usedAt?: boolean
   createdAt?: boolean
+  sessionId?: boolean
+  session?: boolean | Prisma.GivingQRCode$sessionArgs<ExtArgs>
 }, ExtArgs["result"]["givingQRCode"]>
 
 export type GivingQRCodeSelectScalar = {
@@ -614,37 +853,47 @@ export type GivingQRCodeSelectScalar = {
   donationId?: boolean
   amount?: boolean
   category?: boolean
+  paymentMethod?: boolean
   qrCodeData?: boolean
   qrCodeUrl?: boolean
   expiresAt?: boolean
   isUsed?: boolean
   usedAt?: boolean
   createdAt?: boolean
+  sessionId?: boolean
 }
 
-export type GivingQRCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "donationId" | "amount" | "category" | "qrCodeData" | "qrCodeUrl" | "expiresAt" | "isUsed" | "usedAt" | "createdAt", ExtArgs["result"]["givingQRCode"]>
+export type GivingQRCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "donationId" | "amount" | "category" | "paymentMethod" | "qrCodeData" | "qrCodeUrl" | "expiresAt" | "isUsed" | "usedAt" | "createdAt" | "sessionId", ExtArgs["result"]["givingQRCode"]>
 export type GivingQRCodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   donation?: boolean | Prisma.GivingQRCode$donationArgs<ExtArgs>
+  session?: boolean | Prisma.GivingQRCode$sessionArgs<ExtArgs>
 }
-export type GivingQRCodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type GivingQRCodeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type GivingQRCodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  session?: boolean | Prisma.GivingQRCode$sessionArgs<ExtArgs>
+}
+export type GivingQRCodeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  session?: boolean | Prisma.GivingQRCode$sessionArgs<ExtArgs>
+}
 
 export type $GivingQRCodePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "GivingQRCode"
   objects: {
     donation: Prisma.$DonationPayload<ExtArgs> | null
+    session: Prisma.$AttendanceSessionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     donationId: string | null
     amount: runtime.Decimal | null
     category: $Enums.GivingCategory | null
+    paymentMethod: $Enums.PaymentMethod
     qrCodeData: string
     qrCodeUrl: string | null
     expiresAt: Date | null
     isUsed: boolean
     usedAt: Date | null
     createdAt: Date
+    sessionId: string | null
   }, ExtArgs["result"]["givingQRCode"]>
   composites: {}
 }
@@ -1040,6 +1289,7 @@ readonly fields: GivingQRCodeFieldRefs;
 export interface Prisma__GivingQRCodeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   donation<T extends Prisma.GivingQRCode$donationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GivingQRCode$donationArgs<ExtArgs>>): Prisma.Prisma__DonationClient<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  session<T extends Prisma.GivingQRCode$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GivingQRCode$sessionArgs<ExtArgs>>): Prisma.Prisma__AttendanceSessionClient<runtime.Types.Result.GetResult<Prisma.$AttendanceSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1073,12 +1323,14 @@ export interface GivingQRCodeFieldRefs {
   readonly donationId: Prisma.FieldRef<"GivingQRCode", 'String'>
   readonly amount: Prisma.FieldRef<"GivingQRCode", 'Decimal'>
   readonly category: Prisma.FieldRef<"GivingQRCode", 'GivingCategory'>
+  readonly paymentMethod: Prisma.FieldRef<"GivingQRCode", 'PaymentMethod'>
   readonly qrCodeData: Prisma.FieldRef<"GivingQRCode", 'String'>
   readonly qrCodeUrl: Prisma.FieldRef<"GivingQRCode", 'String'>
   readonly expiresAt: Prisma.FieldRef<"GivingQRCode", 'DateTime'>
   readonly isUsed: Prisma.FieldRef<"GivingQRCode", 'Boolean'>
   readonly usedAt: Prisma.FieldRef<"GivingQRCode", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"GivingQRCode", 'DateTime'>
+  readonly sessionId: Prisma.FieldRef<"GivingQRCode", 'String'>
 }
     
 
@@ -1328,6 +1580,10 @@ export type GivingQRCodeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    */
   data: Prisma.GivingQRCodeCreateManyInput | Prisma.GivingQRCodeCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GivingQRCodeIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1398,6 +1654,10 @@ export type GivingQRCodeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * Limit how many GivingQRCodes to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GivingQRCodeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1483,6 +1743,25 @@ export type GivingQRCode$donationArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.DonationInclude<ExtArgs> | null
   where?: Prisma.DonationWhereInput
+}
+
+/**
+ * GivingQRCode.session
+ */
+export type GivingQRCode$sessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AttendanceSession
+   */
+  select?: Prisma.AttendanceSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AttendanceSession
+   */
+  omit?: Prisma.AttendanceSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceSessionInclude<ExtArgs> | null
+  where?: Prisma.AttendanceSessionWhereInput
 }
 
 /**

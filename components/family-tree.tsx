@@ -94,7 +94,7 @@ function FamilyNode({ node, isSpouse = false, isPlaceholder = false }: { node: T
   }
 
   return (
-    <Link href={`/dashboard/users/${node.id}`} className="block">
+    <Link href={`/dashboard/people/${node.id}`} className="block">
       <Card className={`w-48 p-3 hover:shadow-xl transition-all duration-200 cursor-pointer border-2 ${
         isSpouse 
           ? "border-pink-300 dark:border-pink-700 hover:border-pink-500 dark:hover:border-pink-500 bg-pink-50/50 dark:bg-pink-950/20" 

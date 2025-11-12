@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
       if (donation) {
         // Update existing donation
-        await prisma.donation.update({
+        const updatedDonation = await prisma.donation.update({
           where: { id: donation.id },
           data: {
             status: "completed",
@@ -49,6 +49,26 @@ export async function POST(request: NextRequest) {
               completedAt: new Date().toISOString(),
             },
           },
+        });
+
+        // Trigger workflows for completed donation
+        Promise.resolve().then(async () => {
+          try {
+            const { executeWorkflows } = await import("@/lib/workflow-engine");
+            await executeWorkflows({
+              type: "DONATION_RECEIVED",
+              userId: donation.userId || undefined,
+              memberId: donation.userId || undefined,
+              donationId: donation.id,
+              data: {
+                donation: updatedDonation,
+                amount: Number(updatedDonation.amount),
+                category: updatedDonation.category,
+              },
+            });
+          } catch (error) {
+            console.error("Failed to execute donation workflows:", error);
+          }
         });
 
         // Send automated message using template

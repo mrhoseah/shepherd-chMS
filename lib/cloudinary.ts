@@ -23,15 +23,25 @@ export async function uploadImage(
   try {
     let result;
     
+    // Prepare upload options
+    // If public_id is provided and contains folder path, don't set folder separately
+    const uploadOptions: any = {
+      resource_type: options.resource_type || "image",
+      ...options,
+    };
+
+    // Only set folder if public_id doesn't already include it
+    if (options.public_id && !options.public_id.includes("/")) {
+      uploadOptions.folder = folder;
+    } else if (!options.public_id) {
+      uploadOptions.folder = folder;
+    }
+
     // If file is a Buffer, use upload_stream
     if (Buffer.isBuffer(file)) {
       result = await new Promise<any>((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
-          {
-            folder,
-            resource_type: options.resource_type || "image",
-            ...options,
-          },
+          uploadOptions,
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
@@ -41,11 +51,7 @@ export async function uploadImage(
       });
     } else {
       // If file is a string (path or data URI), use upload
-      result = await cloudinary.uploader.upload(file, {
-        folder,
-        resource_type: options.resource_type || "image",
-        ...options,
-      });
+      result = await cloudinary.uploader.upload(file, uploadOptions);
     }
     
     return {

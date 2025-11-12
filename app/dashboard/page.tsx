@@ -4,6 +4,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getGreeting } from "@/lib/greeting";
 import { RoleBasedDashboard } from "@/components/dashboard/role-based-dashboard";
+import { QuickActions } from "@/components/dashboard/quick-actions";
+import { DashboardSummary } from "@/components/dashboard/dashboard-summary";
+import { RecentActivity } from "@/components/dashboard/recent-activity";
 
 export default async function DashboardPage() {
   let session;
@@ -32,8 +35,24 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* Role-Based Dashboard */}
-      <RoleBasedDashboard />
+      {/* Dashboard Summary Cards */}
+      <DashboardSummary />
+
+      {/* Quick Actions */}
+      <QuickActions />
+
+      {/* Main Dashboard Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Role-Based Dashboard Widgets */}
+        <div className="lg:col-span-2">
+          <RoleBasedDashboard />
+        </div>
+
+        {/* Recent Activity Sidebar */}
+        <div className="lg:col-span-1">
+          <RecentActivity />
+        </div>
+      </div>
     </div>
   );
 }
@@ -358,7 +377,7 @@ export async function LegacyDashboardPage() {
                         </p>
                       </div>
                     </div>
-                    <Link href="/dashboard/users">
+                    <Link href="/dashboard/people">
                       <Button
                         variant="link"
                         className="hover:underline text-sm font-medium flex-shrink-0"
@@ -488,7 +507,7 @@ export async function LegacyDashboardPage() {
                   <li className="text-gray-500 text-sm">No recent activity</li>
                 )}
               </ul>
-              <Link href="/dashboard/users">
+              <Link href="/dashboard/people">
                 <Button
                   variant="outline"
                   className="w-full mt-4 hover:bg-gray-50"

@@ -38,6 +38,12 @@ export type EventRegistrationMinAggregateOutputType = {
   id: string | null
   eventId: string | null
   userId: string | null
+  name: string | null
+  ministry: string | null
+  country: string | null
+  phone: string | null
+  email: string | null
+  needsAccommodation: boolean | null
   status: string | null
   paymentStatus: string | null
   paymentAmount: runtime.Decimal | null
@@ -50,6 +56,12 @@ export type EventRegistrationMaxAggregateOutputType = {
   id: string | null
   eventId: string | null
   userId: string | null
+  name: string | null
+  ministry: string | null
+  country: string | null
+  phone: string | null
+  email: string | null
+  needsAccommodation: boolean | null
   status: string | null
   paymentStatus: string | null
   paymentAmount: runtime.Decimal | null
@@ -62,6 +74,12 @@ export type EventRegistrationCountAggregateOutputType = {
   id: number
   eventId: number
   userId: number
+  name: number
+  ministry: number
+  country: number
+  phone: number
+  email: number
+  needsAccommodation: number
   status: number
   paymentStatus: number
   paymentAmount: number
@@ -84,6 +102,12 @@ export type EventRegistrationMinAggregateInputType = {
   id?: true
   eventId?: true
   userId?: true
+  name?: true
+  ministry?: true
+  country?: true
+  phone?: true
+  email?: true
+  needsAccommodation?: true
   status?: true
   paymentStatus?: true
   paymentAmount?: true
@@ -96,6 +120,12 @@ export type EventRegistrationMaxAggregateInputType = {
   id?: true
   eventId?: true
   userId?: true
+  name?: true
+  ministry?: true
+  country?: true
+  phone?: true
+  email?: true
+  needsAccommodation?: true
   status?: true
   paymentStatus?: true
   paymentAmount?: true
@@ -108,6 +138,12 @@ export type EventRegistrationCountAggregateInputType = {
   id?: true
   eventId?: true
   userId?: true
+  name?: true
+  ministry?: true
+  country?: true
+  phone?: true
+  email?: true
+  needsAccommodation?: true
   status?: true
   paymentStatus?: true
   paymentAmount?: true
@@ -206,7 +242,13 @@ export type EventRegistrationGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type EventRegistrationGroupByOutputType = {
   id: string
   eventId: string
-  userId: string
+  userId: string | null
+  name: string | null
+  ministry: string | null
+  country: string | null
+  phone: string | null
+  email: string | null
+  needsAccommodation: boolean
   status: string
   paymentStatus: string | null
   paymentAmount: runtime.Decimal | null
@@ -241,7 +283,13 @@ export type EventRegistrationWhereInput = {
   NOT?: Prisma.EventRegistrationWhereInput | Prisma.EventRegistrationWhereInput[]
   id?: Prisma.StringFilter<"EventRegistration"> | string
   eventId?: Prisma.StringFilter<"EventRegistration"> | string
-  userId?: Prisma.StringFilter<"EventRegistration"> | string
+  userId?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  name?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  ministry?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  country?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  phone?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  email?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  needsAccommodation?: Prisma.BoolFilter<"EventRegistration"> | boolean
   status?: Prisma.StringFilter<"EventRegistration"> | string
   paymentStatus?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
   paymentAmount?: Prisma.DecimalNullableFilter<"EventRegistration"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -249,13 +297,19 @@ export type EventRegistrationWhereInput = {
   registeredAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type EventRegistrationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  ministry?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  needsAccommodation?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -273,7 +327,13 @@ export type EventRegistrationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EventRegistrationWhereInput[]
   NOT?: Prisma.EventRegistrationWhereInput | Prisma.EventRegistrationWhereInput[]
   eventId?: Prisma.StringFilter<"EventRegistration"> | string
-  userId?: Prisma.StringFilter<"EventRegistration"> | string
+  userId?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  name?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  ministry?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  country?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  phone?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  email?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  needsAccommodation?: Prisma.BoolFilter<"EventRegistration"> | boolean
   status?: Prisma.StringFilter<"EventRegistration"> | string
   paymentStatus?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
   paymentAmount?: Prisma.DecimalNullableFilter<"EventRegistration"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -281,13 +341,19 @@ export type EventRegistrationWhereUniqueInput = Prisma.AtLeast<{
   registeredAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "eventId_userId">
 
 export type EventRegistrationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  ministry?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  needsAccommodation?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -307,7 +373,13 @@ export type EventRegistrationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.EventRegistrationScalarWhereWithAggregatesInput | Prisma.EventRegistrationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
   eventId?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
+  userId?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
+  name?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
+  ministry?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
+  needsAccommodation?: Prisma.BoolWithAggregatesFilter<"EventRegistration"> | boolean
   status?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
   paymentStatus?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
   paymentAmount?: Prisma.DecimalNullableWithAggregatesFilter<"EventRegistration"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -318,6 +390,12 @@ export type EventRegistrationScalarWhereWithAggregatesInput = {
 
 export type EventRegistrationCreateInput = {
   id?: string
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -325,13 +403,19 @@ export type EventRegistrationCreateInput = {
   registeredAt?: Date | string
   updatedAt?: Date | string
   event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
-  user: Prisma.UserCreateNestedOneWithoutEventRegistrationsInput
+  user?: Prisma.UserCreateNestedOneWithoutEventRegistrationsInput
 }
 
 export type EventRegistrationUncheckedCreateInput = {
   id?: string
   eventId: string
-  userId: string
+  userId?: string | null
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -342,6 +426,12 @@ export type EventRegistrationUncheckedCreateInput = {
 
 export type EventRegistrationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -349,13 +439,19 @@ export type EventRegistrationUpdateInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutEventRegistrationsNestedInput
+  user?: Prisma.UserUpdateOneWithoutEventRegistrationsNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -367,7 +463,13 @@ export type EventRegistrationUncheckedUpdateInput = {
 export type EventRegistrationCreateManyInput = {
   id?: string
   eventId: string
-  userId: string
+  userId?: string | null
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -378,6 +480,12 @@ export type EventRegistrationCreateManyInput = {
 
 export type EventRegistrationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -389,7 +497,13 @@ export type EventRegistrationUpdateManyMutationInput = {
 export type EventRegistrationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -417,6 +531,12 @@ export type EventRegistrationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  ministry?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  needsAccommodation?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   paymentAmount?: Prisma.SortOrder
@@ -433,6 +553,12 @@ export type EventRegistrationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  ministry?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  needsAccommodation?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   paymentAmount?: Prisma.SortOrder
@@ -445,6 +571,12 @@ export type EventRegistrationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  ministry?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  needsAccommodation?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   paymentAmount?: Prisma.SortOrder
@@ -543,6 +675,12 @@ export type EventRegistrationUncheckedUpdateManyWithoutEventNestedInput = {
 
 export type EventRegistrationCreateWithoutUserInput = {
   id?: string
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -555,6 +693,12 @@ export type EventRegistrationCreateWithoutUserInput = {
 export type EventRegistrationUncheckedCreateWithoutUserInput = {
   id?: string
   eventId: string
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -595,7 +739,13 @@ export type EventRegistrationScalarWhereInput = {
   NOT?: Prisma.EventRegistrationScalarWhereInput | Prisma.EventRegistrationScalarWhereInput[]
   id?: Prisma.StringFilter<"EventRegistration"> | string
   eventId?: Prisma.StringFilter<"EventRegistration"> | string
-  userId?: Prisma.StringFilter<"EventRegistration"> | string
+  userId?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  name?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  ministry?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  country?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  phone?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  email?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
+  needsAccommodation?: Prisma.BoolFilter<"EventRegistration"> | boolean
   status?: Prisma.StringFilter<"EventRegistration"> | string
   paymentStatus?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
   paymentAmount?: Prisma.DecimalNullableFilter<"EventRegistration"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -606,18 +756,30 @@ export type EventRegistrationScalarWhereInput = {
 
 export type EventRegistrationCreateWithoutEventInput = {
   id?: string
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
   registeredAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutEventRegistrationsInput
+  user?: Prisma.UserCreateNestedOneWithoutEventRegistrationsInput
 }
 
 export type EventRegistrationUncheckedCreateWithoutEventInput = {
   id?: string
-  userId: string
+  userId?: string | null
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -655,6 +817,12 @@ export type EventRegistrationUpdateManyWithWhereWithoutEventInput = {
 export type EventRegistrationCreateManyUserInput = {
   id?: string
   eventId: string
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -665,6 +833,12 @@ export type EventRegistrationCreateManyUserInput = {
 
 export type EventRegistrationUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -677,6 +851,12 @@ export type EventRegistrationUpdateWithoutUserInput = {
 export type EventRegistrationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -688,6 +868,12 @@ export type EventRegistrationUncheckedUpdateWithoutUserInput = {
 export type EventRegistrationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -698,7 +884,13 @@ export type EventRegistrationUncheckedUpdateManyWithoutUserInput = {
 
 export type EventRegistrationCreateManyEventInput = {
   id?: string
-  userId: string
+  userId?: string | null
+  name?: string | null
+  ministry?: string | null
+  country?: string | null
+  phone?: string | null
+  email?: string | null
+  needsAccommodation?: boolean
   status?: string
   paymentStatus?: string | null
   paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -709,18 +901,30 @@ export type EventRegistrationCreateManyEventInput = {
 
 export type EventRegistrationUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutEventRegistrationsNestedInput
+  user?: Prisma.UserUpdateOneWithoutEventRegistrationsNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -731,7 +935,13 @@ export type EventRegistrationUncheckedUpdateWithoutEventInput = {
 
 export type EventRegistrationUncheckedUpdateManyWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ministry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needsAccommodation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -746,6 +956,12 @@ export type EventRegistrationSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   eventId?: boolean
   userId?: boolean
+  name?: boolean
+  ministry?: boolean
+  country?: boolean
+  phone?: boolean
+  email?: boolean
+  needsAccommodation?: boolean
   status?: boolean
   paymentStatus?: boolean
   paymentAmount?: boolean
@@ -753,13 +969,19 @@ export type EventRegistrationSelect<ExtArgs extends runtime.Types.Extensions.Int
   registeredAt?: boolean
   updatedAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.EventRegistration$userArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventId?: boolean
   userId?: boolean
+  name?: boolean
+  ministry?: boolean
+  country?: boolean
+  phone?: boolean
+  email?: boolean
+  needsAccommodation?: boolean
   status?: boolean
   paymentStatus?: boolean
   paymentAmount?: boolean
@@ -767,13 +989,19 @@ export type EventRegistrationSelectCreateManyAndReturn<ExtArgs extends runtime.T
   registeredAt?: boolean
   updatedAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.EventRegistration$userArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventId?: boolean
   userId?: boolean
+  name?: boolean
+  ministry?: boolean
+  country?: boolean
+  phone?: boolean
+  email?: boolean
+  needsAccommodation?: boolean
   status?: boolean
   paymentStatus?: boolean
   paymentAmount?: boolean
@@ -781,13 +1009,19 @@ export type EventRegistrationSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   registeredAt?: boolean
   updatedAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.EventRegistration$userArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectScalar = {
   id?: boolean
   eventId?: boolean
   userId?: boolean
+  name?: boolean
+  ministry?: boolean
+  country?: boolean
+  phone?: boolean
+  email?: boolean
+  needsAccommodation?: boolean
   status?: boolean
   paymentStatus?: boolean
   paymentAmount?: boolean
@@ -796,30 +1030,36 @@ export type EventRegistrationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EventRegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "userId" | "status" | "paymentStatus" | "paymentAmount" | "notes" | "registeredAt" | "updatedAt", ExtArgs["result"]["eventRegistration"]>
+export type EventRegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "userId" | "name" | "ministry" | "country" | "phone" | "email" | "needsAccommodation" | "status" | "paymentStatus" | "paymentAmount" | "notes" | "registeredAt" | "updatedAt", ExtArgs["result"]["eventRegistration"]>
 export type EventRegistrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.EventRegistration$userArgs<ExtArgs>
 }
 export type EventRegistrationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.EventRegistration$userArgs<ExtArgs>
 }
 export type EventRegistrationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.EventRegistration$userArgs<ExtArgs>
 }
 
 export type $EventRegistrationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EventRegistration"
   objects: {
     event: Prisma.$EventPayload<ExtArgs>
-    user: Prisma.$UserPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     eventId: string
-    userId: string
+    userId: string | null
+    name: string | null
+    ministry: string | null
+    country: string | null
+    phone: string | null
+    email: string | null
+    needsAccommodation: boolean
     status: string
     paymentStatus: string | null
     paymentAmount: runtime.Decimal | null
@@ -1221,7 +1461,7 @@ readonly fields: EventRegistrationFieldRefs;
 export interface Prisma__EventRegistrationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.EventRegistration$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventRegistration$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1254,6 +1494,12 @@ export interface EventRegistrationFieldRefs {
   readonly id: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly eventId: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly userId: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly name: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly ministry: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly country: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly phone: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly email: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly needsAccommodation: Prisma.FieldRef<"EventRegistration", 'Boolean'>
   readonly status: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly paymentStatus: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly paymentAmount: Prisma.FieldRef<"EventRegistration", 'Decimal'>
@@ -1653,6 +1899,25 @@ export type EventRegistrationDeleteManyArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many EventRegistrations to delete.
    */
   limit?: number
+}
+
+/**
+ * EventRegistration.user
+ */
+export type EventRegistration$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

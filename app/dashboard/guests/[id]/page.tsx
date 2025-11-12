@@ -93,12 +93,12 @@ export default async function GuestProfilePage({ params }: PageProps) {
   });
 
   if (!guest) {
-    redirect("/dashboard/users");
+    redirect("/dashboard/people");
   }
 
   // Verify this is a guest
   if (guest.role !== "GUEST") {
-    redirect(`/dashboard/users/${id}`);
+    redirect(`/dashboard/people/${id}`);
   }
 
   const fullName = [guest.title, guest.firstName, guest.lastName]
@@ -127,7 +127,7 @@ export default async function GuestProfilePage({ params }: PageProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/dashboard/users?tab=guests">
+          <Link href="/dashboard/people?tab=guests">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Guests
@@ -149,7 +149,7 @@ export default async function GuestProfilePage({ params }: PageProps) {
               Returning Guest
             </Badge>
           )}
-          <Link href={`/dashboard/users/${id}/edit`}>
+          <Link href={`/dashboard/people/${id}/edit`}>
             <Button variant="outline" size="sm">
               <Edit className="w-4 h-4 mr-2" />
               Edit

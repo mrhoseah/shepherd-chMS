@@ -8,13 +8,17 @@ import {
   Users,
   Wallet,
   Calendar,
-  Handshake,
   Mail,
   Settings,
   Church,
   FileText,
   Building,
-  Package,
+  ClipboardCheck,
+  Image,
+  Shield,
+  Layers,
+  TrendingUp,
+  Workflow,
 } from "lucide-react";
 
 import {
@@ -36,17 +40,28 @@ interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
 }
 
-const navItems: NavItem[] = [
+const mainNavItems: NavItem[] = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Members", url: "/dashboard/users", icon: Users },
+  { title: "People", url: "/dashboard/people", icon: Users },
   { title: "Groups", url: "/dashboard/groups", icon: Users },
   { title: "Departments", url: "/dashboard/departments", icon: Building },
-  { title: "Inventory", url: "/dashboard/inventory", icon: Package },
   { title: "Giving & Finance", url: "/dashboard/donations", icon: Wallet },
   { title: "Events & Calendar", url: "/dashboard/events", icon: Calendar },
-  { title: "Volunteers", url: "/dashboard/volunteers", icon: Handshake },
-  { title: "Communications", url: "/dashboard/communications/sms", icon: Mail },
+  { title: "Attendance", url: "/dashboard/attendance", icon: ClipboardCheck },
+  { title: "Communications", url: "/dashboard/communications", icon: Mail },
+  { title: "Media Library", url: "/dashboard/media", icon: Image },
+  { title: "Documents", url: "/dashboard/documents", icon: FileText },
+];
+
+const analyticsNavItems: NavItem[] = [
+  { title: "Analytics", url: "/dashboard/analytics", icon: TrendingUp },
   { title: "Reports", url: "/dashboard/reports", icon: FileText },
+];
+
+const adminNavItems: NavItem[] = [
+  { title: "Workflows", url: "/dashboard/workflows", icon: Workflow },
+  { title: "Bulk Operations", url: "/dashboard/bulk-operations", icon: Layers },
+  { title: "Audit Logs", url: "/dashboard/audit-logs", icon: Shield },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
 
@@ -82,13 +97,76 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
+        {/* Main Navigation */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider">
             Main Navigation
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item, index) => {
+              {mainNavItems.map((item, index) => {
+                const Icon = item.icon;
+                const active = isActive(item.url);
+                return (
+                  <SidebarMenuItem key={`${item.url}-${index}`}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={active}
+                      className="group relative data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground transition-all duration-200"
+                    >
+                      <Link href={item.url}>
+                        <Icon className="size-4 transition-transform group-hover:scale-110" />
+                        <span className="font-medium">{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator />
+
+        {/* Analytics & Insights */}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider">
+            Analytics & Insights
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {analyticsNavItems.map((item, index) => {
+                const Icon = item.icon;
+                const active = isActive(item.url);
+                return (
+                  <SidebarMenuItem key={`${item.url}-${index}`}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={active}
+                      className="group relative data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground transition-all duration-200"
+                    >
+                      <Link href={item.url}>
+                        <Icon className="size-4 transition-transform group-hover:scale-110" />
+                        <span className="font-medium">{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator />
+
+        {/* Administration */}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider">
+            Administration
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {adminNavItems.map((item, index) => {
                 const Icon = item.icon;
                 const active = isActive(item.url);
                 return (

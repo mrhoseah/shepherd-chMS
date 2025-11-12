@@ -201,6 +201,7 @@ export type DepartmentWhereInput = {
   leader?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   inventoryItems?: Prisma.InventoryItemListRelationFilter
   staff?: Prisma.StaffListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
 }
 
 export type DepartmentOrderByWithRelationInput = {
@@ -214,6 +215,7 @@ export type DepartmentOrderByWithRelationInput = {
   leader?: Prisma.UserOrderByWithRelationInput
   inventoryItems?: Prisma.InventoryItemOrderByRelationAggregateInput
   staff?: Prisma.StaffOrderByRelationAggregateInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentOrderByRelationAggregateInput
 }
 
 export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
@@ -230,6 +232,7 @@ export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
   leader?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   inventoryItems?: Prisma.InventoryItemListRelationFilter
   staff?: Prisma.StaffListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
 }, "id">
 
 export type DepartmentOrderByWithAggregationInput = {
@@ -268,6 +271,7 @@ export type DepartmentCreateInput = {
   leader?: Prisma.UserCreateNestedOneWithoutDepartmentLeaderInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutDepartmentInput
   staff?: Prisma.StaffCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateInput = {
@@ -280,6 +284,7 @@ export type DepartmentUncheckedCreateInput = {
   updatedAt?: Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutDepartmentInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUpdateInput = {
@@ -292,6 +297,7 @@ export type DepartmentUpdateInput = {
   leader?: Prisma.UserUpdateOneWithoutDepartmentLeaderNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutDepartmentNestedInput
   staff?: Prisma.StaffUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateInput = {
@@ -304,6 +310,7 @@ export type DepartmentUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutDepartmentNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateManyInput = {
@@ -438,6 +445,22 @@ export type DepartmentUpdateOneWithoutInventoryItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DepartmentUpdateToOneWithWhereWithoutInventoryItemsInput, Prisma.DepartmentUpdateWithoutInventoryItemsInput>, Prisma.DepartmentUncheckedUpdateWithoutInventoryItemsInput>
 }
 
+export type DepartmentCreateNestedOneWithoutLeadershipAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.DepartmentCreateWithoutLeadershipAssignmentsInput, Prisma.DepartmentUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutLeadershipAssignmentsInput
+  connect?: Prisma.DepartmentWhereUniqueInput
+}
+
+export type DepartmentUpdateOneWithoutLeadershipAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.DepartmentCreateWithoutLeadershipAssignmentsInput, Prisma.DepartmentUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutLeadershipAssignmentsInput
+  upsert?: Prisma.DepartmentUpsertWithoutLeadershipAssignmentsInput
+  disconnect?: Prisma.DepartmentWhereInput | boolean
+  delete?: Prisma.DepartmentWhereInput | boolean
+  connect?: Prisma.DepartmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DepartmentUpdateToOneWithWhereWithoutLeadershipAssignmentsInput, Prisma.DepartmentUpdateWithoutLeadershipAssignmentsInput>, Prisma.DepartmentUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
 export type DepartmentCreateNestedOneWithoutStaffInput = {
   create?: Prisma.XOR<Prisma.DepartmentCreateWithoutStaffInput, Prisma.DepartmentUncheckedCreateWithoutStaffInput>
   connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutStaffInput
@@ -463,6 +486,7 @@ export type DepartmentCreateWithoutLeaderInput = {
   updatedAt?: Date | string
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutDepartmentInput
   staff?: Prisma.StaffCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutLeaderInput = {
@@ -474,6 +498,7 @@ export type DepartmentUncheckedCreateWithoutLeaderInput = {
   updatedAt?: Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutDepartmentInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutLeaderInput = {
@@ -524,6 +549,7 @@ export type DepartmentCreateWithoutInventoryItemsInput = {
   updatedAt?: Date | string
   leader?: Prisma.UserCreateNestedOneWithoutDepartmentLeaderInput
   staff?: Prisma.StaffCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutInventoryItemsInput = {
@@ -535,6 +561,7 @@ export type DepartmentUncheckedCreateWithoutInventoryItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutInventoryItemsInput = {
@@ -562,6 +589,7 @@ export type DepartmentUpdateWithoutInventoryItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leader?: Prisma.UserUpdateOneWithoutDepartmentLeaderNestedInput
   staff?: Prisma.StaffUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutInventoryItemsInput = {
@@ -572,6 +600,71 @@ export type DepartmentUncheckedUpdateWithoutInventoryItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  staff?: Prisma.StaffUncheckedUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutDepartmentNestedInput
+}
+
+export type DepartmentCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutDepartmentLeaderInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutDepartmentInput
+  staff?: Prisma.StaffCreateNestedManyWithoutDepartmentInput
+}
+
+export type DepartmentUncheckedCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutDepartmentInput
+  staff?: Prisma.StaffUncheckedCreateNestedManyWithoutDepartmentInput
+}
+
+export type DepartmentCreateOrConnectWithoutLeadershipAssignmentsInput = {
+  where: Prisma.DepartmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DepartmentCreateWithoutLeadershipAssignmentsInput, Prisma.DepartmentUncheckedCreateWithoutLeadershipAssignmentsInput>
+}
+
+export type DepartmentUpsertWithoutLeadershipAssignmentsInput = {
+  update: Prisma.XOR<Prisma.DepartmentUpdateWithoutLeadershipAssignmentsInput, Prisma.DepartmentUncheckedUpdateWithoutLeadershipAssignmentsInput>
+  create: Prisma.XOR<Prisma.DepartmentCreateWithoutLeadershipAssignmentsInput, Prisma.DepartmentUncheckedCreateWithoutLeadershipAssignmentsInput>
+  where?: Prisma.DepartmentWhereInput
+}
+
+export type DepartmentUpdateToOneWithWhereWithoutLeadershipAssignmentsInput = {
+  where?: Prisma.DepartmentWhereInput
+  data: Prisma.XOR<Prisma.DepartmentUpdateWithoutLeadershipAssignmentsInput, Prisma.DepartmentUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
+export type DepartmentUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutDepartmentLeaderNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutDepartmentNestedInput
+  staff?: Prisma.StaffUpdateManyWithoutDepartmentNestedInput
+}
+
+export type DepartmentUncheckedUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutDepartmentNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
@@ -584,6 +677,7 @@ export type DepartmentCreateWithoutStaffInput = {
   updatedAt?: Date | string
   leader?: Prisma.UserCreateNestedOneWithoutDepartmentLeaderInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutStaffInput = {
@@ -595,6 +689,7 @@ export type DepartmentUncheckedCreateWithoutStaffInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutDepartmentInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutStaffInput = {
@@ -622,6 +717,7 @@ export type DepartmentUpdateWithoutStaffInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leader?: Prisma.UserUpdateOneWithoutDepartmentLeaderNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutStaffInput = {
@@ -633,6 +729,7 @@ export type DepartmentUncheckedUpdateWithoutStaffInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateManyLeaderInput = {
@@ -653,6 +750,7 @@ export type DepartmentUpdateWithoutLeaderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutDepartmentNestedInput
   staff?: Prisma.StaffUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutLeaderInput = {
@@ -664,6 +762,7 @@ export type DepartmentUncheckedUpdateWithoutLeaderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutDepartmentNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutDepartmentNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateManyWithoutLeaderInput = {
@@ -683,11 +782,13 @@ export type DepartmentUncheckedUpdateManyWithoutLeaderInput = {
 export type DepartmentCountOutputType = {
   inventoryItems: number
   staff: number
+  leadershipAssignments: number
 }
 
 export type DepartmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   inventoryItems?: boolean | DepartmentCountOutputTypeCountInventoryItemsArgs
   staff?: boolean | DepartmentCountOutputTypeCountStaffArgs
+  leadershipAssignments?: boolean | DepartmentCountOutputTypeCountLeadershipAssignmentsArgs
 }
 
 /**
@@ -714,6 +815,13 @@ export type DepartmentCountOutputTypeCountStaffArgs<ExtArgs extends runtime.Type
   where?: Prisma.StaffWhereInput
 }
 
+/**
+ * DepartmentCountOutputType without action
+ */
+export type DepartmentCountOutputTypeCountLeadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadershipAssignmentWhereInput
+}
+
 
 export type DepartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -726,6 +834,7 @@ export type DepartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   leader?: boolean | Prisma.Department$leaderArgs<ExtArgs>
   inventoryItems?: boolean | Prisma.Department$inventoryItemsArgs<ExtArgs>
   staff?: boolean | Prisma.Department$staffArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.Department$leadershipAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["department"]>
 
@@ -766,6 +875,7 @@ export type DepartmentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   leader?: boolean | Prisma.Department$leaderArgs<ExtArgs>
   inventoryItems?: boolean | Prisma.Department$inventoryItemsArgs<ExtArgs>
   staff?: boolean | Prisma.Department$staffArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.Department$leadershipAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DepartmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -781,6 +891,7 @@ export type $DepartmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     leader: Prisma.$UserPayload<ExtArgs> | null
     inventoryItems: Prisma.$InventoryItemPayload<ExtArgs>[]
     staff: Prisma.$StaffPayload<ExtArgs>[]
+    leadershipAssignments: Prisma.$LeadershipAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1187,6 +1298,7 @@ export interface Prisma__DepartmentClient<T, Null = never, ExtArgs extends runti
   leader<T extends Prisma.Department$leaderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$leaderArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   inventoryItems<T extends Prisma.Department$inventoryItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$inventoryItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staff<T extends Prisma.Department$staffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$staffArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadershipAssignments<T extends Prisma.Department$leadershipAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$leadershipAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadershipAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1683,6 +1795,30 @@ export type Department$staffArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.StaffScalarFieldEnum | Prisma.StaffScalarFieldEnum[]
+}
+
+/**
+ * Department.leadershipAssignments
+ */
+export type Department$leadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeadershipAssignment
+   */
+  select?: Prisma.LeadershipAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeadershipAssignment
+   */
+  omit?: Prisma.LeadershipAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadershipAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LeadershipAssignmentWhereInput
+  orderBy?: Prisma.LeadershipAssignmentOrderByWithRelationInput | Prisma.LeadershipAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LeadershipAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadershipAssignmentScalarFieldEnum | Prisma.LeadershipAssignmentScalarFieldEnum[]
 }
 
 /**

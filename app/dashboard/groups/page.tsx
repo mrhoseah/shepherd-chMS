@@ -28,9 +28,28 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, UserPlus, Edit, Trash2, ChevronRight, ChevronDown, Building2, Shuffle, Loader2 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Users, UserPlus, Edit, Trash2, ChevronRight, ChevronDown, Building2, Shuffle, Loader2, Crown } from "lucide-react";
 import Link from "next/link";
 import { GroupRotationManager } from "@/components/group-rotation-manager";
+import { LeaderCombobox } from "@/components/groups/leader-combobox";
+
+interface LeadershipAssignment {
+  id: string;
+  title: string;
+  isPrimary: boolean;
+  displayOrder: number;
+  startDate: string;
+  endDate?: string | null;
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string | null;
+    phone: string | null;
+    profileImage: string | null;
+  };
+}
 
 interface Group {
   id: string;
@@ -49,6 +68,7 @@ interface Group {
     firstName: string;
     lastName: string;
   } | null;
+  leadershipAssignments?: LeadershipAssignment[];
   members?: Array<{
     user: {
       id: string;
@@ -58,10 +78,22 @@ interface Group {
     role: string;
     isLeader: boolean;
   }>;
+  meetingDay?: string | null;
+  meetingTime?: string | null;
+  meetingLocation?: string | null;
+  useRotation?: boolean;
   _count: {
     members: number;
     subgroups: number;
   };
+}
+
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string | null;
+  phone: string | null;
 }
 
 export default function GroupsPage() {
@@ -72,6 +104,16 @@ export default function GroupsPage() {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [assignDialogOpen, setAssignDialogOpen] = useState(false);
   const [assigning, setAssigning] = useState(false);
+  const [leadershipDialogOpen, setLeadershipDialogOpen] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
+  const [availableLeaders, setAvailableLeaders] = useState<User[]>([]);
+  const [leadershipAssignments, setLeadershipAssignments] = useState<LeadershipAssignment[]>([]);
+  const [leadershipFormData, setLeadershipFormData] = useState({
+    userId: "",
+    title: "",
+    isPrimary: false,
+    displayOrder: 0,
+  });
   const [assignFormData, setAssignFormData] = useState({
     groupType: "connect-group",
     maxMembersPerGroup: 15,
@@ -93,7 +135,14 @@ export default function GroupsPage() {
 
   useEffect(() => {
     fetchGroups();
+    fetchLeaders();
   }, []);
+
+  useEffect(() => {
+    if (leadershipDialogOpen && selectedGroup) {
+      fetchLeadershipAssignments(selectedGroup.id);
+    }
+  }, [leadershipDialogOpen, selectedGroup]);
 
   const fetchGroups = async () => {
     setLoading(true);
@@ -105,6 +154,108 @@ export default function GroupsPage() {
       console.error("Error fetching groups:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchLeaders = async () => {
+    try {
+      const res = await fetch("/api/people?excludeRoles=GUEST&status=ACTIVE&limit=200");
+      const data = await res.json();
+      setAvailableLeaders((data.people || data.users || []).map((u: any) => ({
+        id: u.id,
+        firstName: u.firstName,
+        lastName: u.lastName,
+        email: u.email,
+        phone: u.phone,
+      })));
+    } catch (error) {
+      console.error("Error fetching leaders:", error);
+    }
+  };
+
+  const fetchLeadershipAssignments = async (groupId: string) => {
+    try {
+      const res = await fetch(
+        `/api/leadership-assignments?entityType=GROUP&entityId=${groupId}`
+      );
+      const data = await res.json();
+      setLeadershipAssignments(data.assignments || []);
+    } catch (error) {
+      console.error("Error fetching leadership assignments:", error);
+    }
+  };
+
+  const handleManageLeaders = (group: Group) => {
+    setSelectedGroup(group);
+    setLeadershipDialogOpen(true);
+    fetchLeadershipAssignments(group.id);
+    setLeadershipFormData({
+      userId: "",
+      title: "",
+      isPrimary: false,
+      displayOrder: 0,
+    });
+  };
+
+  const handleAddLeadership = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedGroup || !leadershipFormData.userId || !leadershipFormData.title) {
+      alert("Please select a leader and enter a title");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/leadership-assignments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: leadershipFormData.userId,
+          entityType: "GROUP",
+          entityId: selectedGroup.id,
+          title: leadershipFormData.title,
+          isPrimary: leadershipFormData.isPrimary,
+          displayOrder: leadershipFormData.displayOrder,
+        }),
+      });
+
+      if (res.ok) {
+        fetchLeadershipAssignments(selectedGroup.id);
+        fetchGroups(); // Refresh groups list
+        setLeadershipFormData({
+          userId: "",
+          title: "",
+          isPrimary: false,
+          displayOrder: 0,
+        });
+        alert("Leader added successfully!");
+      } else {
+        const data = await res.json();
+        alert(data.error || "Failed to add leader");
+      }
+    } catch (error) {
+      console.error("Error adding leadership:", error);
+      alert("Failed to add leader");
+    }
+  };
+
+  const handleRemoveLeadership = async (assignmentId: string) => {
+    if (!confirm("Are you sure you want to remove this leader?")) return;
+
+    try {
+      const res = await fetch(`/api/leadership-assignments/${assignmentId}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok && selectedGroup) {
+        fetchLeadershipAssignments(selectedGroup.id);
+        fetchGroups(); // Refresh groups list
+        alert("Leader removed successfully!");
+      } else {
+        alert("Failed to remove leader");
+      }
+    } catch (error) {
+      console.error("Error removing leadership:", error);
+      alert("Failed to remove leader");
     }
   };
 
@@ -165,7 +316,7 @@ export default function GroupsPage() {
       meetingDay: group.meetingDay || "",
       meetingTime: group.meetingTime || "",
       meetingLocation: group.meetingLocation || "",
-      useRotation: (group as any).useRotation || false,
+      useRotation: Boolean((group as any).useRotation),
     });
     setOpen(true);
   };
@@ -286,7 +437,24 @@ export default function GroupsPage() {
           )}
         </TableCell>
         <TableCell>
-          {group.leader ? (
+          {group.leadershipAssignments && group.leadershipAssignments.length > 0 ? (
+            <div className="space-y-1">
+              {group.leadershipAssignments.map((assignment) => (
+                <div key={assignment.id} className="flex items-center gap-2 text-sm">
+                  <Crown className="w-3 h-3 text-yellow-500" />
+                  <span>
+                    <span className="font-medium">
+                      {assignment.user.firstName} {assignment.user.lastName}
+                    </span>
+                    <span className="text-gray-500 ml-1">({assignment.title})</span>
+                    {assignment.isPrimary && (
+                      <Badge variant="default" className="ml-1 text-xs">Primary</Badge>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : group.leader ? (
             <span className="text-sm">
               {group.leader.firstName} {group.leader.lastName}
             </span>
@@ -304,6 +472,14 @@ export default function GroupsPage() {
         </TableCell>
         <TableCell>
           <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleManageLeaders(group)}
+              title="Manage Leaders"
+            >
+              <Crown className="w-4 h-4" />
+            </Button>
             <GroupRotationManager groupId={group.id} groupName={group.name} />
             <Button
               variant="outline"
@@ -483,6 +659,7 @@ export default function GroupsPage() {
                   meetingDay: "",
                   meetingTime: "",
                   meetingLocation: "",
+                  useRotation: false,
                 });
               }}
             >
@@ -621,14 +798,12 @@ export default function GroupsPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
+                <Checkbox
                   id="useRotation"
-                  checked={formData.useRotation}
-                  onChange={(e) =>
-                    setFormData({ ...formData, useRotation: e.target.checked })
+                  checked={formData.useRotation ?? false}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, useRotation: checked === true })
                   }
-                  className="w-4 h-4 rounded border-gray-300"
                 />
                 <Label htmlFor="useRotation" className="cursor-pointer">
                   Use rotational meeting locations
@@ -693,6 +868,135 @@ export default function GroupsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Leadership Management Dialog */}
+      <Dialog open={leadershipDialogOpen} onOpenChange={setLeadershipDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              Manage Leaders - {selectedGroup?.name}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-6">
+            {/* Current Leaders */}
+            <div>
+              <h3 className="font-semibold mb-3 flex items-center gap-2">
+                <Crown className="w-4 h-4" />
+                Current Leaders ({leadershipAssignments.length})
+              </h3>
+              {leadershipAssignments.length === 0 ? (
+                <p className="text-gray-500 text-sm">No leaders assigned yet</p>
+              ) : (
+                <div className="space-y-2">
+                  {leadershipAssignments.map((assignment) => (
+                    <div
+                      key={assignment.id}
+                      className="flex items-center justify-between p-3 border rounded-lg"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Crown className="w-4 h-4 text-yellow-500" />
+                        <div>
+                          <p className="font-medium">
+                            {assignment.user.firstName} {assignment.user.lastName}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {assignment.title}
+                            {assignment.isPrimary && (
+                              <Badge variant="default" className="ml-2">
+                                Primary
+                              </Badge>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRemoveLeadership(assignment.id)}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Add New Leader */}
+            <div>
+              <h3 className="font-semibold mb-3">Add New Leader</h3>
+              <form onSubmit={handleAddLeadership} className="space-y-4">
+                <div>
+                  <Label htmlFor="leaderSelect">Select Leader *</Label>
+                  <LeaderCombobox
+                    value={leadershipFormData.userId}
+                    onValueChange={(value) =>
+                      setLeadershipFormData({ ...leadershipFormData, userId: value })
+                    }
+                    availableLeaders={availableLeaders}
+                    excludeUserIds={leadershipAssignments.map((a) => a.user.id)}
+                    placeholder="Choose a leader..."
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="title">Leadership Title *</Label>
+                  <Input
+                    id="title"
+                    placeholder="e.g., Group Leader, Co-Leader, Assistant Leader"
+                    value={leadershipFormData.title}
+                    onChange={(e) =>
+                      setLeadershipFormData({
+                        ...leadershipFormData,
+                        title: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Examples: Group Leader, Co-Leader, Assistant Leader, Facilitator
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="isPrimary"
+                      checked={leadershipFormData.isPrimary}
+                      onChange={(e) =>
+                        setLeadershipFormData({
+                          ...leadershipFormData,
+                          isPrimary: e.target.checked,
+                        })
+                      }
+                      className="rounded"
+                    />
+                    <Label htmlFor="isPrimary" className="cursor-pointer">
+                      Set as Primary Leader
+                    </Label>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setLeadershipDialogOpen(false)}
+                  >
+                    Close
+                  </Button>
+                  <Button type="submit" style={{ backgroundColor: "#1E40AF" }}>
+                    Add Leader
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

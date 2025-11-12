@@ -210,6 +210,8 @@ export type ServicePlanWhereInput = {
   items?: Prisma.ServicePlanItemListRelationFilter
   assignments?: Prisma.ServiceAssignmentListRelationFilter
   livestreams?: Prisma.LivestreamListRelationFilter
+  sessions?: Prisma.ServiceSessionListRelationFilter
+  masterEvents?: Prisma.MasterEventListRelationFilter
 }
 
 export type ServicePlanOrderByWithRelationInput = {
@@ -225,6 +227,8 @@ export type ServicePlanOrderByWithRelationInput = {
   items?: Prisma.ServicePlanItemOrderByRelationAggregateInput
   assignments?: Prisma.ServiceAssignmentOrderByRelationAggregateInput
   livestreams?: Prisma.LivestreamOrderByRelationAggregateInput
+  sessions?: Prisma.ServiceSessionOrderByRelationAggregateInput
+  masterEvents?: Prisma.MasterEventOrderByRelationAggregateInput
 }
 
 export type ServicePlanWhereUniqueInput = Prisma.AtLeast<{
@@ -243,6 +247,8 @@ export type ServicePlanWhereUniqueInput = Prisma.AtLeast<{
   items?: Prisma.ServicePlanItemListRelationFilter
   assignments?: Prisma.ServiceAssignmentListRelationFilter
   livestreams?: Prisma.LivestreamListRelationFilter
+  sessions?: Prisma.ServiceSessionListRelationFilter
+  masterEvents?: Prisma.MasterEventListRelationFilter
 }, "id">
 
 export type ServicePlanOrderByWithAggregationInput = {
@@ -285,6 +291,8 @@ export type ServicePlanCreateInput = {
   items?: Prisma.ServicePlanItemCreateNestedManyWithoutPlanInput
   assignments?: Prisma.ServiceAssignmentCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanUncheckedCreateInput = {
@@ -299,6 +307,8 @@ export type ServicePlanUncheckedCreateInput = {
   items?: Prisma.ServicePlanItemUncheckedCreateNestedManyWithoutPlanInput
   assignments?: Prisma.ServiceAssignmentUncheckedCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamUncheckedCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanUpdateInput = {
@@ -313,6 +323,8 @@ export type ServicePlanUpdateInput = {
   items?: Prisma.ServicePlanItemUpdateManyWithoutPlanNestedInput
   assignments?: Prisma.ServiceAssignmentUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanUncheckedUpdateInput = {
@@ -327,6 +339,8 @@ export type ServicePlanUncheckedUpdateInput = {
   items?: Prisma.ServicePlanItemUncheckedUpdateManyWithoutPlanNestedInput
   assignments?: Prisma.ServiceAssignmentUncheckedUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUncheckedUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanCreateManyInput = {
@@ -500,6 +514,38 @@ export type ServicePlanUpdateOneWithoutLivestreamsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServicePlanUpdateToOneWithWhereWithoutLivestreamsInput, Prisma.ServicePlanUpdateWithoutLivestreamsInput>, Prisma.ServicePlanUncheckedUpdateWithoutLivestreamsInput>
 }
 
+export type ServicePlanCreateNestedOneWithoutMasterEventsInput = {
+  create?: Prisma.XOR<Prisma.ServicePlanCreateWithoutMasterEventsInput, Prisma.ServicePlanUncheckedCreateWithoutMasterEventsInput>
+  connectOrCreate?: Prisma.ServicePlanCreateOrConnectWithoutMasterEventsInput
+  connect?: Prisma.ServicePlanWhereUniqueInput
+}
+
+export type ServicePlanUpdateOneWithoutMasterEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServicePlanCreateWithoutMasterEventsInput, Prisma.ServicePlanUncheckedCreateWithoutMasterEventsInput>
+  connectOrCreate?: Prisma.ServicePlanCreateOrConnectWithoutMasterEventsInput
+  upsert?: Prisma.ServicePlanUpsertWithoutMasterEventsInput
+  disconnect?: Prisma.ServicePlanWhereInput | boolean
+  delete?: Prisma.ServicePlanWhereInput | boolean
+  connect?: Prisma.ServicePlanWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServicePlanUpdateToOneWithWhereWithoutMasterEventsInput, Prisma.ServicePlanUpdateWithoutMasterEventsInput>, Prisma.ServicePlanUncheckedUpdateWithoutMasterEventsInput>
+}
+
+export type ServicePlanCreateNestedOneWithoutSessionsInput = {
+  create?: Prisma.XOR<Prisma.ServicePlanCreateWithoutSessionsInput, Prisma.ServicePlanUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.ServicePlanCreateOrConnectWithoutSessionsInput
+  connect?: Prisma.ServicePlanWhereUniqueInput
+}
+
+export type ServicePlanUpdateOneWithoutSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServicePlanCreateWithoutSessionsInput, Prisma.ServicePlanUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.ServicePlanCreateOrConnectWithoutSessionsInput
+  upsert?: Prisma.ServicePlanUpsertWithoutSessionsInput
+  disconnect?: Prisma.ServicePlanWhereInput | boolean
+  delete?: Prisma.ServicePlanWhereInput | boolean
+  connect?: Prisma.ServicePlanWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServicePlanUpdateToOneWithWhereWithoutSessionsInput, Prisma.ServicePlanUpdateWithoutSessionsInput>, Prisma.ServicePlanUncheckedUpdateWithoutSessionsInput>
+}
+
 export type ServicePlanCreateWithoutCampusInput = {
   id?: string
   title: string
@@ -511,6 +557,8 @@ export type ServicePlanCreateWithoutCampusInput = {
   items?: Prisma.ServicePlanItemCreateNestedManyWithoutPlanInput
   assignments?: Prisma.ServiceAssignmentCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanUncheckedCreateWithoutCampusInput = {
@@ -524,6 +572,8 @@ export type ServicePlanUncheckedCreateWithoutCampusInput = {
   items?: Prisma.ServicePlanItemUncheckedCreateNestedManyWithoutPlanInput
   assignments?: Prisma.ServiceAssignmentUncheckedCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamUncheckedCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanCreateOrConnectWithoutCampusInput = {
@@ -577,6 +627,8 @@ export type ServicePlanCreateWithoutItemsInput = {
   campus?: Prisma.CampusCreateNestedOneWithoutServicesInput
   assignments?: Prisma.ServiceAssignmentCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanUncheckedCreateWithoutItemsInput = {
@@ -590,6 +642,8 @@ export type ServicePlanUncheckedCreateWithoutItemsInput = {
   updatedAt?: Date | string
   assignments?: Prisma.ServiceAssignmentUncheckedCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamUncheckedCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanCreateOrConnectWithoutItemsInput = {
@@ -619,6 +673,8 @@ export type ServicePlanUpdateWithoutItemsInput = {
   campus?: Prisma.CampusUpdateOneWithoutServicesNestedInput
   assignments?: Prisma.ServiceAssignmentUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanUncheckedUpdateWithoutItemsInput = {
@@ -632,6 +688,8 @@ export type ServicePlanUncheckedUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignments?: Prisma.ServiceAssignmentUncheckedUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUncheckedUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanCreateWithoutAssignmentsInput = {
@@ -645,6 +703,8 @@ export type ServicePlanCreateWithoutAssignmentsInput = {
   campus?: Prisma.CampusCreateNestedOneWithoutServicesInput
   items?: Prisma.ServicePlanItemCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanUncheckedCreateWithoutAssignmentsInput = {
@@ -658,6 +718,8 @@ export type ServicePlanUncheckedCreateWithoutAssignmentsInput = {
   updatedAt?: Date | string
   items?: Prisma.ServicePlanItemUncheckedCreateNestedManyWithoutPlanInput
   livestreams?: Prisma.LivestreamUncheckedCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanCreateOrConnectWithoutAssignmentsInput = {
@@ -687,6 +749,8 @@ export type ServicePlanUpdateWithoutAssignmentsInput = {
   campus?: Prisma.CampusUpdateOneWithoutServicesNestedInput
   items?: Prisma.ServicePlanItemUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanUncheckedUpdateWithoutAssignmentsInput = {
@@ -700,6 +764,8 @@ export type ServicePlanUncheckedUpdateWithoutAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ServicePlanItemUncheckedUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUncheckedUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanCreateWithoutLivestreamsInput = {
@@ -713,6 +779,8 @@ export type ServicePlanCreateWithoutLivestreamsInput = {
   campus?: Prisma.CampusCreateNestedOneWithoutServicesInput
   items?: Prisma.ServicePlanItemCreateNestedManyWithoutPlanInput
   assignments?: Prisma.ServiceAssignmentCreateNestedManyWithoutPlanInput
+  sessions?: Prisma.ServiceSessionCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanUncheckedCreateWithoutLivestreamsInput = {
@@ -726,6 +794,8 @@ export type ServicePlanUncheckedCreateWithoutLivestreamsInput = {
   updatedAt?: Date | string
   items?: Prisma.ServicePlanItemUncheckedCreateNestedManyWithoutPlanInput
   assignments?: Prisma.ServiceAssignmentUncheckedCreateNestedManyWithoutPlanInput
+  sessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutServicePlanInput
 }
 
 export type ServicePlanCreateOrConnectWithoutLivestreamsInput = {
@@ -755,6 +825,8 @@ export type ServicePlanUpdateWithoutLivestreamsInput = {
   campus?: Prisma.CampusUpdateOneWithoutServicesNestedInput
   items?: Prisma.ServicePlanItemUpdateManyWithoutPlanNestedInput
   assignments?: Prisma.ServiceAssignmentUpdateManyWithoutPlanNestedInput
+  sessions?: Prisma.ServiceSessionUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanUncheckedUpdateWithoutLivestreamsInput = {
@@ -768,6 +840,160 @@ export type ServicePlanUncheckedUpdateWithoutLivestreamsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ServicePlanItemUncheckedUpdateManyWithoutPlanNestedInput
   assignments?: Prisma.ServiceAssignmentUncheckedUpdateManyWithoutPlanNestedInput
+  sessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutServicePlanNestedInput
+}
+
+export type ServicePlanCreateWithoutMasterEventsInput = {
+  id?: string
+  title: string
+  date: Date | string
+  notes?: string | null
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus?: Prisma.CampusCreateNestedOneWithoutServicesInput
+  items?: Prisma.ServicePlanItemCreateNestedManyWithoutPlanInput
+  assignments?: Prisma.ServiceAssignmentCreateNestedManyWithoutPlanInput
+  livestreams?: Prisma.LivestreamCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionCreateNestedManyWithoutServicePlanInput
+}
+
+export type ServicePlanUncheckedCreateWithoutMasterEventsInput = {
+  id?: string
+  title: string
+  date: Date | string
+  campusId?: string | null
+  notes?: string | null
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ServicePlanItemUncheckedCreateNestedManyWithoutPlanInput
+  assignments?: Prisma.ServiceAssignmentUncheckedCreateNestedManyWithoutPlanInput
+  livestreams?: Prisma.LivestreamUncheckedCreateNestedManyWithoutServicePlanInput
+  sessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutServicePlanInput
+}
+
+export type ServicePlanCreateOrConnectWithoutMasterEventsInput = {
+  where: Prisma.ServicePlanWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServicePlanCreateWithoutMasterEventsInput, Prisma.ServicePlanUncheckedCreateWithoutMasterEventsInput>
+}
+
+export type ServicePlanUpsertWithoutMasterEventsInput = {
+  update: Prisma.XOR<Prisma.ServicePlanUpdateWithoutMasterEventsInput, Prisma.ServicePlanUncheckedUpdateWithoutMasterEventsInput>
+  create: Prisma.XOR<Prisma.ServicePlanCreateWithoutMasterEventsInput, Prisma.ServicePlanUncheckedCreateWithoutMasterEventsInput>
+  where?: Prisma.ServicePlanWhereInput
+}
+
+export type ServicePlanUpdateToOneWithWhereWithoutMasterEventsInput = {
+  where?: Prisma.ServicePlanWhereInput
+  data: Prisma.XOR<Prisma.ServicePlanUpdateWithoutMasterEventsInput, Prisma.ServicePlanUncheckedUpdateWithoutMasterEventsInput>
+}
+
+export type ServicePlanUpdateWithoutMasterEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneWithoutServicesNestedInput
+  items?: Prisma.ServicePlanItemUpdateManyWithoutPlanNestedInput
+  assignments?: Prisma.ServiceAssignmentUpdateManyWithoutPlanNestedInput
+  livestreams?: Prisma.LivestreamUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUpdateManyWithoutServicePlanNestedInput
+}
+
+export type ServicePlanUncheckedUpdateWithoutMasterEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ServicePlanItemUncheckedUpdateManyWithoutPlanNestedInput
+  assignments?: Prisma.ServiceAssignmentUncheckedUpdateManyWithoutPlanNestedInput
+  livestreams?: Prisma.LivestreamUncheckedUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutServicePlanNestedInput
+}
+
+export type ServicePlanCreateWithoutSessionsInput = {
+  id?: string
+  title: string
+  date: Date | string
+  notes?: string | null
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus?: Prisma.CampusCreateNestedOneWithoutServicesInput
+  items?: Prisma.ServicePlanItemCreateNestedManyWithoutPlanInput
+  assignments?: Prisma.ServiceAssignmentCreateNestedManyWithoutPlanInput
+  livestreams?: Prisma.LivestreamCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutServicePlanInput
+}
+
+export type ServicePlanUncheckedCreateWithoutSessionsInput = {
+  id?: string
+  title: string
+  date: Date | string
+  campusId?: string | null
+  notes?: string | null
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ServicePlanItemUncheckedCreateNestedManyWithoutPlanInput
+  assignments?: Prisma.ServiceAssignmentUncheckedCreateNestedManyWithoutPlanInput
+  livestreams?: Prisma.LivestreamUncheckedCreateNestedManyWithoutServicePlanInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutServicePlanInput
+}
+
+export type ServicePlanCreateOrConnectWithoutSessionsInput = {
+  where: Prisma.ServicePlanWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServicePlanCreateWithoutSessionsInput, Prisma.ServicePlanUncheckedCreateWithoutSessionsInput>
+}
+
+export type ServicePlanUpsertWithoutSessionsInput = {
+  update: Prisma.XOR<Prisma.ServicePlanUpdateWithoutSessionsInput, Prisma.ServicePlanUncheckedUpdateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.ServicePlanCreateWithoutSessionsInput, Prisma.ServicePlanUncheckedCreateWithoutSessionsInput>
+  where?: Prisma.ServicePlanWhereInput
+}
+
+export type ServicePlanUpdateToOneWithWhereWithoutSessionsInput = {
+  where?: Prisma.ServicePlanWhereInput
+  data: Prisma.XOR<Prisma.ServicePlanUpdateWithoutSessionsInput, Prisma.ServicePlanUncheckedUpdateWithoutSessionsInput>
+}
+
+export type ServicePlanUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneWithoutServicesNestedInput
+  items?: Prisma.ServicePlanItemUpdateManyWithoutPlanNestedInput
+  assignments?: Prisma.ServiceAssignmentUpdateManyWithoutPlanNestedInput
+  livestreams?: Prisma.LivestreamUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutServicePlanNestedInput
+}
+
+export type ServicePlanUncheckedUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ServicePlanItemUncheckedUpdateManyWithoutPlanNestedInput
+  assignments?: Prisma.ServiceAssignmentUncheckedUpdateManyWithoutPlanNestedInput
+  livestreams?: Prisma.LivestreamUncheckedUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanCreateManyCampusInput = {
@@ -791,6 +1017,8 @@ export type ServicePlanUpdateWithoutCampusInput = {
   items?: Prisma.ServicePlanItemUpdateManyWithoutPlanNestedInput
   assignments?: Prisma.ServiceAssignmentUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanUncheckedUpdateWithoutCampusInput = {
@@ -804,6 +1032,8 @@ export type ServicePlanUncheckedUpdateWithoutCampusInput = {
   items?: Prisma.ServicePlanItemUncheckedUpdateManyWithoutPlanNestedInput
   assignments?: Prisma.ServiceAssignmentUncheckedUpdateManyWithoutPlanNestedInput
   livestreams?: Prisma.LivestreamUncheckedUpdateManyWithoutServicePlanNestedInput
+  sessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutServicePlanNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutServicePlanNestedInput
 }
 
 export type ServicePlanUncheckedUpdateManyWithoutCampusInput = {
@@ -825,12 +1055,16 @@ export type ServicePlanCountOutputType = {
   items: number
   assignments: number
   livestreams: number
+  sessions: number
+  masterEvents: number
 }
 
 export type ServicePlanCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | ServicePlanCountOutputTypeCountItemsArgs
   assignments?: boolean | ServicePlanCountOutputTypeCountAssignmentsArgs
   livestreams?: boolean | ServicePlanCountOutputTypeCountLivestreamsArgs
+  sessions?: boolean | ServicePlanCountOutputTypeCountSessionsArgs
+  masterEvents?: boolean | ServicePlanCountOutputTypeCountMasterEventsArgs
 }
 
 /**
@@ -864,6 +1098,20 @@ export type ServicePlanCountOutputTypeCountLivestreamsArgs<ExtArgs extends runti
   where?: Prisma.LivestreamWhereInput
 }
 
+/**
+ * ServicePlanCountOutputType without action
+ */
+export type ServicePlanCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceSessionWhereInput
+}
+
+/**
+ * ServicePlanCountOutputType without action
+ */
+export type ServicePlanCountOutputTypeCountMasterEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MasterEventWhereInput
+}
+
 
 export type ServicePlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -878,6 +1126,8 @@ export type ServicePlanSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   items?: boolean | Prisma.ServicePlan$itemsArgs<ExtArgs>
   assignments?: boolean | Prisma.ServicePlan$assignmentsArgs<ExtArgs>
   livestreams?: boolean | Prisma.ServicePlan$livestreamsArgs<ExtArgs>
+  sessions?: boolean | Prisma.ServicePlan$sessionsArgs<ExtArgs>
+  masterEvents?: boolean | Prisma.ServicePlan$masterEventsArgs<ExtArgs>
   _count?: boolean | Prisma.ServicePlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["servicePlan"]>
 
@@ -922,6 +1172,8 @@ export type ServicePlanInclude<ExtArgs extends runtime.Types.Extensions.Internal
   items?: boolean | Prisma.ServicePlan$itemsArgs<ExtArgs>
   assignments?: boolean | Prisma.ServicePlan$assignmentsArgs<ExtArgs>
   livestreams?: boolean | Prisma.ServicePlan$livestreamsArgs<ExtArgs>
+  sessions?: boolean | Prisma.ServicePlan$sessionsArgs<ExtArgs>
+  masterEvents?: boolean | Prisma.ServicePlan$masterEventsArgs<ExtArgs>
   _count?: boolean | Prisma.ServicePlanCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServicePlanIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -938,6 +1190,8 @@ export type $ServicePlanPayload<ExtArgs extends runtime.Types.Extensions.Interna
     items: Prisma.$ServicePlanItemPayload<ExtArgs>[]
     assignments: Prisma.$ServiceAssignmentPayload<ExtArgs>[]
     livestreams: Prisma.$LivestreamPayload<ExtArgs>[]
+    sessions: Prisma.$ServiceSessionPayload<ExtArgs>[]
+    masterEvents: Prisma.$MasterEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1346,6 +1600,8 @@ export interface Prisma__ServicePlanClient<T, Null = never, ExtArgs extends runt
   items<T extends Prisma.ServicePlan$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicePlan$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePlanItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignments<T extends Prisma.ServicePlan$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicePlan$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   livestreams<T extends Prisma.ServicePlan$livestreamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicePlan$livestreamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LivestreamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessions<T extends Prisma.ServicePlan$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicePlan$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  masterEvents<T extends Prisma.ServicePlan$masterEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicePlan$masterEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MasterEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1867,6 +2123,54 @@ export type ServicePlan$livestreamsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.LivestreamScalarFieldEnum | Prisma.LivestreamScalarFieldEnum[]
+}
+
+/**
+ * ServicePlan.sessions
+ */
+export type ServicePlan$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceSession
+   */
+  select?: Prisma.ServiceSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceSession
+   */
+  omit?: Prisma.ServiceSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceSessionInclude<ExtArgs> | null
+  where?: Prisma.ServiceSessionWhereInput
+  orderBy?: Prisma.ServiceSessionOrderByWithRelationInput | Prisma.ServiceSessionOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceSessionScalarFieldEnum | Prisma.ServiceSessionScalarFieldEnum[]
+}
+
+/**
+ * ServicePlan.masterEvents
+ */
+export type ServicePlan$masterEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MasterEvent
+   */
+  select?: Prisma.MasterEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MasterEvent
+   */
+  omit?: Prisma.MasterEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MasterEventInclude<ExtArgs> | null
+  where?: Prisma.MasterEventWhereInput
+  orderBy?: Prisma.MasterEventOrderByWithRelationInput | Prisma.MasterEventOrderByWithRelationInput[]
+  cursor?: Prisma.MasterEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MasterEventScalarFieldEnum | Prisma.MasterEventScalarFieldEnum[]
 }
 
 /**

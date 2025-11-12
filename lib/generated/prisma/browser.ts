@@ -18,6 +18,11 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model FundCategory
+ * 
+ */
+export type FundCategory = Prisma.FundCategoryModel
+/**
  * Model User
  * 
  */
@@ -173,10 +178,45 @@ export type LivestreamChat = Prisma.LivestreamChatModel
  */
 export type LivestreamAnalytics = Prisma.LivestreamAnalyticsModel
 /**
+ * Model MasterEvent
+ * 
+ */
+export type MasterEvent = Prisma.MasterEventModel
+/**
+ * Model AttendanceSession
+ * 
+ */
+export type AttendanceSession = Prisma.AttendanceSessionModel
+/**
+ * Model AttendanceRecord
+ * 
+ */
+export type AttendanceRecord = Prisma.AttendanceRecordModel
+/**
  * Model Attendance
  * 
  */
 export type Attendance = Prisma.AttendanceModel
+/**
+ * Model ServiceSession
+ * 
+ */
+export type ServiceSession = Prisma.ServiceSessionModel
+/**
+ * Model SessionAttendee
+ * 
+ */
+export type SessionAttendee = Prisma.SessionAttendeeModel
+/**
+ * Model Decision
+ * 
+ */
+export type Decision = Prisma.DecisionModel
+/**
+ * Model Meeting
+ * 
+ */
+export type Meeting = Prisma.MeetingModel
 /**
  * Model Donation
  * 
@@ -328,6 +368,16 @@ export type ProjectUpdate = Prisma.ProjectUpdateModel
  */
 export type Document = Prisma.DocumentModel
 /**
+ * Model Presentation
+ * 
+ */
+export type Presentation = Prisma.PresentationModel
+/**
+ * Model PresentationSlide
+ * 
+ */
+export type PresentationSlide = Prisma.PresentationSlideModel
+/**
  * Model Asset
  * 
  */
@@ -352,6 +402,13 @@ export type InventoryItem = Prisma.InventoryItemModel
  * 
  */
 export type InventoryTransaction = Prisma.InventoryTransactionModel
+/**
+ * Model LeadershipAssignment
+ * *
+ *  * LeadershipAssignment - Professional leadership system
+ *  * Supports multiple leaders per entity with titles and roles
+ */
+export type LeadershipAssignment = Prisma.LeadershipAssignmentModel
 /**
  * Model Staff
  * 
@@ -402,6 +459,11 @@ export type Church = Prisma.ChurchModel
  * 
  */
 export type ChurchSetting = Prisma.ChurchSettingModel
+/**
+ * Model CommunicationTemplate
+ * 
+ */
+export type CommunicationTemplate = Prisma.CommunicationTemplateModel
 /**
  * Model CustomField
  * 

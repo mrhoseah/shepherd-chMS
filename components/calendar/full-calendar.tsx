@@ -187,79 +187,181 @@ export function FullCalendarComponent({
   }));
 
   return (
-    <Card>
-      <CardContent className="p-6">
-        {/* Calendar Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={prev}>
-              ← Prev
-            </Button>
-            <Button variant="outline" size="sm" onClick={today}>
-              Today
-            </Button>
-            <Button variant="outline" size="sm" onClick={next}>
-              Next →
-            </Button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant={view === "dayGridMonth" ? "default" : "outline"}
-              size="sm"
-              onClick={() => changeView("dayGridMonth")}
-            >
-              <Grid className="w-4 h-4 mr-2" />
-              Month
-            </Button>
-            <Button
-              variant={view === "timeGridWeek" ? "default" : "outline"}
-              size="sm"
-              onClick={() => changeView("timeGridWeek")}
-            >
-              <Calendar className="w-4 h-4 mr-2" />
-              Week
-            </Button>
-            <Button
-              variant={view === "listWeek" ? "default" : "outline"}
-              size="sm"
-              onClick={() => changeView("listWeek")}
-            >
-              <List className="w-4 h-4 mr-2" />
-              List
-            </Button>
-          </div>
+    <div className="space-y-4">
+      {/* Calendar Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg border">
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={prev} className="h-8">
+            ← Prev
+          </Button>
+          <Button variant="outline" size="sm" onClick={today} className="h-8">
+            Today
+          </Button>
+          <Button variant="outline" size="sm" onClick={next} className="h-8">
+            Next →
+          </Button>
         </div>
 
-        {/* FullCalendar */}
-        <div className="calendar-container">
-          <FullCalendar
-            ref={calendarRef}
-            plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
-            initialView={view}
-            headerToolbar={false}
-            height={height}
-            events={calendarEvents}
-            editable={!!onEventUpdate}
-            selectable={!!onDateSelect || !!onEventCreate}
-            selectMirror={true}
-            dayMaxEvents={true}
-            weekends={true}
-            select={handleDateSelect}
-            eventClick={handleEventClick}
-            eventDrop={handleEventDrop}
-            eventResize={handleEventDrop}
-            eventDisplay="block"
-            nowIndicator={true}
-            slotMinTime="06:00:00"
-            slotMaxTime="22:00:00"
-            businessHours={{
-              daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-              startTime: "08:00",
-              endTime: "18:00",
-            }}
-          />
+        <div className="flex items-center gap-2">
+          <Button
+            variant={view === "dayGridMonth" ? "default" : "outline"}
+            size="sm"
+            onClick={() => changeView("dayGridMonth")}
+            className="h-8"
+          >
+            <Grid className="w-4 h-4 mr-1.5" />
+            Month
+          </Button>
+          <Button
+            variant={view === "timeGridWeek" ? "default" : "outline"}
+            size="sm"
+            onClick={() => changeView("timeGridWeek")}
+            className="h-8"
+          >
+            <Calendar className="w-4 h-4 mr-1.5" />
+            Week
+          </Button>
+          <Button
+            variant={view === "listWeek" ? "default" : "outline"}
+            size="sm"
+            onClick={() => changeView("listWeek")}
+            className="h-8"
+          >
+            <List className="w-4 h-4 mr-1.5" />
+            List
+          </Button>
         </div>
+      </div>
+
+      {/* FullCalendar */}
+      <div className="calendar-container bg-white dark:bg-gray-950 rounded-lg border p-4">
+        <style jsx global>{`
+          .calendar-container .fc {
+            font-family: inherit;
+          }
+          .calendar-container .fc-header-toolbar {
+            margin-bottom: 1rem;
+          }
+          .calendar-container .fc-button {
+            background-color: #f3f4f6;
+            border-color: #e5e7eb;
+            color: #374151;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+          }
+          .calendar-container .fc-button:hover {
+            background-color: #e5e7eb;
+          }
+          .calendar-container .fc-button-primary:not(:disabled):active,
+          .calendar-container .fc-button-primary:not(:disabled).fc-button-active {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+          }
+          .calendar-container .fc-daygrid-day {
+            border-color: #e5e7eb;
+          }
+          .calendar-container .fc-daygrid-day-top {
+            padding: 0.5rem;
+          }
+          .calendar-container .fc-daygrid-event {
+            border-radius: 0.25rem;
+            padding: 0.125rem 0.375rem;
+            margin: 0.125rem 0;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+          .calendar-container .fc-daygrid-event:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+          .calendar-container .fc-timegrid-event {
+            border-radius: 0.25rem;
+            padding: 0.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+          .calendar-container .fc-timegrid-event:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+          .calendar-container .fc-list-event:hover {
+            background-color: #f9fafb;
+          }
+          .calendar-container .fc-today-button {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+          }
+          .calendar-container .fc-today-button:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+          }
+          .calendar-container .fc-day-today {
+            background-color: #eff6ff !important;
+          }
+          .calendar-container .fc-col-header-cell {
+            padding: 0.75rem 0.5rem;
+            background-color: #f9fafb;
+            border-color: #e5e7eb;
+            font-weight: 600;
+            font-size: 0.875rem;
+          }
+          .calendar-container .fc-timegrid-slot {
+            height: 2.5rem;
+          }
+          .calendar-container .fc-timegrid-now-indicator-line {
+            border-color: #ef4444;
+            border-width: 2px;
+          }
+        `}</style>
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
+          initialView={view}
+          headerToolbar={{
+            left: "title",
+            center: "",
+            right: "",
+          }}
+          height={height}
+          events={calendarEvents}
+          editable={!!onEventUpdate}
+          selectable={!!onDateSelect || !!onEventCreate}
+          selectMirror={true}
+          dayMaxEvents={3}
+          moreLinkClick="popover"
+          weekends={true}
+          select={handleDateSelect}
+          eventClick={handleEventClick}
+          eventDrop={handleEventDrop}
+          eventResize={handleEventDrop}
+          eventDisplay="block"
+          nowIndicator={true}
+          slotMinTime="06:00:00"
+          slotMaxTime="22:00:00"
+          businessHours={{
+            daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+            startTime: "08:00",
+            endTime: "18:00",
+          }}
+          eventTimeFormat={{
+            hour: "numeric",
+            minute: "2-digit",
+            meridiem: "short",
+          }}
+          slotLabelFormat={{
+            hour: "numeric",
+            minute: "2-digit",
+            meridiem: "short",
+          }}
+        />
+      </div>
 
         {/* Create Event Dialog */}
         <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
@@ -358,8 +460,7 @@ export function FullCalendarComponent({
             </div>
           </DialogContent>
         </Dialog>
-      </CardContent>
-    </Card>
+    </div>
   );
 }
 

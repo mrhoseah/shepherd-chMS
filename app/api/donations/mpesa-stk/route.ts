@@ -9,7 +9,7 @@ import { initiateSTKPush } from "@/lib/mpesa";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { phoneNumber, amount, qrCodeId, category, userId } = body;
+    const { phoneNumber, amount, qrCodeId, category, userId, sessionId, groupId } = body;
     
     // If userId is provided, verify the user exists (optional - for logged-in users)
     let user = null;
@@ -38,6 +38,46 @@ export async function POST(request: NextRequest) {
 
     const reference = `GIVING-${Date.now()}`;
 
+    // Get sessionId from QR code if qrCodeId is provided
+    let linkedSessionId = sessionId || null;
+    if (qrCodeId && !linkedSessionId) {
+      const qrCode = await prisma.givingQRCode.findUnique({
+        where: { id: qrCodeId },
+        select: { sessionId: true },
+      });
+      if (qrCode?.sessionId) {
+        linkedSessionId = qrCode.sessionId;
+      }
+    }
+
+    // Validate groupId if provided
+    let validGroupId = null;
+    if (groupId) {
+      const group = await prisma.smallGroup.findUnique({
+        where: { id: groupId },
+        select: { id: true, groupGivingEnabled: true },
+      });
+      if (group && group.groupGivingEnabled) {
+        // Verify user is a member of the group if userId is provided
+        if (user?.id) {
+          const isMember = await prisma.groupMember.findUnique({
+            where: {
+              groupId_userId: {
+                groupId: groupId,
+                userId: user.id,
+              },
+            },
+          });
+          if (isMember) {
+            validGroupId = groupId;
+          }
+        } else {
+          // Allow anonymous group donations if group has giving enabled
+          validGroupId = groupId;
+        }
+      }
+    }
+
     // Create donation record with pending status
     const donation = await prisma.donation.create({
       data: {
@@ -48,9 +88,13 @@ export async function POST(request: NextRequest) {
         reference,
         status: "pending",
         mpesaRequestId: reference,
+        linkedSessionId, // Link to session if provided
+        groupId: validGroupId, // Link to group if provided and valid
         metadata: {
           phoneNumber: formattedPhone,
           qrCodeId,
+          sessionId: linkedSessionId,
+          groupId: validGroupId,
           isPublicDonation: !user, // Mark as public donation if not logged in
         },
       },
@@ -172,7 +216,7 @@ export async function PUT(request: NextRequest) {
         (item: any) => item.Name === "PhoneNumber"
       )?.Value;
 
-      await prisma.donation.update({
+      const updatedDonation = await prisma.donation.update({
         where: { id: donation.id },
         data: {
           status: "completed",
@@ -185,6 +229,26 @@ export async function PUT(request: NextRequest) {
             phoneNumber,
           },
         },
+      });
+
+      // Trigger workflows for completed donation
+      Promise.resolve().then(async () => {
+        try {
+          const { executeWorkflows } = await import("@/lib/workflow-engine");
+          await executeWorkflows({
+            type: "DONATION_RECEIVED",
+            userId: donation.userId || undefined,
+            memberId: donation.userId || undefined,
+            donationId: donation.id,
+            data: {
+              donation: updatedDonation,
+              amount: Number(updatedDonation.amount),
+              category: updatedDonation.category,
+            },
+          });
+        } catch (error) {
+          console.error("Failed to execute donation workflows:", error);
+        }
       });
 
       // Send automated message using template

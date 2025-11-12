@@ -259,6 +259,7 @@ export type ChildrenClassWhereInput = {
   leader?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.ChildrenMinistryMemberListRelationFilter
   lessons?: Prisma.ChildrenLessonListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
 }
 
 export type ChildrenClassOrderByWithRelationInput = {
@@ -274,6 +275,7 @@ export type ChildrenClassOrderByWithRelationInput = {
   leader?: Prisma.UserOrderByWithRelationInput
   members?: Prisma.ChildrenMinistryMemberOrderByRelationAggregateInput
   lessons?: Prisma.ChildrenLessonOrderByRelationAggregateInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentOrderByRelationAggregateInput
 }
 
 export type ChildrenClassWhereUniqueInput = Prisma.AtLeast<{
@@ -292,6 +294,7 @@ export type ChildrenClassWhereUniqueInput = Prisma.AtLeast<{
   leader?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.ChildrenMinistryMemberListRelationFilter
   lessons?: Prisma.ChildrenLessonListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
 }, "id">
 
 export type ChildrenClassOrderByWithAggregationInput = {
@@ -338,6 +341,7 @@ export type ChildrenClassCreateInput = {
   leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassUncheckedCreateInput = {
@@ -352,6 +356,7 @@ export type ChildrenClassUncheckedCreateInput = {
   updatedAt?: Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassUpdateInput = {
@@ -366,6 +371,7 @@ export type ChildrenClassUpdateInput = {
   leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateInput = {
@@ -380,6 +386,7 @@ export type ChildrenClassUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassCreateManyInput = {
@@ -480,6 +487,11 @@ export type ChildrenClassScalarRelationFilter = {
   isNot?: Prisma.ChildrenClassWhereInput
 }
 
+export type ChildrenClassNullableScalarRelationFilter = {
+  is?: Prisma.ChildrenClassWhereInput | null
+  isNot?: Prisma.ChildrenClassWhereInput | null
+}
+
 export type ChildrenClassCreateNestedManyWithoutLeaderInput = {
   create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutLeaderInput, Prisma.ChildrenClassUncheckedCreateWithoutLeaderInput> | Prisma.ChildrenClassCreateWithoutLeaderInput[] | Prisma.ChildrenClassUncheckedCreateWithoutLeaderInput[]
   connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutLeaderInput | Prisma.ChildrenClassCreateOrConnectWithoutLeaderInput[]
@@ -550,6 +562,22 @@ export type ChildrenClassUpdateOneRequiredWithoutLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutLessonsInput, Prisma.ChildrenClassUpdateWithoutLessonsInput>, Prisma.ChildrenClassUncheckedUpdateWithoutLessonsInput>
 }
 
+export type ChildrenClassCreateNestedOneWithoutLeadershipAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutLeadershipAssignmentsInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+}
+
+export type ChildrenClassUpdateOneWithoutLeadershipAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutLeadershipAssignmentsInput
+  upsert?: Prisma.ChildrenClassUpsertWithoutLeadershipAssignmentsInput
+  disconnect?: Prisma.ChildrenClassWhereInput | boolean
+  delete?: Prisma.ChildrenClassWhereInput | boolean
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUpdateWithoutLeadershipAssignmentsInput>, Prisma.ChildrenClassUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
 export type ChildrenClassCreateWithoutLeaderInput = {
   id?: string
   name: string
@@ -561,6 +589,7 @@ export type ChildrenClassCreateWithoutLeaderInput = {
   updatedAt?: Date | string
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutLeaderInput = {
@@ -574,6 +603,7 @@ export type ChildrenClassUncheckedCreateWithoutLeaderInput = {
   updatedAt?: Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutLeaderInput = {
@@ -628,6 +658,7 @@ export type ChildrenClassCreateWithoutMembersInput = {
   updatedAt?: Date | string
   leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutMembersInput = {
@@ -641,6 +672,7 @@ export type ChildrenClassUncheckedCreateWithoutMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutMembersInput = {
@@ -670,6 +702,7 @@ export type ChildrenClassUpdateWithoutMembersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutMembersInput = {
@@ -683,6 +716,7 @@ export type ChildrenClassUncheckedUpdateWithoutMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassCreateWithoutLessonsInput = {
@@ -696,6 +730,7 @@ export type ChildrenClassCreateWithoutLessonsInput = {
   updatedAt?: Date | string
   leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutLessonsInput = {
@@ -709,6 +744,7 @@ export type ChildrenClassUncheckedCreateWithoutLessonsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutLessonsInput = {
@@ -738,6 +774,7 @@ export type ChildrenClassUpdateWithoutLessonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutLessonsInput = {
@@ -751,6 +788,79 @@ export type ChildrenClassUncheckedUpdateWithoutLessonsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+}
+
+export type ChildrenClassCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
+  members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassCreateOrConnectWithoutLeadershipAssignmentsInput = {
+  where: Prisma.ChildrenClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput>
+}
+
+export type ChildrenClassUpsertWithoutLeadershipAssignmentsInput = {
+  update: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedUpdateWithoutLeadershipAssignmentsInput>
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput>
+  where?: Prisma.ChildrenClassWhereInput
+}
+
+export type ChildrenClassUpdateToOneWithWhereWithoutLeadershipAssignmentsInput = {
+  where?: Prisma.ChildrenClassWhereInput
+  data: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
+export type ChildrenClassUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
+  members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassUncheckedUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassCreateManyLeaderInput = {
@@ -775,6 +885,7 @@ export type ChildrenClassUpdateWithoutLeaderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutLeaderInput = {
@@ -788,6 +899,7 @@ export type ChildrenClassUncheckedUpdateWithoutLeaderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateManyWithoutLeaderInput = {
@@ -809,11 +921,13 @@ export type ChildrenClassUncheckedUpdateManyWithoutLeaderInput = {
 export type ChildrenClassCountOutputType = {
   members: number
   lessons: number
+  leadershipAssignments: number
 }
 
 export type ChildrenClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | ChildrenClassCountOutputTypeCountMembersArgs
   lessons?: boolean | ChildrenClassCountOutputTypeCountLessonsArgs
+  leadershipAssignments?: boolean | ChildrenClassCountOutputTypeCountLeadershipAssignmentsArgs
 }
 
 /**
@@ -840,6 +954,13 @@ export type ChildrenClassCountOutputTypeCountLessonsArgs<ExtArgs extends runtime
   where?: Prisma.ChildrenLessonWhereInput
 }
 
+/**
+ * ChildrenClassCountOutputType without action
+ */
+export type ChildrenClassCountOutputTypeCountLeadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadershipAssignmentWhereInput
+}
+
 
 export type ChildrenClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -854,6 +975,7 @@ export type ChildrenClassSelect<ExtArgs extends runtime.Types.Extensions.Interna
   leader?: boolean | Prisma.ChildrenClass$leaderArgs<ExtArgs>
   members?: boolean | Prisma.ChildrenClass$membersArgs<ExtArgs>
   lessons?: boolean | Prisma.ChildrenClass$lessonsArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ChildrenClassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["childrenClass"]>
 
@@ -900,6 +1022,7 @@ export type ChildrenClassInclude<ExtArgs extends runtime.Types.Extensions.Intern
   leader?: boolean | Prisma.ChildrenClass$leaderArgs<ExtArgs>
   members?: boolean | Prisma.ChildrenClass$membersArgs<ExtArgs>
   lessons?: boolean | Prisma.ChildrenClass$lessonsArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ChildrenClassCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChildrenClassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -915,6 +1038,7 @@ export type $ChildrenClassPayload<ExtArgs extends runtime.Types.Extensions.Inter
     leader: Prisma.$UserPayload<ExtArgs> | null
     members: Prisma.$ChildrenMinistryMemberPayload<ExtArgs>[]
     lessons: Prisma.$ChildrenLessonPayload<ExtArgs>[]
+    leadershipAssignments: Prisma.$LeadershipAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1323,6 +1447,7 @@ export interface Prisma__ChildrenClassClient<T, Null = never, ExtArgs extends ru
   leader<T extends Prisma.ChildrenClass$leaderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$leaderArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   members<T extends Prisma.ChildrenClass$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChildrenMinistryMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lessons<T extends Prisma.ChildrenClass$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChildrenLessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadershipAssignments<T extends Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadershipAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1821,6 +1946,30 @@ export type ChildrenClass$lessonsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.ChildrenLessonScalarFieldEnum | Prisma.ChildrenLessonScalarFieldEnum[]
+}
+
+/**
+ * ChildrenClass.leadershipAssignments
+ */
+export type ChildrenClass$leadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeadershipAssignment
+   */
+  select?: Prisma.LeadershipAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeadershipAssignment
+   */
+  omit?: Prisma.LeadershipAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadershipAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LeadershipAssignmentWhereInput
+  orderBy?: Prisma.LeadershipAssignmentOrderByWithRelationInput | Prisma.LeadershipAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LeadershipAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadershipAssignmentScalarFieldEnum | Prisma.LeadershipAssignmentScalarFieldEnum[]
 }
 
 /**

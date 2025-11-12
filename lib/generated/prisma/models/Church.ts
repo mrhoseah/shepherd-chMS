@@ -291,6 +291,7 @@ export type ChurchWhereInput = {
   budgets?: Prisma.BudgetListRelationFilter
   calendarEvents?: Prisma.CalendarEventListRelationFilter
   documents?: Prisma.DocumentListRelationFilter
+  presentations?: Prisma.PresentationListRelationFilter
   assets?: Prisma.AssetListRelationFilter
   settings?: Prisma.ChurchSettingListRelationFilter
   customFields?: Prisma.CustomFieldListRelationFilter
@@ -323,6 +324,7 @@ export type ChurchOrderByWithRelationInput = {
   budgets?: Prisma.BudgetOrderByRelationAggregateInput
   calendarEvents?: Prisma.CalendarEventOrderByRelationAggregateInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
+  presentations?: Prisma.PresentationOrderByRelationAggregateInput
   assets?: Prisma.AssetOrderByRelationAggregateInput
   settings?: Prisma.ChurchSettingOrderByRelationAggregateInput
   customFields?: Prisma.CustomFieldOrderByRelationAggregateInput
@@ -358,6 +360,7 @@ export type ChurchWhereUniqueInput = Prisma.AtLeast<{
   budgets?: Prisma.BudgetListRelationFilter
   calendarEvents?: Prisma.CalendarEventListRelationFilter
   documents?: Prisma.DocumentListRelationFilter
+  presentations?: Prisma.PresentationListRelationFilter
   assets?: Prisma.AssetListRelationFilter
   settings?: Prisma.ChurchSettingListRelationFilter
   customFields?: Prisma.CustomFieldListRelationFilter
@@ -438,6 +441,7 @@ export type ChurchCreateInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -470,6 +474,7 @@ export type ChurchUncheckedCreateInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -502,6 +507,7 @@ export type ChurchUpdateInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -534,6 +540,7 @@ export type ChurchUncheckedUpdateInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -743,6 +750,20 @@ export type ChurchUpdateOneRequiredWithoutDocumentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChurchUpdateToOneWithWhereWithoutDocumentsInput, Prisma.ChurchUpdateWithoutDocumentsInput>, Prisma.ChurchUncheckedUpdateWithoutDocumentsInput>
 }
 
+export type ChurchCreateNestedOneWithoutPresentationsInput = {
+  create?: Prisma.XOR<Prisma.ChurchCreateWithoutPresentationsInput, Prisma.ChurchUncheckedCreateWithoutPresentationsInput>
+  connectOrCreate?: Prisma.ChurchCreateOrConnectWithoutPresentationsInput
+  connect?: Prisma.ChurchWhereUniqueInput
+}
+
+export type ChurchUpdateOneRequiredWithoutPresentationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ChurchCreateWithoutPresentationsInput, Prisma.ChurchUncheckedCreateWithoutPresentationsInput>
+  connectOrCreate?: Prisma.ChurchCreateOrConnectWithoutPresentationsInput
+  upsert?: Prisma.ChurchUpsertWithoutPresentationsInput
+  connect?: Prisma.ChurchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChurchUpdateToOneWithWhereWithoutPresentationsInput, Prisma.ChurchUpdateWithoutPresentationsInput>, Prisma.ChurchUncheckedUpdateWithoutPresentationsInput>
+}
+
 export type ChurchCreateNestedOneWithoutAssetsInput = {
   create?: Prisma.XOR<Prisma.ChurchCreateWithoutAssetsInput, Prisma.ChurchUncheckedCreateWithoutAssetsInput>
   connectOrCreate?: Prisma.ChurchCreateOrConnectWithoutAssetsInput
@@ -850,6 +871,7 @@ export type ChurchCreateWithoutCampusesInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -881,6 +903,7 @@ export type ChurchUncheckedCreateWithoutCampusesInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -928,6 +951,7 @@ export type ChurchUpdateWithoutCampusesInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -959,6 +983,7 @@ export type ChurchUncheckedUpdateWithoutCampusesInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -990,6 +1015,7 @@ export type ChurchCreateWithoutBudgetsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -1021,6 +1047,7 @@ export type ChurchUncheckedCreateWithoutBudgetsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -1068,6 +1095,7 @@ export type ChurchUpdateWithoutBudgetsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -1099,6 +1127,7 @@ export type ChurchUncheckedUpdateWithoutBudgetsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -1130,6 +1159,7 @@ export type ChurchCreateWithoutAccountsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -1161,6 +1191,7 @@ export type ChurchUncheckedCreateWithoutAccountsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -1208,6 +1239,7 @@ export type ChurchUpdateWithoutAccountsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -1239,6 +1271,7 @@ export type ChurchUncheckedUpdateWithoutAccountsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -1270,6 +1303,7 @@ export type ChurchCreateWithoutCalendarEventsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutChurchInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -1301,6 +1335,7 @@ export type ChurchUncheckedCreateWithoutCalendarEventsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutChurchInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -1348,6 +1383,7 @@ export type ChurchUpdateWithoutCalendarEventsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutChurchNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -1379,6 +1415,7 @@ export type ChurchUncheckedUpdateWithoutCalendarEventsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutChurchNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -1410,6 +1447,7 @@ export type ChurchCreateWithoutDocumentsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutChurchInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -1441,6 +1479,7 @@ export type ChurchUncheckedCreateWithoutDocumentsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutChurchInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -1488,6 +1527,7 @@ export type ChurchUpdateWithoutDocumentsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutChurchNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -1519,6 +1559,151 @@ export type ChurchUncheckedUpdateWithoutDocumentsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutChurchNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
+  settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
+  customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
+  residences?: Prisma.ResidenceUncheckedUpdateManyWithoutChurchNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutChurchNestedInput
+  checks?: Prisma.CheckUncheckedUpdateManyWithoutChurchNestedInput
+}
+
+export type ChurchCreateWithoutPresentationsInput = {
+  id?: string
+  name: string
+  denomination?: string | null
+  logo?: string | null
+  website?: string | null
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zipCode?: string | null
+  country?: string | null
+  timezone?: string
+  language?: string
+  currency?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campuses?: Prisma.CampusCreateNestedManyWithoutChurchInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutChurchInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
+  settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
+  customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
+  residences?: Prisma.ResidenceCreateNestedManyWithoutChurchInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutChurchInput
+  checks?: Prisma.CheckCreateNestedManyWithoutChurchInput
+}
+
+export type ChurchUncheckedCreateWithoutPresentationsInput = {
+  id?: string
+  name: string
+  denomination?: string | null
+  logo?: string | null
+  website?: string | null
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zipCode?: string | null
+  country?: string | null
+  timezone?: string
+  language?: string
+  currency?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campuses?: Prisma.CampusUncheckedCreateNestedManyWithoutChurchInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutChurchInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
+  settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
+  customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
+  residences?: Prisma.ResidenceUncheckedCreateNestedManyWithoutChurchInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutChurchInput
+  checks?: Prisma.CheckUncheckedCreateNestedManyWithoutChurchInput
+}
+
+export type ChurchCreateOrConnectWithoutPresentationsInput = {
+  where: Prisma.ChurchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChurchCreateWithoutPresentationsInput, Prisma.ChurchUncheckedCreateWithoutPresentationsInput>
+}
+
+export type ChurchUpsertWithoutPresentationsInput = {
+  update: Prisma.XOR<Prisma.ChurchUpdateWithoutPresentationsInput, Prisma.ChurchUncheckedUpdateWithoutPresentationsInput>
+  create: Prisma.XOR<Prisma.ChurchCreateWithoutPresentationsInput, Prisma.ChurchUncheckedCreateWithoutPresentationsInput>
+  where?: Prisma.ChurchWhereInput
+}
+
+export type ChurchUpdateToOneWithWhereWithoutPresentationsInput = {
+  where?: Prisma.ChurchWhereInput
+  data: Prisma.XOR<Prisma.ChurchUpdateWithoutPresentationsInput, Prisma.ChurchUncheckedUpdateWithoutPresentationsInput>
+}
+
+export type ChurchUpdateWithoutPresentationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  denomination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campuses?: Prisma.CampusUpdateManyWithoutChurchNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutChurchNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
+  settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
+  customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
+  residences?: Prisma.ResidenceUpdateManyWithoutChurchNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutChurchNestedInput
+  checks?: Prisma.CheckUpdateManyWithoutChurchNestedInput
+}
+
+export type ChurchUncheckedUpdateWithoutPresentationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  denomination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campuses?: Prisma.CampusUncheckedUpdateManyWithoutChurchNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutChurchNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -1551,6 +1736,7 @@ export type ChurchCreateWithoutAssetsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
   residences?: Prisma.ResidenceCreateNestedManyWithoutChurchInput
@@ -1582,6 +1768,7 @@ export type ChurchUncheckedCreateWithoutAssetsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
   residences?: Prisma.ResidenceUncheckedCreateNestedManyWithoutChurchInput
@@ -1629,6 +1816,7 @@ export type ChurchUpdateWithoutAssetsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
   residences?: Prisma.ResidenceUpdateManyWithoutChurchNestedInput
@@ -1660,6 +1848,7 @@ export type ChurchUncheckedUpdateWithoutAssetsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
   residences?: Prisma.ResidenceUncheckedUpdateManyWithoutChurchNestedInput
@@ -1691,6 +1880,7 @@ export type ChurchCreateWithoutPayrollsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -1722,6 +1912,7 @@ export type ChurchUncheckedCreateWithoutPayrollsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -1769,6 +1960,7 @@ export type ChurchUpdateWithoutPayrollsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -1800,6 +1992,7 @@ export type ChurchUncheckedUpdateWithoutPayrollsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -1831,6 +2024,7 @@ export type ChurchCreateWithoutChecksInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -1862,6 +2056,7 @@ export type ChurchUncheckedCreateWithoutChecksInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -1909,6 +2104,7 @@ export type ChurchUpdateWithoutChecksInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -1940,6 +2136,7 @@ export type ChurchUncheckedUpdateWithoutChecksInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -1971,6 +2168,7 @@ export type ChurchCreateWithoutSettingsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
   residences?: Prisma.ResidenceCreateNestedManyWithoutChurchInput
@@ -2002,6 +2200,7 @@ export type ChurchUncheckedCreateWithoutSettingsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
   residences?: Prisma.ResidenceUncheckedCreateNestedManyWithoutChurchInput
@@ -2049,6 +2248,7 @@ export type ChurchUpdateWithoutSettingsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
   residences?: Prisma.ResidenceUpdateManyWithoutChurchNestedInput
@@ -2080,6 +2280,7 @@ export type ChurchUncheckedUpdateWithoutSettingsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
   residences?: Prisma.ResidenceUncheckedUpdateManyWithoutChurchNestedInput
@@ -2111,6 +2312,7 @@ export type ChurchCreateWithoutCustomFieldsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   residences?: Prisma.ResidenceCreateNestedManyWithoutChurchInput
@@ -2142,6 +2344,7 @@ export type ChurchUncheckedCreateWithoutCustomFieldsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   residences?: Prisma.ResidenceUncheckedCreateNestedManyWithoutChurchInput
@@ -2189,6 +2392,7 @@ export type ChurchUpdateWithoutCustomFieldsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   residences?: Prisma.ResidenceUpdateManyWithoutChurchNestedInput
@@ -2220,6 +2424,7 @@ export type ChurchUncheckedUpdateWithoutCustomFieldsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   residences?: Prisma.ResidenceUncheckedUpdateManyWithoutChurchNestedInput
@@ -2251,6 +2456,7 @@ export type ChurchCreateWithoutResidencesInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldCreateNestedManyWithoutChurchInput
@@ -2282,6 +2488,7 @@ export type ChurchUncheckedCreateWithoutResidencesInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutChurchInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutChurchInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutChurchInput
+  presentations?: Prisma.PresentationUncheckedCreateNestedManyWithoutChurchInput
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutChurchInput
   settings?: Prisma.ChurchSettingUncheckedCreateNestedManyWithoutChurchInput
   customFields?: Prisma.CustomFieldUncheckedCreateNestedManyWithoutChurchInput
@@ -2329,6 +2536,7 @@ export type ChurchUpdateWithoutResidencesInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUpdateManyWithoutChurchNestedInput
@@ -2360,6 +2568,7 @@ export type ChurchUncheckedUpdateWithoutResidencesInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutChurchNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutChurchNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutChurchNestedInput
+  presentations?: Prisma.PresentationUncheckedUpdateManyWithoutChurchNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutChurchNestedInput
   settings?: Prisma.ChurchSettingUncheckedUpdateManyWithoutChurchNestedInput
   customFields?: Prisma.CustomFieldUncheckedUpdateManyWithoutChurchNestedInput
@@ -2378,6 +2587,7 @@ export type ChurchCountOutputType = {
   budgets: number
   calendarEvents: number
   documents: number
+  presentations: number
   assets: number
   settings: number
   customFields: number
@@ -2392,6 +2602,7 @@ export type ChurchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   budgets?: boolean | ChurchCountOutputTypeCountBudgetsArgs
   calendarEvents?: boolean | ChurchCountOutputTypeCountCalendarEventsArgs
   documents?: boolean | ChurchCountOutputTypeCountDocumentsArgs
+  presentations?: boolean | ChurchCountOutputTypeCountPresentationsArgs
   assets?: boolean | ChurchCountOutputTypeCountAssetsArgs
   settings?: boolean | ChurchCountOutputTypeCountSettingsArgs
   customFields?: boolean | ChurchCountOutputTypeCountCustomFieldsArgs
@@ -2443,6 +2654,13 @@ export type ChurchCountOutputTypeCountCalendarEventsArgs<ExtArgs extends runtime
  */
 export type ChurchCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.DocumentWhereInput
+}
+
+/**
+ * ChurchCountOutputType without action
+ */
+export type ChurchCountOutputTypeCountPresentationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PresentationWhereInput
 }
 
 /**
@@ -2512,6 +2730,7 @@ export type ChurchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   budgets?: boolean | Prisma.Church$budgetsArgs<ExtArgs>
   calendarEvents?: boolean | Prisma.Church$calendarEventsArgs<ExtArgs>
   documents?: boolean | Prisma.Church$documentsArgs<ExtArgs>
+  presentations?: boolean | Prisma.Church$presentationsArgs<ExtArgs>
   assets?: boolean | Prisma.Church$assetsArgs<ExtArgs>
   settings?: boolean | Prisma.Church$settingsArgs<ExtArgs>
   customFields?: boolean | Prisma.Church$customFieldsArgs<ExtArgs>
@@ -2591,6 +2810,7 @@ export type ChurchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   budgets?: boolean | Prisma.Church$budgetsArgs<ExtArgs>
   calendarEvents?: boolean | Prisma.Church$calendarEventsArgs<ExtArgs>
   documents?: boolean | Prisma.Church$documentsArgs<ExtArgs>
+  presentations?: boolean | Prisma.Church$presentationsArgs<ExtArgs>
   assets?: boolean | Prisma.Church$assetsArgs<ExtArgs>
   settings?: boolean | Prisma.Church$settingsArgs<ExtArgs>
   customFields?: boolean | Prisma.Church$customFieldsArgs<ExtArgs>
@@ -2610,6 +2830,7 @@ export type $ChurchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     budgets: Prisma.$BudgetPayload<ExtArgs>[]
     calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
     documents: Prisma.$DocumentPayload<ExtArgs>[]
+    presentations: Prisma.$PresentationPayload<ExtArgs>[]
     assets: Prisma.$AssetPayload<ExtArgs>[]
     settings: Prisma.$ChurchSettingPayload<ExtArgs>[]
     customFields: Prisma.$CustomFieldPayload<ExtArgs>[]
@@ -3035,6 +3256,7 @@ export interface Prisma__ChurchClient<T, Null = never, ExtArgs extends runtime.T
   budgets<T extends Prisma.Church$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   calendarEvents<T extends Prisma.Church$calendarEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   documents<T extends Prisma.Church$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  presentations<T extends Prisma.Church$presentationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$presentationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PresentationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assets<T extends Prisma.Church$assetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   settings<T extends Prisma.Church$settingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$settingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChurchSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customFields<T extends Prisma.Church$customFieldsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Church$customFieldsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomFieldPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3593,6 +3815,30 @@ export type Church$documentsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+}
+
+/**
+ * Church.presentations
+ */
+export type Church$presentationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Presentation
+   */
+  select?: Prisma.PresentationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Presentation
+   */
+  omit?: Prisma.PresentationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PresentationInclude<ExtArgs> | null
+  where?: Prisma.PresentationWhereInput
+  orderBy?: Prisma.PresentationOrderByWithRelationInput | Prisma.PresentationOrderByWithRelationInput[]
+  cursor?: Prisma.PresentationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PresentationScalarFieldEnum | Prisma.PresentationScalarFieldEnum[]
 }
 
 /**

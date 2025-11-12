@@ -247,6 +247,8 @@ export type CampusWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
   pastor?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  serviceSessions?: Prisma.ServiceSessionListRelationFilter
+  masterEvents?: Prisma.MasterEventListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
   church?: Prisma.XOR<Prisma.ChurchScalarRelationFilter, Prisma.ChurchWhereInput>
   users?: Prisma.UserListRelationFilter
@@ -273,6 +275,8 @@ export type CampusOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pastor?: Prisma.UserOrderByWithRelationInput
+  serviceSessions?: Prisma.ServiceSessionOrderByRelationAggregateInput
+  masterEvents?: Prisma.MasterEventOrderByRelationAggregateInput
   invitations?: Prisma.InvitationOrderByRelationAggregateInput
   church?: Prisma.ChurchOrderByWithRelationInput
   users?: Prisma.UserOrderByRelationAggregateInput
@@ -302,6 +306,8 @@ export type CampusWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
   pastor?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  serviceSessions?: Prisma.ServiceSessionListRelationFilter
+  masterEvents?: Prisma.MasterEventListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
   church?: Prisma.XOR<Prisma.ChurchScalarRelationFilter, Prisma.ChurchWhereInput>
   users?: Prisma.UserListRelationFilter
@@ -364,6 +370,8 @@ export type CampusCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -389,6 +397,8 @@ export type CampusUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -412,6 +422,8 @@ export type CampusUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -437,6 +449,8 @@ export type CampusUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -678,6 +692,38 @@ export type CampusUpdateOneWithoutServicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutServicesInput, Prisma.CampusUpdateWithoutServicesInput>, Prisma.CampusUncheckedUpdateWithoutServicesInput>
 }
 
+export type CampusCreateNestedOneWithoutMasterEventsInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutMasterEventsInput, Prisma.CampusUncheckedCreateWithoutMasterEventsInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutMasterEventsInput
+  connect?: Prisma.CampusWhereUniqueInput
+}
+
+export type CampusUpdateOneWithoutMasterEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutMasterEventsInput, Prisma.CampusUncheckedCreateWithoutMasterEventsInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutMasterEventsInput
+  upsert?: Prisma.CampusUpsertWithoutMasterEventsInput
+  disconnect?: Prisma.CampusWhereInput | boolean
+  delete?: Prisma.CampusWhereInput | boolean
+  connect?: Prisma.CampusWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutMasterEventsInput, Prisma.CampusUpdateWithoutMasterEventsInput>, Prisma.CampusUncheckedUpdateWithoutMasterEventsInput>
+}
+
+export type CampusCreateNestedOneWithoutServiceSessionsInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutServiceSessionsInput, Prisma.CampusUncheckedCreateWithoutServiceSessionsInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutServiceSessionsInput
+  connect?: Prisma.CampusWhereUniqueInput
+}
+
+export type CampusUpdateOneWithoutServiceSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutServiceSessionsInput, Prisma.CampusUncheckedCreateWithoutServiceSessionsInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutServiceSessionsInput
+  upsert?: Prisma.CampusUpsertWithoutServiceSessionsInput
+  disconnect?: Prisma.CampusWhereInput | boolean
+  delete?: Prisma.CampusWhereInput | boolean
+  connect?: Prisma.CampusWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutServiceSessionsInput, Prisma.CampusUpdateWithoutServiceSessionsInput>, Prisma.CampusUncheckedUpdateWithoutServiceSessionsInput>
+}
+
 export type CampusCreateNestedOneWithoutEventsInput = {
   create?: Prisma.XOR<Prisma.CampusCreateWithoutEventsInput, Prisma.CampusUncheckedCreateWithoutEventsInput>
   connectOrCreate?: Prisma.CampusCreateOrConnectWithoutEventsInput
@@ -781,6 +827,8 @@ export type CampusCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   groups?: Prisma.SmallGroupCreateNestedManyWithoutCampusInput
@@ -805,6 +853,8 @@ export type CampusUncheckedCreateWithoutUsersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
@@ -831,6 +881,8 @@ export type CampusCreateWithoutPastorInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -855,6 +907,8 @@ export type CampusUncheckedCreateWithoutPastorInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -899,6 +953,8 @@ export type CampusUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   groups?: Prisma.SmallGroupUpdateManyWithoutCampusNestedInput
@@ -923,6 +979,8 @@ export type CampusUncheckedUpdateWithoutUsersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
@@ -980,6 +1038,8 @@ export type CampusCreateWithoutInvitationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupCreateNestedManyWithoutCampusInput
@@ -1004,6 +1064,8 @@ export type CampusUncheckedCreateWithoutInvitationsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
@@ -1042,6 +1104,8 @@ export type CampusUpdateWithoutInvitationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUpdateManyWithoutCampusNestedInput
@@ -1066,6 +1130,8 @@ export type CampusUncheckedUpdateWithoutInvitationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
@@ -1088,6 +1154,8 @@ export type CampusCreateWithoutGroupsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -1112,6 +1180,8 @@ export type CampusUncheckedCreateWithoutGroupsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
@@ -1150,6 +1220,8 @@ export type CampusUpdateWithoutGroupsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1174,6 +1246,8 @@ export type CampusUncheckedUpdateWithoutGroupsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
@@ -1196,6 +1270,8 @@ export type CampusCreateWithoutAnnouncementsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -1220,6 +1296,8 @@ export type CampusUncheckedCreateWithoutAnnouncementsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -1258,6 +1336,8 @@ export type CampusUpdateWithoutAnnouncementsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1282,6 +1362,8 @@ export type CampusUncheckedUpdateWithoutAnnouncementsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -1304,6 +1386,8 @@ export type CampusCreateWithoutServicesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -1328,6 +1412,8 @@ export type CampusUncheckedCreateWithoutServicesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -1366,6 +1452,8 @@ export type CampusUpdateWithoutServicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1390,11 +1478,245 @@ export type CampusUncheckedUpdateWithoutServicesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
   announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutCampusNestedInput
+  facilities?: Prisma.FacilityUncheckedUpdateManyWithoutCampusNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusCreateWithoutMasterEventsInput = {
+  id?: string
+  name: string
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zipCode?: string | null
+  phone?: string | null
+  email?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
+  church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
+  users?: Prisma.UserCreateNestedManyWithoutCampusInput
+  groups?: Prisma.SmallGroupCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventCreateNestedManyWithoutCampusInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutCampusInput
+  services?: Prisma.ServicePlanCreateNestedManyWithoutCampusInput
+  facilities?: Prisma.FacilityCreateNestedManyWithoutCampusInput
+  assets?: Prisma.AssetCreateNestedManyWithoutCampusInput
+}
+
+export type CampusUncheckedCreateWithoutMasterEventsInput = {
+  id?: string
+  name: string
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zipCode?: string | null
+  phone?: string | null
+  email?: string | null
+  pastorId?: string | null
+  churchId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
+  groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutCampusInput
+  services?: Prisma.ServicePlanUncheckedCreateNestedManyWithoutCampusInput
+  facilities?: Prisma.FacilityUncheckedCreateNestedManyWithoutCampusInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutCampusInput
+}
+
+export type CampusCreateOrConnectWithoutMasterEventsInput = {
+  where: Prisma.CampusWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampusCreateWithoutMasterEventsInput, Prisma.CampusUncheckedCreateWithoutMasterEventsInput>
+}
+
+export type CampusUpsertWithoutMasterEventsInput = {
+  update: Prisma.XOR<Prisma.CampusUpdateWithoutMasterEventsInput, Prisma.CampusUncheckedUpdateWithoutMasterEventsInput>
+  create: Prisma.XOR<Prisma.CampusCreateWithoutMasterEventsInput, Prisma.CampusUncheckedCreateWithoutMasterEventsInput>
+  where?: Prisma.CampusWhereInput
+}
+
+export type CampusUpdateToOneWithWhereWithoutMasterEventsInput = {
+  where?: Prisma.CampusWhereInput
+  data: Prisma.XOR<Prisma.CampusUpdateWithoutMasterEventsInput, Prisma.CampusUncheckedUpdateWithoutMasterEventsInput>
+}
+
+export type CampusUpdateWithoutMasterEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
+  church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
+  users?: Prisma.UserUpdateManyWithoutCampusNestedInput
+  groups?: Prisma.SmallGroupUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUpdateManyWithoutCampusNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutCampusNestedInput
+  services?: Prisma.ServicePlanUpdateManyWithoutCampusNestedInput
+  facilities?: Prisma.FacilityUpdateManyWithoutCampusNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusUncheckedUpdateWithoutMasterEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pastorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  churchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
+  groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutCampusNestedInput
+  services?: Prisma.ServicePlanUncheckedUpdateManyWithoutCampusNestedInput
+  facilities?: Prisma.FacilityUncheckedUpdateManyWithoutCampusNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusCreateWithoutServiceSessionsInput = {
+  id?: string
+  name: string
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zipCode?: string | null
+  phone?: string | null
+  email?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
+  church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
+  users?: Prisma.UserCreateNestedManyWithoutCampusInput
+  groups?: Prisma.SmallGroupCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventCreateNestedManyWithoutCampusInput
+  announcements?: Prisma.AnnouncementCreateNestedManyWithoutCampusInput
+  services?: Prisma.ServicePlanCreateNestedManyWithoutCampusInput
+  facilities?: Prisma.FacilityCreateNestedManyWithoutCampusInput
+  assets?: Prisma.AssetCreateNestedManyWithoutCampusInput
+}
+
+export type CampusUncheckedCreateWithoutServiceSessionsInput = {
+  id?: string
+  name: string
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zipCode?: string | null
+  phone?: string | null
+  email?: string | null
+  pastorId?: string | null
+  churchId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
+  groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
+  announcements?: Prisma.AnnouncementUncheckedCreateNestedManyWithoutCampusInput
+  services?: Prisma.ServicePlanUncheckedCreateNestedManyWithoutCampusInput
+  facilities?: Prisma.FacilityUncheckedCreateNestedManyWithoutCampusInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutCampusInput
+}
+
+export type CampusCreateOrConnectWithoutServiceSessionsInput = {
+  where: Prisma.CampusWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampusCreateWithoutServiceSessionsInput, Prisma.CampusUncheckedCreateWithoutServiceSessionsInput>
+}
+
+export type CampusUpsertWithoutServiceSessionsInput = {
+  update: Prisma.XOR<Prisma.CampusUpdateWithoutServiceSessionsInput, Prisma.CampusUncheckedUpdateWithoutServiceSessionsInput>
+  create: Prisma.XOR<Prisma.CampusCreateWithoutServiceSessionsInput, Prisma.CampusUncheckedCreateWithoutServiceSessionsInput>
+  where?: Prisma.CampusWhereInput
+}
+
+export type CampusUpdateToOneWithWhereWithoutServiceSessionsInput = {
+  where?: Prisma.CampusWhereInput
+  data: Prisma.XOR<Prisma.CampusUpdateWithoutServiceSessionsInput, Prisma.CampusUncheckedUpdateWithoutServiceSessionsInput>
+}
+
+export type CampusUpdateWithoutServiceSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
+  church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
+  users?: Prisma.UserUpdateManyWithoutCampusNestedInput
+  groups?: Prisma.SmallGroupUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUpdateManyWithoutCampusNestedInput
+  announcements?: Prisma.AnnouncementUpdateManyWithoutCampusNestedInput
+  services?: Prisma.ServicePlanUpdateManyWithoutCampusNestedInput
+  facilities?: Prisma.FacilityUpdateManyWithoutCampusNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusUncheckedUpdateWithoutServiceSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pastorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  churchId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
+  groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
+  announcements?: Prisma.AnnouncementUncheckedUpdateManyWithoutCampusNestedInput
+  services?: Prisma.ServicePlanUncheckedUpdateManyWithoutCampusNestedInput
   facilities?: Prisma.FacilityUncheckedUpdateManyWithoutCampusNestedInput
   assets?: Prisma.AssetUncheckedUpdateManyWithoutCampusNestedInput
 }
@@ -1412,6 +1734,8 @@ export type CampusCreateWithoutEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -1436,6 +1760,8 @@ export type CampusUncheckedCreateWithoutEventsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -1474,6 +1800,8 @@ export type CampusUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1498,6 +1826,8 @@ export type CampusUncheckedUpdateWithoutEventsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -1520,6 +1850,8 @@ export type CampusCreateWithoutFacilitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -1544,6 +1876,8 @@ export type CampusUncheckedCreateWithoutFacilitiesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -1582,6 +1916,8 @@ export type CampusUpdateWithoutFacilitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1606,6 +1942,8 @@ export type CampusUncheckedUpdateWithoutFacilitiesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -1628,6 +1966,8 @@ export type CampusCreateWithoutAssetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   church: Prisma.ChurchCreateNestedOneWithoutCampusesInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
@@ -1652,6 +1992,8 @@ export type CampusUncheckedCreateWithoutAssetsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -1690,6 +2032,8 @@ export type CampusUpdateWithoutAssetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1714,6 +2058,8 @@ export type CampusUncheckedUpdateWithoutAssetsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -1736,6 +2082,8 @@ export type CampusCreateWithoutChurchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   pastor?: Prisma.UserCreateNestedOneWithoutCampusPastorInput
+  serviceSessions?: Prisma.ServiceSessionCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutCampusInput
   users?: Prisma.UserCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupCreateNestedManyWithoutCampusInput
@@ -1759,6 +2107,8 @@ export type CampusUncheckedCreateWithoutChurchInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedCreateNestedManyWithoutCampusInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutCampusInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutCampusInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCampusInput
   groups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutCampusInput
@@ -1822,6 +2172,8 @@ export type CampusUpdateWithoutPastorInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   church?: Prisma.ChurchUpdateOneRequiredWithoutCampusesNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
@@ -1846,6 +2198,8 @@ export type CampusUncheckedUpdateWithoutPastorInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -1899,6 +2253,8 @@ export type CampusUpdateWithoutChurchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pastor?: Prisma.UserUpdateOneWithoutCampusPastorNestedInput
+  serviceSessions?: Prisma.ServiceSessionUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUpdateManyWithoutCampusNestedInput
@@ -1922,6 +2278,8 @@ export type CampusUncheckedUpdateWithoutChurchInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceSessions?: Prisma.ServiceSessionUncheckedUpdateManyWithoutCampusNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutCampusNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutCampusNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutCampusNestedInput
   groups?: Prisma.SmallGroupUncheckedUpdateManyWithoutCampusNestedInput
@@ -1953,6 +2311,8 @@ export type CampusUncheckedUpdateManyWithoutChurchInput = {
  */
 
 export type CampusCountOutputType = {
+  serviceSessions: number
+  masterEvents: number
   invitations: number
   users: number
   groups: number
@@ -1964,6 +2324,8 @@ export type CampusCountOutputType = {
 }
 
 export type CampusCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  serviceSessions?: boolean | CampusCountOutputTypeCountServiceSessionsArgs
+  masterEvents?: boolean | CampusCountOutputTypeCountMasterEventsArgs
   invitations?: boolean | CampusCountOutputTypeCountInvitationsArgs
   users?: boolean | CampusCountOutputTypeCountUsersArgs
   groups?: boolean | CampusCountOutputTypeCountGroupsArgs
@@ -1982,6 +2344,20 @@ export type CampusCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
    * Select specific fields to fetch from the CampusCountOutputType
    */
   select?: Prisma.CampusCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CampusCountOutputType without action
+ */
+export type CampusCountOutputTypeCountServiceSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceSessionWhereInput
+}
+
+/**
+ * CampusCountOutputType without action
+ */
+export type CampusCountOutputTypeCountMasterEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MasterEventWhereInput
 }
 
 /**
@@ -2056,6 +2432,8 @@ export type CampusSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   pastor?: boolean | Prisma.Campus$pastorArgs<ExtArgs>
+  serviceSessions?: boolean | Prisma.Campus$serviceSessionsArgs<ExtArgs>
+  masterEvents?: boolean | Prisma.Campus$masterEventsArgs<ExtArgs>
   invitations?: boolean | Prisma.Campus$invitationsArgs<ExtArgs>
   church?: boolean | Prisma.ChurchDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Campus$usersArgs<ExtArgs>
@@ -2123,6 +2501,8 @@ export type CampusSelectScalar = {
 export type CampusOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "city" | "state" | "zipCode" | "phone" | "email" | "pastorId" | "churchId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["campus"]>
 export type CampusInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pastor?: boolean | Prisma.Campus$pastorArgs<ExtArgs>
+  serviceSessions?: boolean | Prisma.Campus$serviceSessionsArgs<ExtArgs>
+  masterEvents?: boolean | Prisma.Campus$masterEventsArgs<ExtArgs>
   invitations?: boolean | Prisma.Campus$invitationsArgs<ExtArgs>
   church?: boolean | Prisma.ChurchDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Campus$usersArgs<ExtArgs>
@@ -2147,6 +2527,8 @@ export type $CampusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Campus"
   objects: {
     pastor: Prisma.$UserPayload<ExtArgs> | null
+    serviceSessions: Prisma.$ServiceSessionPayload<ExtArgs>[]
+    masterEvents: Prisma.$MasterEventPayload<ExtArgs>[]
     invitations: Prisma.$InvitationPayload<ExtArgs>[]
     church: Prisma.$ChurchPayload<ExtArgs>
     users: Prisma.$UserPayload<ExtArgs>[]
@@ -2566,6 +2948,8 @@ readonly fields: CampusFieldRefs;
 export interface Prisma__CampusClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   pastor<T extends Prisma.Campus$pastorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$pastorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  serviceSessions<T extends Prisma.Campus$serviceSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$serviceSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  masterEvents<T extends Prisma.Campus$masterEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$masterEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MasterEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invitations<T extends Prisma.Campus$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   church<T extends Prisma.ChurchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChurchDefaultArgs<ExtArgs>>): Prisma.Prisma__ChurchClient<runtime.Types.Result.GetResult<Prisma.$ChurchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   users<T extends Prisma.Campus$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3029,6 +3413,54 @@ export type Campus$pastorArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Campus.serviceSessions
+ */
+export type Campus$serviceSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceSession
+   */
+  select?: Prisma.ServiceSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceSession
+   */
+  omit?: Prisma.ServiceSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceSessionInclude<ExtArgs> | null
+  where?: Prisma.ServiceSessionWhereInput
+  orderBy?: Prisma.ServiceSessionOrderByWithRelationInput | Prisma.ServiceSessionOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceSessionScalarFieldEnum | Prisma.ServiceSessionScalarFieldEnum[]
+}
+
+/**
+ * Campus.masterEvents
+ */
+export type Campus$masterEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MasterEvent
+   */
+  select?: Prisma.MasterEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MasterEvent
+   */
+  omit?: Prisma.MasterEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MasterEventInclude<ExtArgs> | null
+  where?: Prisma.MasterEventWhereInput
+  orderBy?: Prisma.MasterEventOrderByWithRelationInput | Prisma.MasterEventOrderByWithRelationInput[]
+  cursor?: Prisma.MasterEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MasterEventScalarFieldEnum | Prisma.MasterEventScalarFieldEnum[]
 }
 
 /**

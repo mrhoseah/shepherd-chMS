@@ -1,0 +1,115 @@
+[
+  {
+    "timestamp": "2025-11-09T15:07:23.653Z",
+    "type": "CognitoDirect_API_Error",
+    "error": {
+      "name": "InvalidParameterException",
+      "message": "1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+",
+      "code": "400",
+      "stack": "InvalidParameterException: 1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+\n    at signInWithCognitoDirect (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2485:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.authorize (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2680:45)\n    at async Object.callback (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:1600:20)"
+    },
+    "context": {
+      "endpoint": "https://cognito-idp.af-south-1.amazonaws.com/",
+      "clientId": "your-client-id",
+      "userPoolId": "af-south-1_HZYIpahzs",
+      "region": "af-south-1",
+      "hasClientSecret": false,
+      "fullResponse": {
+        "__type": "InvalidParameterException",
+        "message": "1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+"
+      },
+      "requestBody": {
+        "AuthFlow": "USER_PASSWORD_AUTH",
+        "ClientId": "your-client-id",
+        "AuthParameters": {
+          "USERNAME": "mrhoseah@gmail.com",
+          "PASSWORD": "***"
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-11-09T15:07:24.013Z",
+    "type": "CognitoDirect_Exception",
+    "error": {
+      "name": "Error",
+      "message": "Invalid parameter: 1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+",
+      "stack": "Error: Invalid parameter: 1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+\n    at signInWithCognitoDirect (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2513:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.authorize (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2680:45)\n    at async Object.callback (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:1600:20)"
+    },
+    "context": {
+      "email": "mrhoseah@gmail.com",
+      "endpoint": "https://cognito-idp.af-south-1.amazonaws.com/",
+      "clientId": "your-client-id",
+      "userPoolId": "af-south-1_HZYIpahzs",
+      "region": "af-south-1"
+    }
+  },
+  {
+    "timestamp": "2025-11-09T15:07:24.014Z",
+    "type": "NextAuth_Authorize_Error",
+    "error": {
+      "name": "Error",
+      "message": "Invalid parameter: 1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+",
+      "stack": "Error: Invalid parameter: 1 validation error detected: Value 'your-client-id' at 'clientId' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\w+]+\n    at signInWithCognitoDirect (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2513:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.authorize (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2680:45)\n    at async Object.callback (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:1600:20)"
+    },
+    "context": {
+      "email": "mrhoseah@gmail.com",
+      "cognitoConfig": {
+        "userPoolId": "af-south-1_HZYIpahzs",
+        "clientId": "your-client-id",
+        "region": "af-south-1"
+      }
+    }
+  },
+  {
+    "timestamp": "2025-11-09T15:14:14.887Z",
+    "type": "NextAuth_Authorize_Error",
+    "error": {
+      "name": "Error",
+      "message": "This role does not have login access. This role is for identification and grouping purposes only.",
+      "stack": "Error: This role does not have login access. This role is for identification and grouping purposes only.\n    at Object.authorize (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2790:31)\n    at async Object.callback (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:1600:20)\n    at async AuthHandler (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:3333:38)\n    at async NextAuthRouteHandler (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:3501:30)"
+    },
+    "context": {
+      "email": "mrhoseah@gmail.com",
+      "cognitoConfig": {
+        "userPoolId": "af-south-1_LmAJvuOpj",
+        "clientId": "3tqr6stk71nj1dqid070ortevv",
+        "region": "af-south-1"
+      }
+    }
+  },
+  {
+    "timestamp": "2025-11-09T15:16:12.139Z",
+    "type": "NextAuth_Authorize_Error",
+    "error": {
+      "name": "Error",
+      "message": "This role does not have login access by default. This role is for identification and grouping purposes only. Please contact an administrator to enable login access.",
+      "stack": "Error: This role does not have login access by default. This role is for identification and grouping purposes only. Please contact an administrator to enable login access.\n    at Object.authorize (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2795:31)\n    at async Object.callback (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:1600:20)\n    at async AuthHandler (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:3333:38)\n    at async NextAuthRouteHandler (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/node_modules_next-auth_1810886e._.js:3501:30)"
+    },
+    "context": {
+      "email": "mrhoseah@gmail.com",
+      "cognitoConfig": {
+        "userPoolId": "af-south-1_LmAJvuOpj",
+        "clientId": "3tqr6stk71nj1dqid070ortevv",
+        "region": "af-south-1"
+      }
+    }
+  },
+  {
+    "timestamp": "2025-11-09T15:19:05.963Z",
+    "type": "NextAuth_Authorize_Error",
+    "error": {
+      "name": "TypeError",
+      "message": "fetch failed",
+      "stack": "TypeError: fetch failed\n    at node:internal/deps/undici/undici:15845:13\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async getUserFromTokenDirect (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2557:26)\n    at async Object.authorize (/home/mrhoseah/dev/eastgate-chMS/.next/dev/server/chunks/[root-of-the-server]__991a9921._.js:2685:41)"
+    },
+    "context": {
+      "email": "mrhoseah@gmail.com",
+      "cognitoConfig": {
+        "userPoolId": "af-south-1_LmAJvuOpj",
+        "clientId": "3tqr6stk71nj1dqid070ortevv",
+        "region": "af-south-1"
+      }
+    }
+  }
+]

@@ -38,7 +38,7 @@ export function FamilyPhotoUpload({
   const handleSave = async (urlToSave: string | null = photoUrl || null) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/users/${userId}/family`, {
+      const res = await fetch(`/api/people/${userId}/family`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,7 +69,7 @@ export function FamilyPhotoUpload({
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/users/${userId}/family`, {
+      const res = await fetch(`/api/people/${userId}/family`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

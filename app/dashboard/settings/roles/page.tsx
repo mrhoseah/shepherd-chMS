@@ -188,10 +188,10 @@ export default function RolesAndPermissionsPage() {
         limit: "10",
         ...(userSearch && { search: userSearch }),
       });
-      const response = await fetch(`/api/users?${params}`);
+      const response = await fetch(`/api/people?${params}`);
       const data = await response.json();
       if (response.ok) {
-        setUsers(data.users || []);
+        setUsers(data.people || data.users || []);
         setUserTotalPages(data.pagination?.totalPages || 1);
       } else {
         setError(data.error || "Failed to fetch users");
@@ -327,7 +327,7 @@ export default function RolesAndPermissionsPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`/api/users/${editingUser.id}`, {
+      const response = await fetch(`/api/people/${editingUser.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: userRole }),

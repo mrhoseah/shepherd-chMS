@@ -28,13 +28,14 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { QrCode, Smartphone } from "lucide-react";
+import { QrCode, Smartphone, Printer, AlertCircle } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { QRCodeDialog } from "@/components/qr-code-dialog";
 import { formatCurrency } from "@/lib/currency";
 import { formatCurrencyWithConversionSync } from "@/lib/currency-converter";
 import { useAppSelector, useAppDispatch } from "@/lib/store/hooks";
 import { initializeCurrency, setExchangeRate } from "@/lib/store/slices/currencySlice";
+import Link from "next/link";
 
 interface Donation {
   id: string;
@@ -238,7 +239,20 @@ export default function DonationsPage() {
             Manage church donations and giving
           </p>
         </div>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <div className="flex gap-2">
+          <Link href="/dashboard/donations/unallocated">
+            <Button variant="outline">
+              <AlertCircle className="w-4 h-4 mr-2" />
+              Unallocated
+            </Button>
+          </Link>
+          <Link href="/dashboard/giving/qr-print">
+            <Button variant="outline">
+              <Printer className="w-4 h-4 mr-2" />
+              Print QR Codes
+            </Button>
+          </Link>
+          <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
               onClick={() => {
@@ -362,6 +376,7 @@ export default function DonationsPage() {
             </form>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* Category Statistics */}

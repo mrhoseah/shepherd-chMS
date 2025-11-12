@@ -68,21 +68,29 @@ async function createUserWithCognito(
 
   if (existingUser) {
     console.log(`ℹ️  User already exists in database: ${email}`);
+    console.log(`   Current role: ${existingUser.role}, Current canLogin: ${existingUser.canLogin}`);
     // Update user to ensure proper settings
+    // For ADMIN role, always enable canLogin
+    // For other roles, use the canLogin parameter
+    const shouldEnableLogin = role === "ADMIN" || canLogin;
     const updated = await prisma.user.update({
       where: { id: existingUser.id },
       data: {
         role,
         status: "ACTIVE",
-        canLogin: role === "ADMIN" || canLogin,
+        canLogin: shouldEnableLogin,
         emailVerified: true,
         phoneVerified: phone ? true : undefined,
       },
     });
+    console.log(`   ✅ Updated: role=${updated.role}, canLogin=${updated.canLogin}, status=${updated.status}`);
     return updated;
   }
 
   // Create user in database
+  // For ADMIN role, always enable canLogin
+  // For other roles, use the canLogin parameter
+  const shouldEnableLogin = role === "ADMIN" || canLogin;
   const user = await prisma.user.create({
     data: {
       email,
@@ -91,7 +99,7 @@ async function createUserWithCognito(
       lastName,
       role,
       status: "ACTIVE",
-      canLogin: role === "ADMIN" || canLogin, // Admins can always login
+      canLogin: shouldEnableLogin,
       emailVerified: true,
       phoneVerified: phone ? true : false,
     },

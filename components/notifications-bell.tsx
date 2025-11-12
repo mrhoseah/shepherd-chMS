@@ -34,31 +34,50 @@ interface Notification {
 }
 
 export function NotificationsBell() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
   const fetchNotifications = async () => {
-    if (!session?.user?.id) return;
+    if (!session?.user?.id) {
+      setLoading(false);
+      return;
+    }
 
     try {
-      const response = await fetch("/api/notifications?unreadOnly=false&limit=20");
+      const response = await fetch("/api/notifications?unreadOnly=false&limit=20", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      
       if (response.ok) {
         const data = await response.json();
         setNotifications(data.notifications || []);
         setUnreadCount(data.unreadCount || 0);
+      } else {
+        console.error("Failed to fetch notifications:", response.status, response.statusText);
+        // Set empty state on error
+        setNotifications([]);
+        setUnreadCount(0);
       }
     } catch (error) {
       console.error("Error fetching notifications:", error);
+      // Set empty state on error
+      setNotifications([]);
+      setUnreadCount(0);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (session?.user?.id) {
+    // Only fetch if session is loaded and user is authenticated
+    if (status === "authenticated" && session?.user?.id) {
       fetchNotifications();
       
       // Poll for new notifications every 30 seconds
@@ -66,7 +85,7 @@ export function NotificationsBell() {
       return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user?.id]);
+  }, [status, session?.user?.id]);
 
   // Refresh notifications when popover opens
   useEffect(() => {
@@ -118,6 +137,11 @@ export function NotificationsBell() {
       console.error("Error marking all as read:", error);
     }
   };
+
+  // Don't render until session is loaded
+  if (status === "loading") {
+    return null;
+  }
 
   // Only show for pastors and leaders
   const userRole = (session?.user as any)?.role;

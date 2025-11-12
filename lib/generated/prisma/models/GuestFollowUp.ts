@@ -31,9 +31,12 @@ export type GuestFollowUpMinAggregateOutputType = {
   method: $Enums.FollowUpMethod | null
   subject: string | null
   content: string | null
+  isAiGenerated: boolean | null
+  templateId: string | null
   scheduledAt: Date | null
   completedAt: Date | null
   status: $Enums.FollowUpStatus | null
+  priority: $Enums.FollowUpPriority | null
   assignedToId: string | null
   createdById: string | null
   notes: string | null
@@ -48,9 +51,12 @@ export type GuestFollowUpMaxAggregateOutputType = {
   method: $Enums.FollowUpMethod | null
   subject: string | null
   content: string | null
+  isAiGenerated: boolean | null
+  templateId: string | null
   scheduledAt: Date | null
   completedAt: Date | null
   status: $Enums.FollowUpStatus | null
+  priority: $Enums.FollowUpPriority | null
   assignedToId: string | null
   createdById: string | null
   notes: string | null
@@ -65,9 +71,12 @@ export type GuestFollowUpCountAggregateOutputType = {
   method: number
   subject: number
   content: number
+  isAiGenerated: number
+  templateId: number
   scheduledAt: number
   completedAt: number
   status: number
+  priority: number
   assignedToId: number
   createdById: number
   notes: number
@@ -85,9 +94,12 @@ export type GuestFollowUpMinAggregateInputType = {
   method?: true
   subject?: true
   content?: true
+  isAiGenerated?: true
+  templateId?: true
   scheduledAt?: true
   completedAt?: true
   status?: true
+  priority?: true
   assignedToId?: true
   createdById?: true
   notes?: true
@@ -102,9 +114,12 @@ export type GuestFollowUpMaxAggregateInputType = {
   method?: true
   subject?: true
   content?: true
+  isAiGenerated?: true
+  templateId?: true
   scheduledAt?: true
   completedAt?: true
   status?: true
+  priority?: true
   assignedToId?: true
   createdById?: true
   notes?: true
@@ -119,9 +134,12 @@ export type GuestFollowUpCountAggregateInputType = {
   method?: true
   subject?: true
   content?: true
+  isAiGenerated?: true
+  templateId?: true
   scheduledAt?: true
   completedAt?: true
   status?: true
+  priority?: true
   assignedToId?: true
   createdById?: true
   notes?: true
@@ -210,9 +228,12 @@ export type GuestFollowUpGroupByOutputType = {
   method: $Enums.FollowUpMethod
   subject: string | null
   content: string
+  isAiGenerated: boolean
+  templateId: string | null
   scheduledAt: Date | null
   completedAt: Date | null
   status: $Enums.FollowUpStatus
+  priority: $Enums.FollowUpPriority
   assignedToId: string | null
   createdById: string
   notes: string | null
@@ -249,9 +270,12 @@ export type GuestFollowUpWhereInput = {
   method?: Prisma.EnumFollowUpMethodFilter<"GuestFollowUp"> | $Enums.FollowUpMethod
   subject?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   content?: Prisma.StringFilter<"GuestFollowUp"> | string
+  isAiGenerated?: Prisma.BoolFilter<"GuestFollowUp"> | boolean
+  templateId?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   scheduledAt?: Prisma.DateTimeNullableFilter<"GuestFollowUp"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"GuestFollowUp"> | Date | string | null
   status?: Prisma.EnumFollowUpStatusFilter<"GuestFollowUp"> | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFilter<"GuestFollowUp"> | $Enums.FollowUpPriority
   assignedToId?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   createdById?: Prisma.StringFilter<"GuestFollowUp"> | string
   notes?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
@@ -259,6 +283,7 @@ export type GuestFollowUpWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"GuestFollowUp"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"GuestFollowUp"> | Date | string
   guest?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  template?: Prisma.XOR<Prisma.CommunicationTemplateNullableScalarRelationFilter, Prisma.CommunicationTemplateWhereInput> | null
   assignedTo?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -270,9 +295,12 @@ export type GuestFollowUpOrderByWithRelationInput = {
   method?: Prisma.SortOrder
   subject?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
+  isAiGenerated?: Prisma.SortOrder
+  templateId?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -280,6 +308,7 @@ export type GuestFollowUpOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   guest?: Prisma.UserOrderByWithRelationInput
+  template?: Prisma.CommunicationTemplateOrderByWithRelationInput
   assignedTo?: Prisma.UserOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
 }
@@ -294,9 +323,12 @@ export type GuestFollowUpWhereUniqueInput = Prisma.AtLeast<{
   method?: Prisma.EnumFollowUpMethodFilter<"GuestFollowUp"> | $Enums.FollowUpMethod
   subject?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   content?: Prisma.StringFilter<"GuestFollowUp"> | string
+  isAiGenerated?: Prisma.BoolFilter<"GuestFollowUp"> | boolean
+  templateId?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   scheduledAt?: Prisma.DateTimeNullableFilter<"GuestFollowUp"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"GuestFollowUp"> | Date | string | null
   status?: Prisma.EnumFollowUpStatusFilter<"GuestFollowUp"> | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFilter<"GuestFollowUp"> | $Enums.FollowUpPriority
   assignedToId?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   createdById?: Prisma.StringFilter<"GuestFollowUp"> | string
   notes?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
@@ -304,6 +336,7 @@ export type GuestFollowUpWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"GuestFollowUp"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"GuestFollowUp"> | Date | string
   guest?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  template?: Prisma.XOR<Prisma.CommunicationTemplateNullableScalarRelationFilter, Prisma.CommunicationTemplateWhereInput> | null
   assignedTo?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -315,9 +348,12 @@ export type GuestFollowUpOrderByWithAggregationInput = {
   method?: Prisma.SortOrder
   subject?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
+  isAiGenerated?: Prisma.SortOrder
+  templateId?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -339,9 +375,12 @@ export type GuestFollowUpScalarWhereWithAggregatesInput = {
   method?: Prisma.EnumFollowUpMethodWithAggregatesFilter<"GuestFollowUp"> | $Enums.FollowUpMethod
   subject?: Prisma.StringNullableWithAggregatesFilter<"GuestFollowUp"> | string | null
   content?: Prisma.StringWithAggregatesFilter<"GuestFollowUp"> | string
+  isAiGenerated?: Prisma.BoolWithAggregatesFilter<"GuestFollowUp"> | boolean
+  templateId?: Prisma.StringNullableWithAggregatesFilter<"GuestFollowUp"> | string | null
   scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"GuestFollowUp"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"GuestFollowUp"> | Date | string | null
   status?: Prisma.EnumFollowUpStatusWithAggregatesFilter<"GuestFollowUp"> | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityWithAggregatesFilter<"GuestFollowUp"> | $Enums.FollowUpPriority
   assignedToId?: Prisma.StringNullableWithAggregatesFilter<"GuestFollowUp"> | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"GuestFollowUp"> | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"GuestFollowUp"> | string | null
@@ -356,14 +395,17 @@ export type GuestFollowUpCreateInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   guest: Prisma.UserCreateNestedOneWithoutGuestFollowUpsInput
+  template?: Prisma.CommunicationTemplateCreateNestedOneWithoutFollowUpsInput
   assignedTo?: Prisma.UserCreateNestedOneWithoutFollowUpsAssignedInput
   createdBy: Prisma.UserCreateNestedOneWithoutFollowUpsCreatedInput
 }
@@ -375,9 +417,12 @@ export type GuestFollowUpUncheckedCreateInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   assignedToId?: string | null
   createdById: string
   notes?: string | null
@@ -392,14 +437,17 @@ export type GuestFollowUpUpdateInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guest?: Prisma.UserUpdateOneRequiredWithoutGuestFollowUpsNestedInput
+  template?: Prisma.CommunicationTemplateUpdateOneWithoutFollowUpsNestedInput
   assignedTo?: Prisma.UserUpdateOneWithoutFollowUpsAssignedNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutFollowUpsCreatedNestedInput
 }
@@ -411,9 +459,12 @@ export type GuestFollowUpUncheckedUpdateInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -429,9 +480,12 @@ export type GuestFollowUpCreateManyInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   assignedToId?: string | null
   createdById: string
   notes?: string | null
@@ -446,9 +500,11 @@ export type GuestFollowUpUpdateManyMutationInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,9 +518,12 @@ export type GuestFollowUpUncheckedUpdateManyInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -490,9 +549,12 @@ export type GuestFollowUpCountOrderByAggregateInput = {
   method?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  isAiGenerated?: Prisma.SortOrder
+  templateId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -508,9 +570,12 @@ export type GuestFollowUpMaxOrderByAggregateInput = {
   method?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  isAiGenerated?: Prisma.SortOrder
+  templateId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -525,9 +590,12 @@ export type GuestFollowUpMinOrderByAggregateInput = {
   method?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  isAiGenerated?: Prisma.SortOrder
+  templateId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   assignedToId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -673,19 +741,68 @@ export type EnumFollowUpStatusFieldUpdateOperationsInput = {
   set?: $Enums.FollowUpStatus
 }
 
+export type EnumFollowUpPriorityFieldUpdateOperationsInput = {
+  set?: $Enums.FollowUpPriority
+}
+
+export type GuestFollowUpCreateNestedManyWithoutTemplateInput = {
+  create?: Prisma.XOR<Prisma.GuestFollowUpCreateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput> | Prisma.GuestFollowUpCreateWithoutTemplateInput[] | Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput[]
+  connectOrCreate?: Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput | Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput[]
+  createMany?: Prisma.GuestFollowUpCreateManyTemplateInputEnvelope
+  connect?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+}
+
+export type GuestFollowUpUncheckedCreateNestedManyWithoutTemplateInput = {
+  create?: Prisma.XOR<Prisma.GuestFollowUpCreateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput> | Prisma.GuestFollowUpCreateWithoutTemplateInput[] | Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput[]
+  connectOrCreate?: Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput | Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput[]
+  createMany?: Prisma.GuestFollowUpCreateManyTemplateInputEnvelope
+  connect?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+}
+
+export type GuestFollowUpUpdateManyWithoutTemplateNestedInput = {
+  create?: Prisma.XOR<Prisma.GuestFollowUpCreateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput> | Prisma.GuestFollowUpCreateWithoutTemplateInput[] | Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput[]
+  connectOrCreate?: Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput | Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput[]
+  upsert?: Prisma.GuestFollowUpUpsertWithWhereUniqueWithoutTemplateInput | Prisma.GuestFollowUpUpsertWithWhereUniqueWithoutTemplateInput[]
+  createMany?: Prisma.GuestFollowUpCreateManyTemplateInputEnvelope
+  set?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  disconnect?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  delete?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  connect?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  update?: Prisma.GuestFollowUpUpdateWithWhereUniqueWithoutTemplateInput | Prisma.GuestFollowUpUpdateWithWhereUniqueWithoutTemplateInput[]
+  updateMany?: Prisma.GuestFollowUpUpdateManyWithWhereWithoutTemplateInput | Prisma.GuestFollowUpUpdateManyWithWhereWithoutTemplateInput[]
+  deleteMany?: Prisma.GuestFollowUpScalarWhereInput | Prisma.GuestFollowUpScalarWhereInput[]
+}
+
+export type GuestFollowUpUncheckedUpdateManyWithoutTemplateNestedInput = {
+  create?: Prisma.XOR<Prisma.GuestFollowUpCreateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput> | Prisma.GuestFollowUpCreateWithoutTemplateInput[] | Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput[]
+  connectOrCreate?: Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput | Prisma.GuestFollowUpCreateOrConnectWithoutTemplateInput[]
+  upsert?: Prisma.GuestFollowUpUpsertWithWhereUniqueWithoutTemplateInput | Prisma.GuestFollowUpUpsertWithWhereUniqueWithoutTemplateInput[]
+  createMany?: Prisma.GuestFollowUpCreateManyTemplateInputEnvelope
+  set?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  disconnect?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  delete?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  connect?: Prisma.GuestFollowUpWhereUniqueInput | Prisma.GuestFollowUpWhereUniqueInput[]
+  update?: Prisma.GuestFollowUpUpdateWithWhereUniqueWithoutTemplateInput | Prisma.GuestFollowUpUpdateWithWhereUniqueWithoutTemplateInput[]
+  updateMany?: Prisma.GuestFollowUpUpdateManyWithWhereWithoutTemplateInput | Prisma.GuestFollowUpUpdateManyWithWhereWithoutTemplateInput[]
+  deleteMany?: Prisma.GuestFollowUpScalarWhereInput | Prisma.GuestFollowUpScalarWhereInput[]
+}
+
 export type GuestFollowUpCreateWithoutGuestInput = {
   id?: string
   type: $Enums.FollowUpType
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  template?: Prisma.CommunicationTemplateCreateNestedOneWithoutFollowUpsInput
   assignedTo?: Prisma.UserCreateNestedOneWithoutFollowUpsAssignedInput
   createdBy: Prisma.UserCreateNestedOneWithoutFollowUpsCreatedInput
 }
@@ -696,9 +813,12 @@ export type GuestFollowUpUncheckedCreateWithoutGuestInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   assignedToId?: string | null
   createdById: string
   notes?: string | null
@@ -723,14 +843,17 @@ export type GuestFollowUpCreateWithoutAssignedToInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   guest: Prisma.UserCreateNestedOneWithoutGuestFollowUpsInput
+  template?: Prisma.CommunicationTemplateCreateNestedOneWithoutFollowUpsInput
   createdBy: Prisma.UserCreateNestedOneWithoutFollowUpsCreatedInput
 }
 
@@ -741,9 +864,12 @@ export type GuestFollowUpUncheckedCreateWithoutAssignedToInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   createdById: string
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -767,14 +893,17 @@ export type GuestFollowUpCreateWithoutCreatedByInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   guest: Prisma.UserCreateNestedOneWithoutGuestFollowUpsInput
+  template?: Prisma.CommunicationTemplateCreateNestedOneWithoutFollowUpsInput
   assignedTo?: Prisma.UserCreateNestedOneWithoutFollowUpsAssignedInput
 }
 
@@ -785,9 +914,12 @@ export type GuestFollowUpUncheckedCreateWithoutCreatedByInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   assignedToId?: string | null
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -831,9 +963,12 @@ export type GuestFollowUpScalarWhereInput = {
   method?: Prisma.EnumFollowUpMethodFilter<"GuestFollowUp"> | $Enums.FollowUpMethod
   subject?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   content?: Prisma.StringFilter<"GuestFollowUp"> | string
+  isAiGenerated?: Prisma.BoolFilter<"GuestFollowUp"> | boolean
+  templateId?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   scheduledAt?: Prisma.DateTimeNullableFilter<"GuestFollowUp"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"GuestFollowUp"> | Date | string | null
   status?: Prisma.EnumFollowUpStatusFilter<"GuestFollowUp"> | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFilter<"GuestFollowUp"> | $Enums.FollowUpPriority
   assignedToId?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
   createdById?: Prisma.StringFilter<"GuestFollowUp"> | string
   notes?: Prisma.StringNullableFilter<"GuestFollowUp"> | string | null
@@ -874,15 +1009,84 @@ export type GuestFollowUpUpdateManyWithWhereWithoutCreatedByInput = {
   data: Prisma.XOR<Prisma.GuestFollowUpUpdateManyMutationInput, Prisma.GuestFollowUpUncheckedUpdateManyWithoutCreatedByInput>
 }
 
+export type GuestFollowUpCreateWithoutTemplateInput = {
+  id?: string
+  type: $Enums.FollowUpType
+  method: $Enums.FollowUpMethod
+  subject?: string | null
+  content: string
+  isAiGenerated?: boolean
+  scheduledAt?: Date | string | null
+  completedAt?: Date | string | null
+  status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guest: Prisma.UserCreateNestedOneWithoutGuestFollowUpsInput
+  assignedTo?: Prisma.UserCreateNestedOneWithoutFollowUpsAssignedInput
+  createdBy: Prisma.UserCreateNestedOneWithoutFollowUpsCreatedInput
+}
+
+export type GuestFollowUpUncheckedCreateWithoutTemplateInput = {
+  id?: string
+  guestId: string
+  type: $Enums.FollowUpType
+  method: $Enums.FollowUpMethod
+  subject?: string | null
+  content: string
+  isAiGenerated?: boolean
+  scheduledAt?: Date | string | null
+  completedAt?: Date | string | null
+  status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
+  assignedToId?: string | null
+  createdById: string
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type GuestFollowUpCreateOrConnectWithoutTemplateInput = {
+  where: Prisma.GuestFollowUpWhereUniqueInput
+  create: Prisma.XOR<Prisma.GuestFollowUpCreateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput>
+}
+
+export type GuestFollowUpCreateManyTemplateInputEnvelope = {
+  data: Prisma.GuestFollowUpCreateManyTemplateInput | Prisma.GuestFollowUpCreateManyTemplateInput[]
+  skipDuplicates?: boolean
+}
+
+export type GuestFollowUpUpsertWithWhereUniqueWithoutTemplateInput = {
+  where: Prisma.GuestFollowUpWhereUniqueInput
+  update: Prisma.XOR<Prisma.GuestFollowUpUpdateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedUpdateWithoutTemplateInput>
+  create: Prisma.XOR<Prisma.GuestFollowUpCreateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedCreateWithoutTemplateInput>
+}
+
+export type GuestFollowUpUpdateWithWhereUniqueWithoutTemplateInput = {
+  where: Prisma.GuestFollowUpWhereUniqueInput
+  data: Prisma.XOR<Prisma.GuestFollowUpUpdateWithoutTemplateInput, Prisma.GuestFollowUpUncheckedUpdateWithoutTemplateInput>
+}
+
+export type GuestFollowUpUpdateManyWithWhereWithoutTemplateInput = {
+  where: Prisma.GuestFollowUpScalarWhereInput
+  data: Prisma.XOR<Prisma.GuestFollowUpUpdateManyMutationInput, Prisma.GuestFollowUpUncheckedUpdateManyWithoutTemplateInput>
+}
+
 export type GuestFollowUpCreateManyGuestInput = {
   id?: string
   type: $Enums.FollowUpType
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   assignedToId?: string | null
   createdById: string
   notes?: string | null
@@ -898,9 +1102,12 @@ export type GuestFollowUpCreateManyAssignedToInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   createdById: string
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -915,9 +1122,12 @@ export type GuestFollowUpCreateManyCreatedByInput = {
   method: $Enums.FollowUpMethod
   subject?: string | null
   content: string
+  isAiGenerated?: boolean
+  templateId?: string | null
   scheduledAt?: Date | string | null
   completedAt?: Date | string | null
   status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
   assignedToId?: string | null
   notes?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -931,13 +1141,16 @@ export type GuestFollowUpUpdateWithoutGuestInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  template?: Prisma.CommunicationTemplateUpdateOneWithoutFollowUpsNestedInput
   assignedTo?: Prisma.UserUpdateOneWithoutFollowUpsAssignedNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutFollowUpsCreatedNestedInput
 }
@@ -948,9 +1161,12 @@ export type GuestFollowUpUncheckedUpdateWithoutGuestInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -965,9 +1181,12 @@ export type GuestFollowUpUncheckedUpdateManyWithoutGuestInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -982,14 +1201,17 @@ export type GuestFollowUpUpdateWithoutAssignedToInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guest?: Prisma.UserUpdateOneRequiredWithoutGuestFollowUpsNestedInput
+  template?: Prisma.CommunicationTemplateUpdateOneWithoutFollowUpsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutFollowUpsCreatedNestedInput
 }
 
@@ -1000,9 +1222,12 @@ export type GuestFollowUpUncheckedUpdateWithoutAssignedToInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1017,9 +1242,12 @@ export type GuestFollowUpUncheckedUpdateManyWithoutAssignedToInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1033,14 +1261,17 @@ export type GuestFollowUpUpdateWithoutCreatedByInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guest?: Prisma.UserUpdateOneRequiredWithoutGuestFollowUpsNestedInput
+  template?: Prisma.CommunicationTemplateUpdateOneWithoutFollowUpsNestedInput
   assignedTo?: Prisma.UserUpdateOneWithoutFollowUpsAssignedNestedInput
 }
 
@@ -1051,9 +1282,12 @@ export type GuestFollowUpUncheckedUpdateWithoutCreatedByInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1068,10 +1302,93 @@ export type GuestFollowUpUncheckedUpdateManyWithoutCreatedByInput = {
   method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
   assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type GuestFollowUpCreateManyTemplateInput = {
+  id?: string
+  guestId: string
+  type: $Enums.FollowUpType
+  method: $Enums.FollowUpMethod
+  subject?: string | null
+  content: string
+  isAiGenerated?: boolean
+  scheduledAt?: Date | string | null
+  completedAt?: Date | string | null
+  status?: $Enums.FollowUpStatus
+  priority?: $Enums.FollowUpPriority
+  assignedToId?: string | null
+  createdById: string
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type GuestFollowUpUpdateWithoutTemplateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumFollowUpTypeFieldUpdateOperationsInput | $Enums.FollowUpType
+  method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
+  subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guest?: Prisma.UserUpdateOneRequiredWithoutGuestFollowUpsNestedInput
+  assignedTo?: Prisma.UserUpdateOneWithoutFollowUpsAssignedNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutFollowUpsCreatedNestedInput
+}
+
+export type GuestFollowUpUncheckedUpdateWithoutTemplateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  guestId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumFollowUpTypeFieldUpdateOperationsInput | $Enums.FollowUpType
+  method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
+  subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
+  assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type GuestFollowUpUncheckedUpdateManyWithoutTemplateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  guestId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumFollowUpTypeFieldUpdateOperationsInput | $Enums.FollowUpType
+  method?: Prisma.EnumFollowUpMethodFieldUpdateOperationsInput | $Enums.FollowUpMethod
+  subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  isAiGenerated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumFollowUpStatusFieldUpdateOperationsInput | $Enums.FollowUpStatus
+  priority?: Prisma.EnumFollowUpPriorityFieldUpdateOperationsInput | $Enums.FollowUpPriority
+  assignedToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1087,9 +1404,12 @@ export type GuestFollowUpSelect<ExtArgs extends runtime.Types.Extensions.Interna
   method?: boolean
   subject?: boolean
   content?: boolean
+  isAiGenerated?: boolean
+  templateId?: boolean
   scheduledAt?: boolean
   completedAt?: boolean
   status?: boolean
+  priority?: boolean
   assignedToId?: boolean
   createdById?: boolean
   notes?: boolean
@@ -1097,6 +1417,7 @@ export type GuestFollowUpSelect<ExtArgs extends runtime.Types.Extensions.Interna
   createdAt?: boolean
   updatedAt?: boolean
   guest?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  template?: boolean | Prisma.GuestFollowUp$templateArgs<ExtArgs>
   assignedTo?: boolean | Prisma.GuestFollowUp$assignedToArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guestFollowUp"]>
@@ -1108,9 +1429,12 @@ export type GuestFollowUpSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   method?: boolean
   subject?: boolean
   content?: boolean
+  isAiGenerated?: boolean
+  templateId?: boolean
   scheduledAt?: boolean
   completedAt?: boolean
   status?: boolean
+  priority?: boolean
   assignedToId?: boolean
   createdById?: boolean
   notes?: boolean
@@ -1118,6 +1442,7 @@ export type GuestFollowUpSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   updatedAt?: boolean
   guest?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  template?: boolean | Prisma.GuestFollowUp$templateArgs<ExtArgs>
   assignedTo?: boolean | Prisma.GuestFollowUp$assignedToArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guestFollowUp"]>
@@ -1129,9 +1454,12 @@ export type GuestFollowUpSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   method?: boolean
   subject?: boolean
   content?: boolean
+  isAiGenerated?: boolean
+  templateId?: boolean
   scheduledAt?: boolean
   completedAt?: boolean
   status?: boolean
+  priority?: boolean
   assignedToId?: boolean
   createdById?: boolean
   notes?: boolean
@@ -1139,6 +1467,7 @@ export type GuestFollowUpSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   updatedAt?: boolean
   guest?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  template?: boolean | Prisma.GuestFollowUp$templateArgs<ExtArgs>
   assignedTo?: boolean | Prisma.GuestFollowUp$assignedToArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guestFollowUp"]>
@@ -1150,9 +1479,12 @@ export type GuestFollowUpSelectScalar = {
   method?: boolean
   subject?: boolean
   content?: boolean
+  isAiGenerated?: boolean
+  templateId?: boolean
   scheduledAt?: boolean
   completedAt?: boolean
   status?: boolean
+  priority?: boolean
   assignedToId?: boolean
   createdById?: boolean
   notes?: boolean
@@ -1161,19 +1493,22 @@ export type GuestFollowUpSelectScalar = {
   updatedAt?: boolean
 }
 
-export type GuestFollowUpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guestId" | "type" | "method" | "subject" | "content" | "scheduledAt" | "completedAt" | "status" | "assignedToId" | "createdById" | "notes" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["guestFollowUp"]>
+export type GuestFollowUpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guestId" | "type" | "method" | "subject" | "content" | "isAiGenerated" | "templateId" | "scheduledAt" | "completedAt" | "status" | "priority" | "assignedToId" | "createdById" | "notes" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["guestFollowUp"]>
 export type GuestFollowUpInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guest?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  template?: boolean | Prisma.GuestFollowUp$templateArgs<ExtArgs>
   assignedTo?: boolean | Prisma.GuestFollowUp$assignedToArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type GuestFollowUpIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guest?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  template?: boolean | Prisma.GuestFollowUp$templateArgs<ExtArgs>
   assignedTo?: boolean | Prisma.GuestFollowUp$assignedToArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type GuestFollowUpIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guest?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  template?: boolean | Prisma.GuestFollowUp$templateArgs<ExtArgs>
   assignedTo?: boolean | Prisma.GuestFollowUp$assignedToArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -1182,6 +1517,7 @@ export type $GuestFollowUpPayload<ExtArgs extends runtime.Types.Extensions.Inter
   name: "GuestFollowUp"
   objects: {
     guest: Prisma.$UserPayload<ExtArgs>
+    template: Prisma.$CommunicationTemplatePayload<ExtArgs> | null
     assignedTo: Prisma.$UserPayload<ExtArgs> | null
     createdBy: Prisma.$UserPayload<ExtArgs>
   }
@@ -1192,9 +1528,12 @@ export type $GuestFollowUpPayload<ExtArgs extends runtime.Types.Extensions.Inter
     method: $Enums.FollowUpMethod
     subject: string | null
     content: string
+    isAiGenerated: boolean
+    templateId: string | null
     scheduledAt: Date | null
     completedAt: Date | null
     status: $Enums.FollowUpStatus
+    priority: $Enums.FollowUpPriority
     assignedToId: string | null
     createdById: string
     notes: string | null
@@ -1596,6 +1935,7 @@ readonly fields: GuestFollowUpFieldRefs;
 export interface Prisma__GuestFollowUpClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   guest<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  template<T extends Prisma.GuestFollowUp$templateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GuestFollowUp$templateArgs<ExtArgs>>): Prisma.Prisma__CommunicationTemplateClient<runtime.Types.Result.GetResult<Prisma.$CommunicationTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   assignedTo<T extends Prisma.GuestFollowUp$assignedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GuestFollowUp$assignedToArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1633,9 +1973,12 @@ export interface GuestFollowUpFieldRefs {
   readonly method: Prisma.FieldRef<"GuestFollowUp", 'FollowUpMethod'>
   readonly subject: Prisma.FieldRef<"GuestFollowUp", 'String'>
   readonly content: Prisma.FieldRef<"GuestFollowUp", 'String'>
+  readonly isAiGenerated: Prisma.FieldRef<"GuestFollowUp", 'Boolean'>
+  readonly templateId: Prisma.FieldRef<"GuestFollowUp", 'String'>
   readonly scheduledAt: Prisma.FieldRef<"GuestFollowUp", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"GuestFollowUp", 'DateTime'>
   readonly status: Prisma.FieldRef<"GuestFollowUp", 'FollowUpStatus'>
+  readonly priority: Prisma.FieldRef<"GuestFollowUp", 'FollowUpPriority'>
   readonly assignedToId: Prisma.FieldRef<"GuestFollowUp", 'String'>
   readonly createdById: Prisma.FieldRef<"GuestFollowUp", 'String'>
   readonly notes: Prisma.FieldRef<"GuestFollowUp", 'String'>
@@ -2035,6 +2378,25 @@ export type GuestFollowUpDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many GuestFollowUps to delete.
    */
   limit?: number
+}
+
+/**
+ * GuestFollowUp.template
+ */
+export type GuestFollowUp$templateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CommunicationTemplate
+   */
+  select?: Prisma.CommunicationTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CommunicationTemplate
+   */
+  omit?: Prisma.CommunicationTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommunicationTemplateInclude<ExtArgs> | null
+  where?: Prisma.CommunicationTemplateWhereInput
 }
 
 /**

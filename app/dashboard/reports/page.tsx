@@ -1,64 +1,108 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { FileText, Download, Calendar, Users, Wallet, TrendingUp } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileText, Wallet, Users, Calendar, TrendingUp, BarChart3, UsersRound } from "lucide-react";
+import { FinancialReports } from "@/components/reports/financial-reports";
+import { MembersReports } from "@/components/reports/members-reports";
+import { AttendanceReports } from "@/components/reports/attendance-reports";
+import { EventsReports } from "@/components/reports/events-reports";
+import { EnhancedReportsPage } from "@/components/reports/enhanced-reports-page";
+import { GroupsReports } from "@/components/reports/groups-reports";
 
 export default function ReportsPage() {
-  const [reportType, setReportType] = useState("members");
-  const [dateRange, setDateRange] = useState("month");
+  const [activeTab, setActiveTab] = useState("financial");
+  const [period, setPeriod] = useState("month");
+  const [financialData, setFinancialData] = useState<any>(null);
+  const [membersData, setMembersData] = useState<any>(null);
+  const [attendanceData, setAttendanceData] = useState<any>(null);
+  const [eventsData, setEventsData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  const reportTypes = [
-    { value: "members", label: "Members Report", icon: Users },
-    { value: "giving", label: "Giving Report", icon: Wallet },
-    { value: "attendance", label: "Attendance Report", icon: Calendar },
-    { value: "events", label: "Events Report", icon: Calendar },
-    { value: "financial", label: "Financial Report", icon: TrendingUp },
-  ];
+  const [financialReportType, setFinancialReportType] = useState("profit-loss");
 
-  const dateRanges = [
-    { value: "week", label: "Last Week" },
-    { value: "month", label: "Last Month" },
-    { value: "quarter", label: "Last Quarter" },
-    { value: "year", label: "Last Year" },
-    { value: "custom", label: "Custom Range" },
-  ];
-
-  const handleGenerateReport = async () => {
+  const fetchFinancialReport = async (period: string, reportType: string = "profit-loss") => {
     setLoading(true);
     try {
-      // TODO: Implement report generation
-      console.log("Generating report:", { reportType, dateRange });
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(
+        `/api/reports/financial?type=${reportType}&period=${period}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setFinancialData(data);
+      }
     } catch (error) {
-      console.error("Error generating report:", error);
+      console.error("Error fetching financial report:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleExportReport = async (format: "pdf" | "csv" | "excel") => {
+  const handleFinancialReportTypeChange = (type: string) => {
+    setFinancialReportType(type);
+    fetchFinancialReport(period, type);
+  };
+
+  const fetchMembersReport = async (period: string) => {
     setLoading(true);
     try {
-      // TODO: Implement report export
-      console.log("Exporting report:", { reportType, dateRange, format });
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(`/api/reports/members?period=${period}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMembersData(data);
+      }
     } catch (error) {
-      console.error("Error exporting report:", error);
+      console.error("Error fetching members report:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchAttendanceReport = async (period: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/reports/attendance?period=${period}`);
+      if (response.ok) {
+        const data = await response.json();
+        setAttendanceData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching attendance report:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchEventsReport = async (period: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/reports/events?period=${period}`);
+      if (response.ok) {
+        const data = await response.json();
+        setEventsData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching events report:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "financial") {
+      fetchFinancialReport(period, financialReportType);
+    } else if (activeTab === "members") {
+      fetchMembersReport(period);
+    } else if (activeTab === "attendance") {
+      fetchAttendanceReport(period);
+    } else if (activeTab === "events") {
+      fetchEventsReport(period);
+    }
+  }, [activeTab, period, financialReportType]);
+
+  const handlePeriodChange = (newPeriod: string) => {
+    setPeriod(newPeriod);
   };
 
   return (
@@ -73,139 +117,69 @@ export default function ReportsPage() {
         </p>
       </div>
 
-      {/* Report Configuration */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            Report Configuration
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Report Type
-              </label>
-              <Select value={reportType} onValueChange={setReportType}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select report type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {reportTypes.map((type) => {
-                    const Icon = type.icon;
-                    return (
-                      <SelectItem key={type.value} value={type.value}>
-                        <div className="flex items-center gap-2">
-                          <Icon className="h-4 w-4" />
-                          <span>{type.label}</span>
-                        </div>
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-            </div>
+      {/* Reports Tabs */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="enhanced" className="flex items-center gap-2">
+            <BarChart3 className="h-4 w-4" />
+            Advanced
+          </TabsTrigger>
+          <TabsTrigger value="financial" className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Financial
+          </TabsTrigger>
+          <TabsTrigger value="members" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Members
+          </TabsTrigger>
+          <TabsTrigger value="groups" className="flex items-center gap-2">
+            <UsersRound className="h-4 w-4" />
+            Groups
+          </TabsTrigger>
+          <TabsTrigger value="attendance" className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            Attendance
+          </TabsTrigger>
+          <TabsTrigger value="events" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" />
+            Events
+          </TabsTrigger>
+        </TabsList>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Date Range
-              </label>
-              <Select value={dateRange} onValueChange={setDateRange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select date range" />
-                </SelectTrigger>
-                <SelectContent>
-                  {dateRanges.map((range) => (
-                    <SelectItem key={range.value} value={range.value}>
-                      {range.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+        {/* Enhanced Reports Tab */}
+        <TabsContent value="enhanced" className="space-y-6">
+          <EnhancedReportsPage />
+        </TabsContent>
 
-          <div className="flex gap-4">
-            <Button onClick={handleGenerateReport} disabled={loading}>
-              {loading ? "Generating..." : "Generate Report"}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => handleExportReport("pdf")}
-              disabled={loading}
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export PDF
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => handleExportReport("csv")}
-              disabled={loading}
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export CSV
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => handleExportReport("excel")}
-              disabled={loading}
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export Excel
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Financial Reports Tab */}
+        <TabsContent value="financial" className="space-y-6">
+          <FinancialReports 
+            data={financialData} 
+            onPeriodChange={handlePeriodChange}
+            onReportTypeChange={handleFinancialReportTypeChange}
+          />
+        </TabsContent>
 
-      {/* Report Preview */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Report Preview</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-12 text-gray-500 dark:text-gray-400">
-            <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>Select a report type and date range to generate a report</p>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Members Reports Tab */}
+        <TabsContent value="members" className="space-y-6">
+          <MembersReports data={membersData} onPeriodChange={handlePeriodChange} />
+        </TabsContent>
 
-      {/* Quick Reports */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle className="text-lg">Members Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              View member statistics, growth trends, and demographics
-            </p>
-          </CardContent>
-        </Card>
+        {/* Groups Reports Tab */}
+        <TabsContent value="groups" className="space-y-6">
+          <GroupsReports />
+        </TabsContent>
 
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle className="text-lg">Giving Summary</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Track donations, tithes, and offerings over time
-            </p>
-          </CardContent>
-        </Card>
+        {/* Attendance Reports Tab */}
+        <TabsContent value="attendance" className="space-y-6">
+          <AttendanceReports data={attendanceData} onPeriodChange={handlePeriodChange} />
+        </TabsContent>
 
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle className="text-lg">Attendance Trends</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Analyze attendance patterns and engagement metrics
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+        {/* Events Reports Tab */}
+        <TabsContent value="events" className="space-y-6">
+          <EventsReports data={eventsData} onPeriodChange={handlePeriodChange} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

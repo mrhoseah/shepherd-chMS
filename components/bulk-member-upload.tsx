@@ -64,7 +64,7 @@ export function BulkMemberUpload({ onSuccess }: { onSuccess?: () => void }) {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await fetch("/api/users/bulk", {
+      const response = await fetch("/api/people/bulk", {
         method: "POST",
         body: formData,
       });

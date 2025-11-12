@@ -51,6 +51,31 @@ export async function GET(
             phone: true,
           },
         },
+        leadershipAssignments: {
+          where: {
+            OR: [
+              { endDate: null },
+              { endDate: { gte: new Date() } },
+            ],
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                phone: true,
+                profileImage: true,
+              },
+            },
+          },
+          orderBy: [
+            { isPrimary: "desc" },
+            { displayOrder: "asc" },
+            { startDate: "desc" },
+          ],
+        },
         members: {
           include: {
             user: {
@@ -125,7 +150,84 @@ export async function PATCH(
       meetingLocation,
       useRotation,
       isActive,
+      groupGivingEnabled,
     } = body;
+
+    const userId = (session.user as any).id;
+
+    // Check authorization for groupGivingEnabled - only leaders/pastors/admins can toggle
+    if (groupGivingEnabled !== undefined) {
+      // Get user's role
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { role: true },
+      });
+
+      // Check if user is admin or pastor (they can always toggle)
+      const isAdminOrPastor = user?.role === "ADMIN" || user?.role === "PASTOR";
+
+      // Check if user is a leader of this group
+      const groupMember = await prisma.groupMember.findUnique({
+        where: {
+          groupId_userId: {
+            groupId: id,
+            userId: userId,
+          },
+        },
+        select: { isLeader: true, role: true },
+      });
+
+      const isGroupLeader = groupMember?.isLeader || groupMember?.role === "leader" || groupMember?.role === "co-leader";
+
+      // Also check leadership assignments
+      const leadershipAssignment = await prisma.leadershipAssignment.findFirst({
+        where: {
+          entityType: "GROUP",
+          entityId: id,
+          userId: userId,
+          OR: [
+            { endDate: null },
+            { endDate: { gte: new Date() } },
+          ],
+        },
+      });
+
+      const hasLeadershipAssignment = !!leadershipAssignment;
+
+      if (!isAdminOrPastor && !isGroupLeader && !hasLeadershipAssignment) {
+        return NextResponse.json(
+          { error: "Only group leaders, pastors, or admins can enable/disable group giving" },
+          { status: 403 }
+        );
+      }
+    }
+
+    // Validate groupCode if provided
+    if (groupCode !== undefined && groupCode !== null) {
+      const { validateGroupCode } = await import("@/lib/services/paybill-parser");
+      const validation = validateGroupCode(groupCode);
+      if (!validation.valid) {
+        return NextResponse.json(
+          { error: validation.error },
+          { status: 400 }
+        );
+      }
+
+      // Check if code is already used by another group
+      if (groupCode.trim()) {
+        const existingGroup = await prisma.smallGroup.findUnique({
+          where: { groupCode: groupCode.toUpperCase().trim() },
+          select: { id: true },
+        });
+
+        if (existingGroup && existingGroup.id !== id) {
+          return NextResponse.json(
+            { error: "Group code already in use by another group" },
+            { status: 409 }
+          );
+        }
+      }
+    }
 
     // Prevent circular references
     if (parentId === id) {
@@ -171,6 +273,8 @@ export async function PATCH(
         ...(meetingLocation !== undefined && { meetingLocation: meetingLocation || null }),
         ...(useRotation !== undefined && { useRotation }),
         ...(isActive !== undefined && { isActive }),
+        ...(groupGivingEnabled !== undefined && { groupGivingEnabled }),
+        ...(groupCode !== undefined && { groupCode: groupCode ? groupCode.toUpperCase().trim() : null }),
       },
       include: {
         parent: {

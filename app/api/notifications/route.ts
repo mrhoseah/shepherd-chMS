@@ -57,8 +57,17 @@ export async function GET(request: NextRequest) {
     });
   } catch (error: any) {
     console.error("Error fetching notifications:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      meta: error.meta,
+      stack: error.stack,
+    });
     return NextResponse.json(
-      { error: "Failed to fetch notifications" },
+      { 
+        error: "Failed to fetch notifications",
+        details: process.env.NODE_ENV === "development" ? error.message : undefined,
+      },
       { status: 500 }
     );
   }
@@ -113,8 +122,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error("Error updating notifications:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      meta: error.meta,
+    });
     return NextResponse.json(
-      { error: "Failed to update notifications" },
+      { 
+        error: "Failed to update notifications",
+        details: process.env.NODE_ENV === "development" ? error.message : undefined,
+      },
       { status: 500 }
     );
   }

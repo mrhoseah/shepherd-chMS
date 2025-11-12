@@ -53,7 +53,7 @@ export function AssignFamilyHeadDialog({
   const handleAssign = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/users/${userId}/family`, {
+      const res = await fetch(`/api/people/${userId}/family`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

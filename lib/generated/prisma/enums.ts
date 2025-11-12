@@ -225,6 +225,97 @@ export const MessageTemplateCategory = {
 export type MessageTemplateCategory = (typeof MessageTemplateCategory)[keyof typeof MessageTemplateCategory]
 
 
+export const MasterEventType = {
+  SERVICE: 'SERVICE',
+  GROUP: 'GROUP',
+  EVENT: 'EVENT',
+  MEETING: 'MEETING',
+  FELLOWSHIP: 'FELLOWSHIP',
+  TRAINING: 'TRAINING',
+  OUTREACH: 'OUTREACH',
+  OTHER: 'OTHER'
+} as const
+
+export type MasterEventType = (typeof MasterEventType)[keyof typeof MasterEventType]
+
+
+export const DecisionCategory = {
+  FINANCIAL: 'FINANCIAL',
+  STAFFING: 'STAFFING',
+  POLICY: 'POLICY',
+  STRATEGIC: 'STRATEGIC',
+  OPERATIONAL: 'OPERATIONAL',
+  FACILITIES: 'FACILITIES',
+  MINISTRY: 'MINISTRY',
+  GOVERNANCE: 'GOVERNANCE',
+  TECHNOLOGY: 'TECHNOLOGY',
+  OUTREACH: 'OUTREACH',
+  OTHER: 'OTHER'
+} as const
+
+export type DecisionCategory = (typeof DecisionCategory)[keyof typeof DecisionCategory]
+
+
+export const DecisionPriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type DecisionPriority = (typeof DecisionPriority)[keyof typeof DecisionPriority]
+
+
+export const DecisionStatus = {
+  DRAFT: 'DRAFT',
+  PROPOSED: 'PROPOSED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  DEFERRED: 'DEFERRED',
+  IMPLEMENTED: 'IMPLEMENTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DecisionStatus = (typeof DecisionStatus)[keyof typeof DecisionStatus]
+
+
+export const DecisionImplementationStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  ON_HOLD: 'ON_HOLD',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DecisionImplementationStatus = (typeof DecisionImplementationStatus)[keyof typeof DecisionImplementationStatus]
+
+
+export const MeetingType = {
+  BOARD: 'BOARD',
+  LEADERSHIP: 'LEADERSHIP',
+  STAFF: 'STAFF',
+  COMMITTEE: 'COMMITTEE',
+  GENERAL: 'GENERAL',
+  STRATEGIC_PLANNING: 'STRATEGIC_PLANNING',
+  BUDGET: 'BUDGET',
+  OTHER: 'OTHER'
+} as const
+
+export type MeetingType = (typeof MeetingType)[keyof typeof MeetingType]
+
+
+export const MeetingStatus = {
+  SCHEDULED: 'SCHEDULED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  POSTPONED: 'POSTPONED'
+} as const
+
+export type MeetingStatus = (typeof MeetingStatus)[keyof typeof MeetingStatus]
+
+
 export const InventoryTransactionType = {
   IN: 'IN',
   OUT: 'OUT',
@@ -232,6 +323,17 @@ export const InventoryTransactionType = {
 } as const
 
 export type InventoryTransactionType = (typeof InventoryTransactionType)[keyof typeof InventoryTransactionType]
+
+
+export const LeadershipEntityType = {
+  DEPARTMENT: 'DEPARTMENT',
+  GROUP: 'GROUP',
+  CHILDREN_CLASS: 'CHILDREN_CLASS',
+  YOUTH_GROUP: 'YOUTH_GROUP',
+  MINISTRY: 'MINISTRY'
+} as const
+
+export type LeadershipEntityType = (typeof LeadershipEntityType)[keyof typeof LeadershipEntityType]
 
 
 export const PayrollStatus = {
@@ -264,6 +366,16 @@ export const CheckStatus = {
 } as const
 
 export type CheckStatus = (typeof CheckStatus)[keyof typeof CheckStatus]
+
+
+export const FollowUpPriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type FollowUpPriority = (typeof FollowUpPriority)[keyof typeof FollowUpPriority]
 
 
 export const FollowUpType = {

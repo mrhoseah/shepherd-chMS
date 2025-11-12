@@ -39,7 +39,7 @@ export function FamilyNameEditor({
       };
       console.log("Sending family name update:", payload);
       
-      const res = await fetch(`/api/users/${userId}/family`, {
+      const res = await fetch(`/api/people/${userId}/family`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

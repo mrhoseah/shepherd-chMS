@@ -71,13 +71,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Return QR code details for M-Pesa STK push
+    // Return QR code details
     return NextResponse.json({
       success: true,
       qrCode: {
         id: qrCode.id,
         amount: qrCode.amount,
         category: qrCode.category,
+        paymentMethod: qrCode.paymentMethod || "MPESA",
         expiresAt: qrCode.expiresAt,
       },
     });

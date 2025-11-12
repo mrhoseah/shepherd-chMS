@@ -177,17 +177,25 @@ export const authOptions: NextAuthOptions = {
           }
 
           // Step 4: Check login permissions
-          // Roles that cannot sign in (for grouping/identification only)
-          const nonLoginRoles = ["PROTOCOL", "GUEST"];
-          const isNonLoginRole = nonLoginRoles.includes(user.role);
+          // Roles that cannot sign in by default (for grouping/identification only)
+          // However, if canLogin is explicitly enabled, allow them to login
+          const restrictedRoles = ["PROTOCOL", "GUEST"];
+          const isRestrictedRole = restrictedRoles.includes(user.role);
           
-          if (isNonLoginRole) {
+          const isAdmin = user.role === "ADMIN";
+          
+          // Admins can always login
+          if (isAdmin) {
+            // Continue to login
+          } 
+          // Restricted roles need explicit canLogin permission
+          else if (isRestrictedRole && !user.canLogin) {
             throw new Error(
-              "This role does not have login access. This role is for identification and grouping purposes only."
+              "This role does not have login access by default. This role is for identification and grouping purposes only. Please contact an administrator to enable login access."
             );
           }
-
-          const isAdmin = user.role === "ADMIN";
+          
+          // Check if user can login (admin OR has canLogin permission AND is active)
           const canLogin = isAdmin || (user.canLogin && user.status === "ACTIVE");
 
           if (!canLogin) {

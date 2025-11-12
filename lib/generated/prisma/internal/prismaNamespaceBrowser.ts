@@ -49,6 +49,7 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
+  FundCategory: 'FundCategory',
   User: 'User',
   SocialLogin: 'SocialLogin',
   UserSession: 'UserSession',
@@ -80,7 +81,14 @@ export const ModelName = {
   Livestream: 'Livestream',
   LivestreamChat: 'LivestreamChat',
   LivestreamAnalytics: 'LivestreamAnalytics',
+  MasterEvent: 'MasterEvent',
+  AttendanceSession: 'AttendanceSession',
+  AttendanceRecord: 'AttendanceRecord',
   Attendance: 'Attendance',
+  ServiceSession: 'ServiceSession',
+  SessionAttendee: 'SessionAttendee',
+  Decision: 'Decision',
+  Meeting: 'Meeting',
   Donation: 'Donation',
   GivingQRCode: 'GivingQRCode',
   RecurringDonation: 'RecurringDonation',
@@ -111,11 +119,14 @@ export const ModelName = {
   ProjectDonation: 'ProjectDonation',
   ProjectUpdate: 'ProjectUpdate',
   Document: 'Document',
+  Presentation: 'Presentation',
+  PresentationSlide: 'PresentationSlide',
   Asset: 'Asset',
   AssetMaintenance: 'AssetMaintenance',
   Department: 'Department',
   InventoryItem: 'InventoryItem',
   InventoryTransaction: 'InventoryTransaction',
+  LeadershipAssignment: 'LeadershipAssignment',
   Staff: 'Staff',
   Payroll: 'Payroll',
   Payslip: 'Payslip',
@@ -126,6 +137,7 @@ export const ModelName = {
   PerformanceAppraisal: 'PerformanceAppraisal',
   Church: 'Church',
   ChurchSetting: 'ChurchSetting',
+  CommunicationTemplate: 'CommunicationTemplate',
   CustomField: 'CustomField',
   Residence: 'Residence',
   PrayerRequest: 'PrayerRequest',
@@ -168,11 +180,23 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const FundCategoryScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FundCategoryScalarFieldEnum = (typeof FundCategoryScalarFieldEnum)[keyof typeof FundCategoryScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   phone: 'phone',
-  passwordHash: 'passwordHash',
   title: 'title',
   firstName: 'firstName',
   lastName: 'lastName',
@@ -356,6 +380,8 @@ export const SmallGroupScalarFieldEnum = {
   longitude: 'longitude',
   useRotation: 'useRotation',
   isActive: 'isActive',
+  groupGivingEnabled: 'groupGivingEnabled',
+  groupCode: 'groupCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -684,6 +710,63 @@ export const LivestreamAnalyticsScalarFieldEnum = {
 export type LivestreamAnalyticsScalarFieldEnum = (typeof LivestreamAnalyticsScalarFieldEnum)[keyof typeof LivestreamAnalyticsScalarFieldEnum]
 
 
+export const MasterEventScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  recurrencePattern: 'recurrencePattern',
+  isRecurring: 'isRecurring',
+  campusId: 'campusId',
+  groupId: 'groupId',
+  defaultStartTime: 'defaultStartTime',
+  defaultDuration: 'defaultDuration',
+  servicePlanId: 'servicePlanId',
+  isActive: 'isActive',
+  tags: 'tags',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MasterEventScalarFieldEnum = (typeof MasterEventScalarFieldEnum)[keyof typeof MasterEventScalarFieldEnum]
+
+
+export const AttendanceSessionScalarFieldEnum = {
+  id: 'id',
+  masterEventId: 'masterEventId',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  name: 'name',
+  location: 'location',
+  isJointService: 'isJointService',
+  isActive: 'isActive',
+  isCancelled: 'isCancelled',
+  cancelledReason: 'cancelledReason',
+  notes: 'notes',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AttendanceSessionScalarFieldEnum = (typeof AttendanceSessionScalarFieldEnum)[keyof typeof AttendanceSessionScalarFieldEnum]
+
+
+export const AttendanceRecordScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  checkInMethod: 'checkInMethod',
+  checkedInAt: 'checkedInAt',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type AttendanceRecordScalarFieldEnum = (typeof AttendanceRecordScalarFieldEnum)[keyof typeof AttendanceRecordScalarFieldEnum]
+
+
 export const AttendanceScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -697,6 +780,111 @@ export const AttendanceScalarFieldEnum = {
 } as const
 
 export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
+
+
+export const ServiceSessionScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  name: 'name',
+  campusId: 'campusId',
+  servicePlanId: 'servicePlanId',
+  isJointService: 'isJointService',
+  isActive: 'isActive',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceSessionScalarFieldEnum = (typeof ServiceSessionScalarFieldEnum)[keyof typeof ServiceSessionScalarFieldEnum]
+
+
+export const SessionAttendeeScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  checkInMethod: 'checkInMethod',
+  checkedInAt: 'checkedInAt',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type SessionAttendeeScalarFieldEnum = (typeof SessionAttendeeScalarFieldEnum)[keyof typeof SessionAttendeeScalarFieldEnum]
+
+
+export const DecisionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  priority: 'priority',
+  status: 'status',
+  meetingId: 'meetingId',
+  linkedSessionId: 'linkedSessionId',
+  relatedTo: 'relatedTo',
+  relatedToId: 'relatedToId',
+  data: 'data',
+  options: 'options',
+  rationale: 'rationale',
+  impact: 'impact',
+  risks: 'risks',
+  budgetImpact: 'budgetImpact',
+  budgetCategory: 'budgetCategory',
+  proposedById: 'proposedById',
+  approvedById: 'approvedById',
+  assignedToId: 'assignedToId',
+  recordedById: 'recordedById',
+  userId: 'userId',
+  stakeholders: 'stakeholders',
+  proposedAt: 'proposedAt',
+  reviewedAt: 'reviewedAt',
+  approvedAt: 'approvedAt',
+  implementedAt: 'implementedAt',
+  effectiveDate: 'effectiveDate',
+  implementationStatus: 'implementationStatus',
+  implementationNotes: 'implementationNotes',
+  reviewDate: 'reviewDate',
+  reviewNotes: 'reviewNotes',
+  outcome: 'outcome',
+  attachments: 'attachments',
+  references: 'references',
+  tags: 'tags',
+  isArchived: 'isArchived',
+  archivedAt: 'archivedAt',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DecisionScalarFieldEnum = (typeof DecisionScalarFieldEnum)[keyof typeof DecisionScalarFieldEnum]
+
+
+export const MeetingScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  location: 'location',
+  isVirtual: 'isVirtual',
+  meetingLink: 'meetingLink',
+  organizerId: 'organizerId',
+  attendees: 'attendees',
+  requiredAttendees: 'requiredAttendees',
+  agenda: 'agenda',
+  agendaItems: 'agendaItems',
+  minutes: 'minutes',
+  actionItems: 'actionItems',
+  status: 'status',
+  isPublished: 'isPublished',
+  attachments: 'attachments',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MeetingScalarFieldEnum = (typeof MeetingScalarFieldEnum)[keyof typeof MeetingScalarFieldEnum]
 
 
 export const DonationScalarFieldEnum = {
@@ -721,7 +909,11 @@ export const DonationScalarFieldEnum = {
   paypalOrderId: 'paypalOrderId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  recurringDonationId: 'recurringDonationId'
+  recurringDonationId: 'recurringDonationId',
+  linkedSessionId: 'linkedSessionId',
+  groupId: 'groupId',
+  paybillAccountRef: 'paybillAccountRef',
+  fundCategoryId: 'fundCategoryId'
 } as const
 
 export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
@@ -732,12 +924,14 @@ export const GivingQRCodeScalarFieldEnum = {
   donationId: 'donationId',
   amount: 'amount',
   category: 'category',
+  paymentMethod: 'paymentMethod',
   qrCodeData: 'qrCodeData',
   qrCodeUrl: 'qrCodeUrl',
   expiresAt: 'expiresAt',
   isUsed: 'isUsed',
   usedAt: 'usedAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  sessionId: 'sessionId'
 } as const
 
 export type GivingQRCodeScalarFieldEnum = (typeof GivingQRCodeScalarFieldEnum)[keyof typeof GivingQRCodeScalarFieldEnum]
@@ -860,6 +1054,12 @@ export const EventRegistrationScalarFieldEnum = {
   id: 'id',
   eventId: 'eventId',
   userId: 'userId',
+  name: 'name',
+  ministry: 'ministry',
+  country: 'country',
+  phone: 'phone',
+  email: 'email',
+  needsAccommodation: 'needsAccommodation',
   status: 'status',
   paymentStatus: 'paymentStatus',
   paymentAmount: 'paymentAmount',
@@ -1184,6 +1384,48 @@ export const DocumentScalarFieldEnum = {
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
 
 
+export const PresentationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  isPublic: 'isPublic',
+  currentSlideId: 'currentSlideId',
+  presenterUserId: 'presenterUserId',
+  showSlideRing: 'showSlideRing',
+  viewerSize: 'viewerSize',
+  backgroundType: 'backgroundType',
+  isPresenting: 'isPresenting',
+  viewerCountdown: 'viewerCountdown',
+  viewerAnimation: 'viewerAnimation',
+  createdById: 'createdById',
+  churchId: 'churchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PresentationScalarFieldEnum = (typeof PresentationScalarFieldEnum)[keyof typeof PresentationScalarFieldEnum]
+
+
+export const PresentationSlideScalarFieldEnum = {
+  id: 'id',
+  presentationId: 'presentationId',
+  title: 'title',
+  content: 'content',
+  x: 'x',
+  y: 'y',
+  width: 'width',
+  height: 'height',
+  order: 'order',
+  backgroundColor: 'backgroundColor',
+  textColor: 'textColor',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PresentationSlideScalarFieldEnum = (typeof PresentationSlideScalarFieldEnum)[keyof typeof PresentationSlideScalarFieldEnum]
+
+
 export const AssetScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1271,6 +1513,29 @@ export const InventoryTransactionScalarFieldEnum = {
 } as const
 
 export type InventoryTransactionScalarFieldEnum = (typeof InventoryTransactionScalarFieldEnum)[keyof typeof InventoryTransactionScalarFieldEnum]
+
+
+export const LeadershipAssignmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  title: 'title',
+  isPrimary: 'isPrimary',
+  displayOrder: 'displayOrder',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  description: 'description',
+  notes: 'notes',
+  departmentId: 'departmentId',
+  groupId: 'groupId',
+  childrenClassId: 'childrenClassId',
+  youthGroupId: 'youthGroupId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LeadershipAssignmentScalarFieldEnum = (typeof LeadershipAssignmentScalarFieldEnum)[keyof typeof LeadershipAssignmentScalarFieldEnum]
 
 
 export const StaffScalarFieldEnum = {
@@ -1379,9 +1644,12 @@ export const GuestFollowUpScalarFieldEnum = {
   method: 'method',
   subject: 'subject',
   content: 'content',
+  isAiGenerated: 'isAiGenerated',
+  templateId: 'templateId',
   scheduledAt: 'scheduledAt',
   completedAt: 'completedAt',
   status: 'status',
+  priority: 'priority',
   assignedToId: 'assignedToId',
   createdById: 'createdById',
   notes: 'notes',
@@ -1462,6 +1730,24 @@ export const ChurchSettingScalarFieldEnum = {
 } as const
 
 export type ChurchSettingScalarFieldEnum = (typeof ChurchSettingScalarFieldEnum)[keyof typeof ChurchSettingScalarFieldEnum]
+
+
+export const CommunicationTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  method: 'method',
+  subject: 'subject',
+  content: 'content',
+  variables: 'variables',
+  isActive: 'isActive',
+  isDefault: 'isDefault',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommunicationTemplateScalarFieldEnum = (typeof CommunicationTemplateScalarFieldEnum)[keyof typeof CommunicationTemplateScalarFieldEnum]
 
 
 export const CustomFieldScalarFieldEnum = {
@@ -1833,6 +2119,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
@@ -1840,12 +2134,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

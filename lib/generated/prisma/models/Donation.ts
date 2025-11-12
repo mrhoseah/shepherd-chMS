@@ -56,6 +56,10 @@ export type DonationMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   recurringDonationId: string | null
+  linkedSessionId: string | null
+  groupId: string | null
+  paybillAccountRef: string | null
+  fundCategoryId: string | null
 }
 
 export type DonationMaxAggregateOutputType = {
@@ -80,6 +84,10 @@ export type DonationMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   recurringDonationId: string | null
+  linkedSessionId: string | null
+  groupId: string | null
+  paybillAccountRef: string | null
+  fundCategoryId: string | null
 }
 
 export type DonationCountAggregateOutputType = {
@@ -105,6 +113,10 @@ export type DonationCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   recurringDonationId: number
+  linkedSessionId: number
+  groupId: number
+  paybillAccountRef: number
+  fundCategoryId: number
   _all: number
 }
 
@@ -139,6 +151,10 @@ export type DonationMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   recurringDonationId?: true
+  linkedSessionId?: true
+  groupId?: true
+  paybillAccountRef?: true
+  fundCategoryId?: true
 }
 
 export type DonationMaxAggregateInputType = {
@@ -163,6 +179,10 @@ export type DonationMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   recurringDonationId?: true
+  linkedSessionId?: true
+  groupId?: true
+  paybillAccountRef?: true
+  fundCategoryId?: true
 }
 
 export type DonationCountAggregateInputType = {
@@ -188,6 +208,10 @@ export type DonationCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   recurringDonationId?: true
+  linkedSessionId?: true
+  groupId?: true
+  paybillAccountRef?: true
+  fundCategoryId?: true
   _all?: true
 }
 
@@ -300,6 +324,10 @@ export type DonationGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   recurringDonationId: string | null
+  linkedSessionId: string | null
+  groupId: string | null
+  paybillAccountRef: string | null
+  fundCategoryId: string | null
   _count: DonationCountAggregateOutputType | null
   _avg: DonationAvgAggregateOutputType | null
   _sum: DonationSumAggregateOutputType | null
@@ -348,10 +376,17 @@ export type DonationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
   recurringDonationId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  linkedSessionId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  groupId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  paybillAccountRef?: Prisma.StringNullableFilter<"Donation"> | string | null
+  fundCategoryId?: Prisma.StringNullableFilter<"Donation"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   qrCode?: Prisma.XOR<Prisma.GivingQRCodeNullableScalarRelationFilter, Prisma.GivingQRCodeWhereInput> | null
   recurringDonation?: Prisma.XOR<Prisma.RecurringDonationNullableScalarRelationFilter, Prisma.RecurringDonationWhereInput> | null
   check?: Prisma.XOR<Prisma.CheckNullableScalarRelationFilter, Prisma.CheckWhereInput> | null
+  linkedSession?: Prisma.XOR<Prisma.AttendanceSessionNullableScalarRelationFilter, Prisma.AttendanceSessionWhereInput> | null
+  group?: Prisma.XOR<Prisma.SmallGroupNullableScalarRelationFilter, Prisma.SmallGroupWhereInput> | null
+  fundCategory?: Prisma.XOR<Prisma.FundCategoryNullableScalarRelationFilter, Prisma.FundCategoryWhereInput> | null
 }
 
 export type DonationOrderByWithRelationInput = {
@@ -377,10 +412,17 @@ export type DonationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   recurringDonationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paybillAccountRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  fundCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   qrCode?: Prisma.GivingQRCodeOrderByWithRelationInput
   recurringDonation?: Prisma.RecurringDonationOrderByWithRelationInput
   check?: Prisma.CheckOrderByWithRelationInput
+  linkedSession?: Prisma.AttendanceSessionOrderByWithRelationInput
+  group?: Prisma.SmallGroupOrderByWithRelationInput
+  fundCategory?: Prisma.FundCategoryOrderByWithRelationInput
 }
 
 export type DonationWhereUniqueInput = Prisma.AtLeast<{
@@ -409,10 +451,17 @@ export type DonationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
   recurringDonationId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  linkedSessionId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  groupId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  paybillAccountRef?: Prisma.StringNullableFilter<"Donation"> | string | null
+  fundCategoryId?: Prisma.StringNullableFilter<"Donation"> | string | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   qrCode?: Prisma.XOR<Prisma.GivingQRCodeNullableScalarRelationFilter, Prisma.GivingQRCodeWhereInput> | null
   recurringDonation?: Prisma.XOR<Prisma.RecurringDonationNullableScalarRelationFilter, Prisma.RecurringDonationWhereInput> | null
   check?: Prisma.XOR<Prisma.CheckNullableScalarRelationFilter, Prisma.CheckWhereInput> | null
+  linkedSession?: Prisma.XOR<Prisma.AttendanceSessionNullableScalarRelationFilter, Prisma.AttendanceSessionWhereInput> | null
+  group?: Prisma.XOR<Prisma.SmallGroupNullableScalarRelationFilter, Prisma.SmallGroupWhereInput> | null
+  fundCategory?: Prisma.XOR<Prisma.FundCategoryNullableScalarRelationFilter, Prisma.FundCategoryWhereInput> | null
 }, "id" | "transactionId" | "qrCodeId" | "paypalTransactionId">
 
 export type DonationOrderByWithAggregationInput = {
@@ -438,6 +487,10 @@ export type DonationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   recurringDonationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paybillAccountRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  fundCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.DonationCountOrderByAggregateInput
   _avg?: Prisma.DonationAvgOrderByAggregateInput
   _max?: Prisma.DonationMaxOrderByAggregateInput
@@ -471,6 +524,10 @@ export type DonationScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Donation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Donation"> | Date | string
   recurringDonationId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  linkedSessionId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  groupId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  paybillAccountRef?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  fundCategoryId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
 }
 
 export type DonationCreateInput = {
@@ -493,10 +550,14 @@ export type DonationCreateInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  paybillAccountRef?: string | null
   user?: Prisma.UserCreateNestedOneWithoutDonationsInput
   qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
   recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
   check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
 }
 
 export type DonationUncheckedCreateInput = {
@@ -522,6 +583,10 @@ export type DonationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
   check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -545,10 +610,14 @@ export type DonationUpdateInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
   qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
   recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
   check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
 }
 
 export type DonationUncheckedUpdateInput = {
@@ -574,6 +643,10 @@ export type DonationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -600,6 +673,10 @@ export type DonationCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
 }
 
 export type DonationUpdateManyMutationInput = {
@@ -622,6 +699,7 @@ export type DonationUpdateManyMutationInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DonationUncheckedUpdateManyInput = {
@@ -647,6 +725,10 @@ export type DonationUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DonationListRelationFilter = {
@@ -682,6 +764,10 @@ export type DonationCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   recurringDonationId?: Prisma.SortOrder
+  linkedSessionId?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  paybillAccountRef?: Prisma.SortOrder
+  fundCategoryId?: Prisma.SortOrder
 }
 
 export type DonationAvgOrderByAggregateInput = {
@@ -710,6 +796,10 @@ export type DonationMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   recurringDonationId?: Prisma.SortOrder
+  linkedSessionId?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  paybillAccountRef?: Prisma.SortOrder
+  fundCategoryId?: Prisma.SortOrder
 }
 
 export type DonationMinOrderByAggregateInput = {
@@ -734,6 +824,10 @@ export type DonationMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   recurringDonationId?: Prisma.SortOrder
+  linkedSessionId?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  paybillAccountRef?: Prisma.SortOrder
+  fundCategoryId?: Prisma.SortOrder
 }
 
 export type DonationSumOrderByAggregateInput = {
@@ -743,6 +837,48 @@ export type DonationSumOrderByAggregateInput = {
 export type DonationNullableScalarRelationFilter = {
   is?: Prisma.DonationWhereInput | null
   isNot?: Prisma.DonationWhereInput | null
+}
+
+export type DonationCreateNestedManyWithoutFundCategoryInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutFundCategoryInput, Prisma.DonationUncheckedCreateWithoutFundCategoryInput> | Prisma.DonationCreateWithoutFundCategoryInput[] | Prisma.DonationUncheckedCreateWithoutFundCategoryInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutFundCategoryInput | Prisma.DonationCreateOrConnectWithoutFundCategoryInput[]
+  createMany?: Prisma.DonationCreateManyFundCategoryInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUncheckedCreateNestedManyWithoutFundCategoryInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutFundCategoryInput, Prisma.DonationUncheckedCreateWithoutFundCategoryInput> | Prisma.DonationCreateWithoutFundCategoryInput[] | Prisma.DonationUncheckedCreateWithoutFundCategoryInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutFundCategoryInput | Prisma.DonationCreateOrConnectWithoutFundCategoryInput[]
+  createMany?: Prisma.DonationCreateManyFundCategoryInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUpdateManyWithoutFundCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutFundCategoryInput, Prisma.DonationUncheckedCreateWithoutFundCategoryInput> | Prisma.DonationCreateWithoutFundCategoryInput[] | Prisma.DonationUncheckedCreateWithoutFundCategoryInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutFundCategoryInput | Prisma.DonationCreateOrConnectWithoutFundCategoryInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutFundCategoryInput | Prisma.DonationUpsertWithWhereUniqueWithoutFundCategoryInput[]
+  createMany?: Prisma.DonationCreateManyFundCategoryInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutFundCategoryInput | Prisma.DonationUpdateWithWhereUniqueWithoutFundCategoryInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutFundCategoryInput | Prisma.DonationUpdateManyWithWhereWithoutFundCategoryInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+}
+
+export type DonationUncheckedUpdateManyWithoutFundCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutFundCategoryInput, Prisma.DonationUncheckedCreateWithoutFundCategoryInput> | Prisma.DonationCreateWithoutFundCategoryInput[] | Prisma.DonationUncheckedCreateWithoutFundCategoryInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutFundCategoryInput | Prisma.DonationCreateOrConnectWithoutFundCategoryInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutFundCategoryInput | Prisma.DonationUpsertWithWhereUniqueWithoutFundCategoryInput[]
+  createMany?: Prisma.DonationCreateManyFundCategoryInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutFundCategoryInput | Prisma.DonationUpdateWithWhereUniqueWithoutFundCategoryInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutFundCategoryInput | Prisma.DonationUpdateManyWithWhereWithoutFundCategoryInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
 }
 
 export type DonationCreateNestedManyWithoutUserInput = {
@@ -784,6 +920,90 @@ export type DonationUncheckedUpdateManyWithoutUserNestedInput = {
   connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
   update?: Prisma.DonationUpdateWithWhereUniqueWithoutUserInput | Prisma.DonationUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.DonationUpdateManyWithWhereWithoutUserInput | Prisma.DonationUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+}
+
+export type DonationCreateNestedManyWithoutGroupInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutGroupInput, Prisma.DonationUncheckedCreateWithoutGroupInput> | Prisma.DonationCreateWithoutGroupInput[] | Prisma.DonationUncheckedCreateWithoutGroupInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutGroupInput | Prisma.DonationCreateOrConnectWithoutGroupInput[]
+  createMany?: Prisma.DonationCreateManyGroupInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUncheckedCreateNestedManyWithoutGroupInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutGroupInput, Prisma.DonationUncheckedCreateWithoutGroupInput> | Prisma.DonationCreateWithoutGroupInput[] | Prisma.DonationUncheckedCreateWithoutGroupInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutGroupInput | Prisma.DonationCreateOrConnectWithoutGroupInput[]
+  createMany?: Prisma.DonationCreateManyGroupInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUpdateManyWithoutGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutGroupInput, Prisma.DonationUncheckedCreateWithoutGroupInput> | Prisma.DonationCreateWithoutGroupInput[] | Prisma.DonationUncheckedCreateWithoutGroupInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutGroupInput | Prisma.DonationCreateOrConnectWithoutGroupInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutGroupInput | Prisma.DonationUpsertWithWhereUniqueWithoutGroupInput[]
+  createMany?: Prisma.DonationCreateManyGroupInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutGroupInput | Prisma.DonationUpdateWithWhereUniqueWithoutGroupInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutGroupInput | Prisma.DonationUpdateManyWithWhereWithoutGroupInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+}
+
+export type DonationUncheckedUpdateManyWithoutGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutGroupInput, Prisma.DonationUncheckedCreateWithoutGroupInput> | Prisma.DonationCreateWithoutGroupInput[] | Prisma.DonationUncheckedCreateWithoutGroupInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutGroupInput | Prisma.DonationCreateOrConnectWithoutGroupInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutGroupInput | Prisma.DonationUpsertWithWhereUniqueWithoutGroupInput[]
+  createMany?: Prisma.DonationCreateManyGroupInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutGroupInput | Prisma.DonationUpdateWithWhereUniqueWithoutGroupInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutGroupInput | Prisma.DonationUpdateManyWithWhereWithoutGroupInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+}
+
+export type DonationCreateNestedManyWithoutLinkedSessionInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutLinkedSessionInput, Prisma.DonationUncheckedCreateWithoutLinkedSessionInput> | Prisma.DonationCreateWithoutLinkedSessionInput[] | Prisma.DonationUncheckedCreateWithoutLinkedSessionInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutLinkedSessionInput | Prisma.DonationCreateOrConnectWithoutLinkedSessionInput[]
+  createMany?: Prisma.DonationCreateManyLinkedSessionInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUncheckedCreateNestedManyWithoutLinkedSessionInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutLinkedSessionInput, Prisma.DonationUncheckedCreateWithoutLinkedSessionInput> | Prisma.DonationCreateWithoutLinkedSessionInput[] | Prisma.DonationUncheckedCreateWithoutLinkedSessionInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutLinkedSessionInput | Prisma.DonationCreateOrConnectWithoutLinkedSessionInput[]
+  createMany?: Prisma.DonationCreateManyLinkedSessionInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUpdateManyWithoutLinkedSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutLinkedSessionInput, Prisma.DonationUncheckedCreateWithoutLinkedSessionInput> | Prisma.DonationCreateWithoutLinkedSessionInput[] | Prisma.DonationUncheckedCreateWithoutLinkedSessionInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutLinkedSessionInput | Prisma.DonationCreateOrConnectWithoutLinkedSessionInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutLinkedSessionInput | Prisma.DonationUpsertWithWhereUniqueWithoutLinkedSessionInput[]
+  createMany?: Prisma.DonationCreateManyLinkedSessionInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutLinkedSessionInput | Prisma.DonationUpdateWithWhereUniqueWithoutLinkedSessionInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutLinkedSessionInput | Prisma.DonationUpdateManyWithWhereWithoutLinkedSessionInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+}
+
+export type DonationUncheckedUpdateManyWithoutLinkedSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutLinkedSessionInput, Prisma.DonationUncheckedCreateWithoutLinkedSessionInput> | Prisma.DonationCreateWithoutLinkedSessionInput[] | Prisma.DonationUncheckedCreateWithoutLinkedSessionInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutLinkedSessionInput | Prisma.DonationCreateOrConnectWithoutLinkedSessionInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutLinkedSessionInput | Prisma.DonationUpsertWithWhereUniqueWithoutLinkedSessionInput[]
+  createMany?: Prisma.DonationCreateManyLinkedSessionInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutLinkedSessionInput | Prisma.DonationUpdateWithWhereUniqueWithoutLinkedSessionInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutLinkedSessionInput | Prisma.DonationUpdateManyWithWhereWithoutLinkedSessionInput[]
   deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
 }
 
@@ -893,6 +1113,122 @@ export type DonationUpdateOneWithoutCheckNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DonationUpdateToOneWithWhereWithoutCheckInput, Prisma.DonationUpdateWithoutCheckInput>, Prisma.DonationUncheckedUpdateWithoutCheckInput>
 }
 
+export type DonationCreateWithoutFundCategoryInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paybillAccountRef?: string | null
+  user?: Prisma.UserCreateNestedOneWithoutDonationsInput
+  qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
+  recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
+  check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+}
+
+export type DonationUncheckedCreateWithoutFundCategoryInput = {
+  id?: string
+  userId?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: string | null
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
+}
+
+export type DonationCreateOrConnectWithoutFundCategoryInput = {
+  where: Prisma.DonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.DonationCreateWithoutFundCategoryInput, Prisma.DonationUncheckedCreateWithoutFundCategoryInput>
+}
+
+export type DonationCreateManyFundCategoryInputEnvelope = {
+  data: Prisma.DonationCreateManyFundCategoryInput | Prisma.DonationCreateManyFundCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type DonationUpsertWithWhereUniqueWithoutFundCategoryInput = {
+  where: Prisma.DonationWhereUniqueInput
+  update: Prisma.XOR<Prisma.DonationUpdateWithoutFundCategoryInput, Prisma.DonationUncheckedUpdateWithoutFundCategoryInput>
+  create: Prisma.XOR<Prisma.DonationCreateWithoutFundCategoryInput, Prisma.DonationUncheckedCreateWithoutFundCategoryInput>
+}
+
+export type DonationUpdateWithWhereUniqueWithoutFundCategoryInput = {
+  where: Prisma.DonationWhereUniqueInput
+  data: Prisma.XOR<Prisma.DonationUpdateWithoutFundCategoryInput, Prisma.DonationUncheckedUpdateWithoutFundCategoryInput>
+}
+
+export type DonationUpdateManyWithWhereWithoutFundCategoryInput = {
+  where: Prisma.DonationScalarWhereInput
+  data: Prisma.XOR<Prisma.DonationUpdateManyMutationInput, Prisma.DonationUncheckedUpdateManyWithoutFundCategoryInput>
+}
+
+export type DonationScalarWhereInput = {
+  AND?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+  OR?: Prisma.DonationScalarWhereInput[]
+  NOT?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+  id?: Prisma.StringFilter<"Donation"> | string
+  userId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  amount?: Prisma.DecimalFilter<"Donation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFilter<"Donation"> | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Donation"> | $Enums.PaymentMethod
+  transactionId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  reference?: Prisma.StringNullableFilter<"Donation"> | string | null
+  notes?: Prisma.StringNullableFilter<"Donation"> | string | null
+  isRecurring?: Prisma.BoolFilter<"Donation"> | boolean
+  recurringId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  receiptSent?: Prisma.BoolFilter<"Donation"> | boolean
+  receiptSentAt?: Prisma.DateTimeNullableFilter<"Donation"> | Date | string | null
+  status?: Prisma.StringFilter<"Donation"> | string
+  metadata?: Prisma.JsonNullableFilter<"Donation">
+  qrCodeId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  mpesaRequestId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  mpesaCheckoutId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  paypalTransactionId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  paypalOrderId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
+  recurringDonationId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  linkedSessionId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  groupId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  paybillAccountRef?: Prisma.StringNullableFilter<"Donation"> | string | null
+  fundCategoryId?: Prisma.StringNullableFilter<"Donation"> | string | null
+}
+
 export type DonationCreateWithoutUserInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -913,9 +1249,13 @@ export type DonationCreateWithoutUserInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  paybillAccountRef?: string | null
   qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
   recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
   check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
 }
 
 export type DonationUncheckedCreateWithoutUserInput = {
@@ -940,6 +1280,10 @@ export type DonationUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
   check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -969,32 +1313,172 @@ export type DonationUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.DonationUpdateManyMutationInput, Prisma.DonationUncheckedUpdateManyWithoutUserInput>
 }
 
-export type DonationScalarWhereInput = {
-  AND?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
-  OR?: Prisma.DonationScalarWhereInput[]
-  NOT?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
-  id?: Prisma.StringFilter<"Donation"> | string
-  userId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  amount?: Prisma.DecimalFilter<"Donation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  category?: Prisma.EnumGivingCategoryFilter<"Donation"> | $Enums.GivingCategory
-  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Donation"> | $Enums.PaymentMethod
-  transactionId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  reference?: Prisma.StringNullableFilter<"Donation"> | string | null
-  notes?: Prisma.StringNullableFilter<"Donation"> | string | null
-  isRecurring?: Prisma.BoolFilter<"Donation"> | boolean
-  recurringId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  receiptSent?: Prisma.BoolFilter<"Donation"> | boolean
-  receiptSentAt?: Prisma.DateTimeNullableFilter<"Donation"> | Date | string | null
-  status?: Prisma.StringFilter<"Donation"> | string
-  metadata?: Prisma.JsonNullableFilter<"Donation">
-  qrCodeId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  mpesaRequestId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  mpesaCheckoutId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  paypalTransactionId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  paypalOrderId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
-  recurringDonationId?: Prisma.StringNullableFilter<"Donation"> | string | null
+export type DonationCreateWithoutGroupInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paybillAccountRef?: string | null
+  user?: Prisma.UserCreateNestedOneWithoutDonationsInput
+  qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
+  recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
+  check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
+}
+
+export type DonationUncheckedCreateWithoutGroupInput = {
+  id?: string
+  userId?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: string | null
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
+  check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
+}
+
+export type DonationCreateOrConnectWithoutGroupInput = {
+  where: Prisma.DonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.DonationCreateWithoutGroupInput, Prisma.DonationUncheckedCreateWithoutGroupInput>
+}
+
+export type DonationCreateManyGroupInputEnvelope = {
+  data: Prisma.DonationCreateManyGroupInput | Prisma.DonationCreateManyGroupInput[]
+  skipDuplicates?: boolean
+}
+
+export type DonationUpsertWithWhereUniqueWithoutGroupInput = {
+  where: Prisma.DonationWhereUniqueInput
+  update: Prisma.XOR<Prisma.DonationUpdateWithoutGroupInput, Prisma.DonationUncheckedUpdateWithoutGroupInput>
+  create: Prisma.XOR<Prisma.DonationCreateWithoutGroupInput, Prisma.DonationUncheckedCreateWithoutGroupInput>
+}
+
+export type DonationUpdateWithWhereUniqueWithoutGroupInput = {
+  where: Prisma.DonationWhereUniqueInput
+  data: Prisma.XOR<Prisma.DonationUpdateWithoutGroupInput, Prisma.DonationUncheckedUpdateWithoutGroupInput>
+}
+
+export type DonationUpdateManyWithWhereWithoutGroupInput = {
+  where: Prisma.DonationScalarWhereInput
+  data: Prisma.XOR<Prisma.DonationUpdateManyMutationInput, Prisma.DonationUncheckedUpdateManyWithoutGroupInput>
+}
+
+export type DonationCreateWithoutLinkedSessionInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paybillAccountRef?: string | null
+  user?: Prisma.UserCreateNestedOneWithoutDonationsInput
+  qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
+  recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
+  check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
+}
+
+export type DonationUncheckedCreateWithoutLinkedSessionInput = {
+  id?: string
+  userId?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: string | null
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recurringDonationId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
+  check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
+}
+
+export type DonationCreateOrConnectWithoutLinkedSessionInput = {
+  where: Prisma.DonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.DonationCreateWithoutLinkedSessionInput, Prisma.DonationUncheckedCreateWithoutLinkedSessionInput>
+}
+
+export type DonationCreateManyLinkedSessionInputEnvelope = {
+  data: Prisma.DonationCreateManyLinkedSessionInput | Prisma.DonationCreateManyLinkedSessionInput[]
+  skipDuplicates?: boolean
+}
+
+export type DonationUpsertWithWhereUniqueWithoutLinkedSessionInput = {
+  where: Prisma.DonationWhereUniqueInput
+  update: Prisma.XOR<Prisma.DonationUpdateWithoutLinkedSessionInput, Prisma.DonationUncheckedUpdateWithoutLinkedSessionInput>
+  create: Prisma.XOR<Prisma.DonationCreateWithoutLinkedSessionInput, Prisma.DonationUncheckedCreateWithoutLinkedSessionInput>
+}
+
+export type DonationUpdateWithWhereUniqueWithoutLinkedSessionInput = {
+  where: Prisma.DonationWhereUniqueInput
+  data: Prisma.XOR<Prisma.DonationUpdateWithoutLinkedSessionInput, Prisma.DonationUncheckedUpdateWithoutLinkedSessionInput>
+}
+
+export type DonationUpdateManyWithWhereWithoutLinkedSessionInput = {
+  where: Prisma.DonationScalarWhereInput
+  data: Prisma.XOR<Prisma.DonationUpdateManyMutationInput, Prisma.DonationUncheckedUpdateManyWithoutLinkedSessionInput>
 }
 
 export type DonationCreateWithoutQrCodeInput = {
@@ -1017,9 +1501,13 @@ export type DonationCreateWithoutQrCodeInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  paybillAccountRef?: string | null
   user?: Prisma.UserCreateNestedOneWithoutDonationsInput
   recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
   check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
 }
 
 export type DonationUncheckedCreateWithoutQrCodeInput = {
@@ -1044,6 +1532,10 @@ export type DonationUncheckedCreateWithoutQrCodeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
   check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -1083,9 +1575,13 @@ export type DonationUpdateWithoutQrCodeInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
   recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
   check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
 }
 
 export type DonationUncheckedUpdateWithoutQrCodeInput = {
@@ -1110,6 +1606,10 @@ export type DonationUncheckedUpdateWithoutQrCodeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -1133,9 +1633,13 @@ export type DonationCreateWithoutRecurringDonationInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  paybillAccountRef?: string | null
   user?: Prisma.UserCreateNestedOneWithoutDonationsInput
   qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
   check?: Prisma.CheckCreateNestedOneWithoutDonationInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
 }
 
 export type DonationUncheckedCreateWithoutRecurringDonationInput = {
@@ -1160,6 +1664,10 @@ export type DonationUncheckedCreateWithoutRecurringDonationInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
   check?: Prisma.CheckUncheckedCreateNestedOneWithoutDonationInput
 }
 
@@ -1209,9 +1717,13 @@ export type DonationCreateWithoutCheckInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  paybillAccountRef?: string | null
   user?: Prisma.UserCreateNestedOneWithoutDonationsInput
   qrCode?: Prisma.GivingQRCodeCreateNestedOneWithoutDonationInput
   recurringDonation?: Prisma.RecurringDonationCreateNestedOneWithoutDonationsInput
+  linkedSession?: Prisma.AttendanceSessionCreateNestedOneWithoutDonationsInput
+  group?: Prisma.SmallGroupCreateNestedOneWithoutDonationsInput
+  fundCategory?: Prisma.FundCategoryCreateNestedOneWithoutDonationsInput
 }
 
 export type DonationUncheckedCreateWithoutCheckInput = {
@@ -1237,6 +1749,10 @@ export type DonationUncheckedCreateWithoutCheckInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
 }
 
 export type DonationCreateOrConnectWithoutCheckInput = {
@@ -1275,9 +1791,13 @@ export type DonationUpdateWithoutCheckInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
   qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
   recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
 }
 
 export type DonationUncheckedUpdateWithoutCheckInput = {
@@ -1303,6 +1823,124 @@ export type DonationUncheckedUpdateWithoutCheckInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type DonationCreateManyFundCategoryInput = {
+  id?: string
+  userId?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: string | null
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+}
+
+export type DonationUpdateWithoutFundCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
+  qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
+  recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
+  check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+}
+
+export type DonationUncheckedUpdateWithoutFundCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
+}
+
+export type DonationUncheckedUpdateManyWithoutFundCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DonationCreateManyUserInput = {
@@ -1327,6 +1965,10 @@ export type DonationCreateManyUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
 }
 
 export type DonationUpdateWithoutUserInput = {
@@ -1349,9 +1991,13 @@ export type DonationUpdateWithoutUserInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
   recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
   check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
 }
 
 export type DonationUncheckedUpdateWithoutUserInput = {
@@ -1376,6 +2022,10 @@ export type DonationUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -1401,6 +2051,238 @@ export type DonationUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type DonationCreateManyGroupInput = {
+  id?: string
+  userId?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: string | null
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recurringDonationId?: string | null
+  linkedSessionId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
+}
+
+export type DonationUpdateWithoutGroupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
+  qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
+  recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
+  check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
+}
+
+export type DonationUncheckedUpdateWithoutGroupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
+}
+
+export type DonationUncheckedUpdateManyWithoutGroupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type DonationCreateManyLinkedSessionInput = {
+  id?: string
+  userId?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  category: $Enums.GivingCategory
+  paymentMethod: $Enums.PaymentMethod
+  transactionId?: string | null
+  reference?: string | null
+  notes?: string | null
+  isRecurring?: boolean
+  recurringId?: string | null
+  receiptSent?: boolean
+  receiptSentAt?: Date | string | null
+  status?: string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: string | null
+  mpesaRequestId?: string | null
+  mpesaCheckoutId?: string | null
+  paypalTransactionId?: string | null
+  paypalOrderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  recurringDonationId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
+}
+
+export type DonationUpdateWithoutLinkedSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
+  qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
+  recurringDonation?: Prisma.RecurringDonationUpdateOneWithoutDonationsNestedInput
+  check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
+}
+
+export type DonationUncheckedUpdateWithoutLinkedSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
+}
+
+export type DonationUncheckedUpdateManyWithoutLinkedSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  category?: Prisma.EnumGivingCategoryFieldUpdateOperationsInput | $Enums.GivingCategory
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiptSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  qrCodeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mpesaCheckoutId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recurringDonationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DonationCreateManyRecurringDonationInput = {
@@ -1425,6 +2307,10 @@ export type DonationCreateManyRecurringDonationInput = {
   paypalOrderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  linkedSessionId?: string | null
+  groupId?: string | null
+  paybillAccountRef?: string | null
+  fundCategoryId?: string | null
 }
 
 export type DonationUpdateWithoutRecurringDonationInput = {
@@ -1447,9 +2333,13 @@ export type DonationUpdateWithoutRecurringDonationInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneWithoutDonationsNestedInput
   qrCode?: Prisma.GivingQRCodeUpdateOneWithoutDonationNestedInput
   check?: Prisma.CheckUpdateOneWithoutDonationNestedInput
+  linkedSession?: Prisma.AttendanceSessionUpdateOneWithoutDonationsNestedInput
+  group?: Prisma.SmallGroupUpdateOneWithoutDonationsNestedInput
+  fundCategory?: Prisma.FundCategoryUpdateOneWithoutDonationsNestedInput
 }
 
 export type DonationUncheckedUpdateWithoutRecurringDonationInput = {
@@ -1474,6 +2364,10 @@ export type DonationUncheckedUpdateWithoutRecurringDonationInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   check?: Prisma.CheckUncheckedUpdateOneWithoutDonationNestedInput
 }
 
@@ -1499,6 +2393,10 @@ export type DonationUncheckedUpdateManyWithoutRecurringDonationInput = {
   paypalOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  linkedSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paybillAccountRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fundCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1526,10 +2424,17 @@ export type DonationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   recurringDonationId?: boolean
+  linkedSessionId?: boolean
+  groupId?: boolean
+  paybillAccountRef?: boolean
+  fundCategoryId?: boolean
   user?: boolean | Prisma.Donation$userArgs<ExtArgs>
   qrCode?: boolean | Prisma.Donation$qrCodeArgs<ExtArgs>
   recurringDonation?: boolean | Prisma.Donation$recurringDonationArgs<ExtArgs>
   check?: boolean | Prisma.Donation$checkArgs<ExtArgs>
+  linkedSession?: boolean | Prisma.Donation$linkedSessionArgs<ExtArgs>
+  group?: boolean | Prisma.Donation$groupArgs<ExtArgs>
+  fundCategory?: boolean | Prisma.Donation$fundCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["donation"]>
 
 export type DonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1555,9 +2460,16 @@ export type DonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   recurringDonationId?: boolean
+  linkedSessionId?: boolean
+  groupId?: boolean
+  paybillAccountRef?: boolean
+  fundCategoryId?: boolean
   user?: boolean | Prisma.Donation$userArgs<ExtArgs>
   qrCode?: boolean | Prisma.Donation$qrCodeArgs<ExtArgs>
   recurringDonation?: boolean | Prisma.Donation$recurringDonationArgs<ExtArgs>
+  linkedSession?: boolean | Prisma.Donation$linkedSessionArgs<ExtArgs>
+  group?: boolean | Prisma.Donation$groupArgs<ExtArgs>
+  fundCategory?: boolean | Prisma.Donation$fundCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["donation"]>
 
 export type DonationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1583,9 +2495,16 @@ export type DonationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   recurringDonationId?: boolean
+  linkedSessionId?: boolean
+  groupId?: boolean
+  paybillAccountRef?: boolean
+  fundCategoryId?: boolean
   user?: boolean | Prisma.Donation$userArgs<ExtArgs>
   qrCode?: boolean | Prisma.Donation$qrCodeArgs<ExtArgs>
   recurringDonation?: boolean | Prisma.Donation$recurringDonationArgs<ExtArgs>
+  linkedSession?: boolean | Prisma.Donation$linkedSessionArgs<ExtArgs>
+  group?: boolean | Prisma.Donation$groupArgs<ExtArgs>
+  fundCategory?: boolean | Prisma.Donation$fundCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["donation"]>
 
 export type DonationSelectScalar = {
@@ -1611,24 +2530,37 @@ export type DonationSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   recurringDonationId?: boolean
+  linkedSessionId?: boolean
+  groupId?: boolean
+  paybillAccountRef?: boolean
+  fundCategoryId?: boolean
 }
 
-export type DonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "amount" | "category" | "paymentMethod" | "transactionId" | "reference" | "notes" | "isRecurring" | "recurringId" | "receiptSent" | "receiptSentAt" | "status" | "metadata" | "qrCodeId" | "mpesaRequestId" | "mpesaCheckoutId" | "paypalTransactionId" | "paypalOrderId" | "createdAt" | "updatedAt" | "recurringDonationId", ExtArgs["result"]["donation"]>
+export type DonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "amount" | "category" | "paymentMethod" | "transactionId" | "reference" | "notes" | "isRecurring" | "recurringId" | "receiptSent" | "receiptSentAt" | "status" | "metadata" | "qrCodeId" | "mpesaRequestId" | "mpesaCheckoutId" | "paypalTransactionId" | "paypalOrderId" | "createdAt" | "updatedAt" | "recurringDonationId" | "linkedSessionId" | "groupId" | "paybillAccountRef" | "fundCategoryId", ExtArgs["result"]["donation"]>
 export type DonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Donation$userArgs<ExtArgs>
   qrCode?: boolean | Prisma.Donation$qrCodeArgs<ExtArgs>
   recurringDonation?: boolean | Prisma.Donation$recurringDonationArgs<ExtArgs>
   check?: boolean | Prisma.Donation$checkArgs<ExtArgs>
+  linkedSession?: boolean | Prisma.Donation$linkedSessionArgs<ExtArgs>
+  group?: boolean | Prisma.Donation$groupArgs<ExtArgs>
+  fundCategory?: boolean | Prisma.Donation$fundCategoryArgs<ExtArgs>
 }
 export type DonationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Donation$userArgs<ExtArgs>
   qrCode?: boolean | Prisma.Donation$qrCodeArgs<ExtArgs>
   recurringDonation?: boolean | Prisma.Donation$recurringDonationArgs<ExtArgs>
+  linkedSession?: boolean | Prisma.Donation$linkedSessionArgs<ExtArgs>
+  group?: boolean | Prisma.Donation$groupArgs<ExtArgs>
+  fundCategory?: boolean | Prisma.Donation$fundCategoryArgs<ExtArgs>
 }
 export type DonationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Donation$userArgs<ExtArgs>
   qrCode?: boolean | Prisma.Donation$qrCodeArgs<ExtArgs>
   recurringDonation?: boolean | Prisma.Donation$recurringDonationArgs<ExtArgs>
+  linkedSession?: boolean | Prisma.Donation$linkedSessionArgs<ExtArgs>
+  group?: boolean | Prisma.Donation$groupArgs<ExtArgs>
+  fundCategory?: boolean | Prisma.Donation$fundCategoryArgs<ExtArgs>
 }
 
 export type $DonationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1638,6 +2570,9 @@ export type $DonationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     qrCode: Prisma.$GivingQRCodePayload<ExtArgs> | null
     recurringDonation: Prisma.$RecurringDonationPayload<ExtArgs> | null
     check: Prisma.$CheckPayload<ExtArgs> | null
+    linkedSession: Prisma.$AttendanceSessionPayload<ExtArgs> | null
+    group: Prisma.$SmallGroupPayload<ExtArgs> | null
+    fundCategory: Prisma.$FundCategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1662,6 +2597,10 @@ export type $DonationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     createdAt: Date
     updatedAt: Date
     recurringDonationId: string | null
+    linkedSessionId: string | null
+    groupId: string | null
+    paybillAccountRef: string | null
+    fundCategoryId: string | null
   }, ExtArgs["result"]["donation"]>
   composites: {}
 }
@@ -2060,6 +2999,9 @@ export interface Prisma__DonationClient<T, Null = never, ExtArgs extends runtime
   qrCode<T extends Prisma.Donation$qrCodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$qrCodeArgs<ExtArgs>>): Prisma.Prisma__GivingQRCodeClient<runtime.Types.Result.GetResult<Prisma.$GivingQRCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   recurringDonation<T extends Prisma.Donation$recurringDonationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$recurringDonationArgs<ExtArgs>>): Prisma.Prisma__RecurringDonationClient<runtime.Types.Result.GetResult<Prisma.$RecurringDonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   check<T extends Prisma.Donation$checkArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$checkArgs<ExtArgs>>): Prisma.Prisma__CheckClient<runtime.Types.Result.GetResult<Prisma.$CheckPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  linkedSession<T extends Prisma.Donation$linkedSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$linkedSessionArgs<ExtArgs>>): Prisma.Prisma__AttendanceSessionClient<runtime.Types.Result.GetResult<Prisma.$AttendanceSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  group<T extends Prisma.Donation$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$groupArgs<ExtArgs>>): Prisma.Prisma__SmallGroupClient<runtime.Types.Result.GetResult<Prisma.$SmallGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  fundCategory<T extends Prisma.Donation$fundCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$fundCategoryArgs<ExtArgs>>): Prisma.Prisma__FundCategoryClient<runtime.Types.Result.GetResult<Prisma.$FundCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2111,6 +3053,10 @@ export interface DonationFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Donation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Donation", 'DateTime'>
   readonly recurringDonationId: Prisma.FieldRef<"Donation", 'String'>
+  readonly linkedSessionId: Prisma.FieldRef<"Donation", 'String'>
+  readonly groupId: Prisma.FieldRef<"Donation", 'String'>
+  readonly paybillAccountRef: Prisma.FieldRef<"Donation", 'String'>
+  readonly fundCategoryId: Prisma.FieldRef<"Donation", 'String'>
 }
     
 
@@ -2580,6 +3526,63 @@ export type Donation$checkArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   include?: Prisma.CheckInclude<ExtArgs> | null
   where?: Prisma.CheckWhereInput
+}
+
+/**
+ * Donation.linkedSession
+ */
+export type Donation$linkedSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AttendanceSession
+   */
+  select?: Prisma.AttendanceSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AttendanceSession
+   */
+  omit?: Prisma.AttendanceSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceSessionInclude<ExtArgs> | null
+  where?: Prisma.AttendanceSessionWhereInput
+}
+
+/**
+ * Donation.group
+ */
+export type Donation$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SmallGroup
+   */
+  select?: Prisma.SmallGroupSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SmallGroup
+   */
+  omit?: Prisma.SmallGroupOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SmallGroupInclude<ExtArgs> | null
+  where?: Prisma.SmallGroupWhereInput
+}
+
+/**
+ * Donation.fundCategory
+ */
+export type Donation$fundCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FundCategory
+   */
+  select?: Prisma.FundCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FundCategory
+   */
+  omit?: Prisma.FundCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FundCategoryInclude<ExtArgs> | null
+  where?: Prisma.FundCategoryWhereInput
 }
 
 /**

@@ -255,6 +255,7 @@ export type YouthGroupWhereInput = {
   leader?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.YouthGroupMemberListRelationFilter
   events?: Prisma.YouthEventListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
 }
 
 export type YouthGroupOrderByWithRelationInput = {
@@ -270,6 +271,7 @@ export type YouthGroupOrderByWithRelationInput = {
   leader?: Prisma.UserOrderByWithRelationInput
   members?: Prisma.YouthGroupMemberOrderByRelationAggregateInput
   events?: Prisma.YouthEventOrderByRelationAggregateInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentOrderByRelationAggregateInput
 }
 
 export type YouthGroupWhereUniqueInput = Prisma.AtLeast<{
@@ -288,6 +290,7 @@ export type YouthGroupWhereUniqueInput = Prisma.AtLeast<{
   leader?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.YouthGroupMemberListRelationFilter
   events?: Prisma.YouthEventListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
 }, "id">
 
 export type YouthGroupOrderByWithAggregationInput = {
@@ -334,6 +337,7 @@ export type YouthGroupCreateInput = {
   leader?: Prisma.UserCreateNestedOneWithoutYouthLeadershipInput
   members?: Prisma.YouthGroupMemberCreateNestedManyWithoutGroupInput
   events?: Prisma.YouthEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupUncheckedCreateInput = {
@@ -348,6 +352,7 @@ export type YouthGroupUncheckedCreateInput = {
   updatedAt?: Date | string
   members?: Prisma.YouthGroupMemberUncheckedCreateNestedManyWithoutGroupInput
   events?: Prisma.YouthEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupUpdateInput = {
@@ -362,6 +367,7 @@ export type YouthGroupUpdateInput = {
   leader?: Prisma.UserUpdateOneWithoutYouthLeadershipNestedInput
   members?: Prisma.YouthGroupMemberUpdateManyWithoutGroupNestedInput
   events?: Prisma.YouthEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupUncheckedUpdateInput = {
@@ -376,6 +382,7 @@ export type YouthGroupUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.YouthGroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   events?: Prisma.YouthEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupCreateManyInput = {
@@ -474,6 +481,11 @@ export type YouthGroupScalarRelationFilter = {
   isNot?: Prisma.YouthGroupWhereInput
 }
 
+export type YouthGroupNullableScalarRelationFilter = {
+  is?: Prisma.YouthGroupWhereInput | null
+  isNot?: Prisma.YouthGroupWhereInput | null
+}
+
 export type YouthGroupCreateNestedManyWithoutLeaderInput = {
   create?: Prisma.XOR<Prisma.YouthGroupCreateWithoutLeaderInput, Prisma.YouthGroupUncheckedCreateWithoutLeaderInput> | Prisma.YouthGroupCreateWithoutLeaderInput[] | Prisma.YouthGroupUncheckedCreateWithoutLeaderInput[]
   connectOrCreate?: Prisma.YouthGroupCreateOrConnectWithoutLeaderInput | Prisma.YouthGroupCreateOrConnectWithoutLeaderInput[]
@@ -544,6 +556,22 @@ export type YouthGroupUpdateOneRequiredWithoutEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.YouthGroupUpdateToOneWithWhereWithoutEventsInput, Prisma.YouthGroupUpdateWithoutEventsInput>, Prisma.YouthGroupUncheckedUpdateWithoutEventsInput>
 }
 
+export type YouthGroupCreateNestedOneWithoutLeadershipAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.YouthGroupCreateWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.YouthGroupCreateOrConnectWithoutLeadershipAssignmentsInput
+  connect?: Prisma.YouthGroupWhereUniqueInput
+}
+
+export type YouthGroupUpdateOneWithoutLeadershipAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.YouthGroupCreateWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.YouthGroupCreateOrConnectWithoutLeadershipAssignmentsInput
+  upsert?: Prisma.YouthGroupUpsertWithoutLeadershipAssignmentsInput
+  disconnect?: Prisma.YouthGroupWhereInput | boolean
+  delete?: Prisma.YouthGroupWhereInput | boolean
+  connect?: Prisma.YouthGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.YouthGroupUpdateToOneWithWhereWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUpdateWithoutLeadershipAssignmentsInput>, Prisma.YouthGroupUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
 export type YouthGroupCreateWithoutLeaderInput = {
   id?: string
   name: string
@@ -555,6 +583,7 @@ export type YouthGroupCreateWithoutLeaderInput = {
   updatedAt?: Date | string
   members?: Prisma.YouthGroupMemberCreateNestedManyWithoutGroupInput
   events?: Prisma.YouthEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupUncheckedCreateWithoutLeaderInput = {
@@ -568,6 +597,7 @@ export type YouthGroupUncheckedCreateWithoutLeaderInput = {
   updatedAt?: Date | string
   members?: Prisma.YouthGroupMemberUncheckedCreateNestedManyWithoutGroupInput
   events?: Prisma.YouthEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupCreateOrConnectWithoutLeaderInput = {
@@ -622,6 +652,7 @@ export type YouthGroupCreateWithoutMembersInput = {
   updatedAt?: Date | string
   leader?: Prisma.UserCreateNestedOneWithoutYouthLeadershipInput
   events?: Prisma.YouthEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupUncheckedCreateWithoutMembersInput = {
@@ -635,6 +666,7 @@ export type YouthGroupUncheckedCreateWithoutMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.YouthEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupCreateOrConnectWithoutMembersInput = {
@@ -664,6 +696,7 @@ export type YouthGroupUpdateWithoutMembersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leader?: Prisma.UserUpdateOneWithoutYouthLeadershipNestedInput
   events?: Prisma.YouthEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupUncheckedUpdateWithoutMembersInput = {
@@ -677,6 +710,7 @@ export type YouthGroupUncheckedUpdateWithoutMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.YouthEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupCreateWithoutEventsInput = {
@@ -690,6 +724,7 @@ export type YouthGroupCreateWithoutEventsInput = {
   updatedAt?: Date | string
   leader?: Prisma.UserCreateNestedOneWithoutYouthLeadershipInput
   members?: Prisma.YouthGroupMemberCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupUncheckedCreateWithoutEventsInput = {
@@ -703,6 +738,7 @@ export type YouthGroupUncheckedCreateWithoutEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.YouthGroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutYouthGroupInput
 }
 
 export type YouthGroupCreateOrConnectWithoutEventsInput = {
@@ -732,6 +768,7 @@ export type YouthGroupUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leader?: Prisma.UserUpdateOneWithoutYouthLeadershipNestedInput
   members?: Prisma.YouthGroupMemberUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupUncheckedUpdateWithoutEventsInput = {
@@ -745,6 +782,79 @@ export type YouthGroupUncheckedUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.YouthGroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutYouthGroupNestedInput
+}
+
+export type YouthGroupCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  ageMin: number
+  ageMax: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutYouthLeadershipInput
+  members?: Prisma.YouthGroupMemberCreateNestedManyWithoutGroupInput
+  events?: Prisma.YouthEventCreateNestedManyWithoutGroupInput
+}
+
+export type YouthGroupUncheckedCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  ageMin: number
+  ageMax: number
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.YouthGroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  events?: Prisma.YouthEventUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type YouthGroupCreateOrConnectWithoutLeadershipAssignmentsInput = {
+  where: Prisma.YouthGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.YouthGroupCreateWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+}
+
+export type YouthGroupUpsertWithoutLeadershipAssignmentsInput = {
+  update: Prisma.XOR<Prisma.YouthGroupUpdateWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUncheckedUpdateWithoutLeadershipAssignmentsInput>
+  create: Prisma.XOR<Prisma.YouthGroupCreateWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+  where?: Prisma.YouthGroupWhereInput
+}
+
+export type YouthGroupUpdateToOneWithWhereWithoutLeadershipAssignmentsInput = {
+  where?: Prisma.YouthGroupWhereInput
+  data: Prisma.XOR<Prisma.YouthGroupUpdateWithoutLeadershipAssignmentsInput, Prisma.YouthGroupUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
+export type YouthGroupUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutYouthLeadershipNestedInput
+  members?: Prisma.YouthGroupMemberUpdateManyWithoutGroupNestedInput
+  events?: Prisma.YouthEventUpdateManyWithoutGroupNestedInput
+}
+
+export type YouthGroupUncheckedUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.YouthGroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  events?: Prisma.YouthEventUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type YouthGroupCreateManyLeaderInput = {
@@ -769,6 +879,7 @@ export type YouthGroupUpdateWithoutLeaderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.YouthGroupMemberUpdateManyWithoutGroupNestedInput
   events?: Prisma.YouthEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupUncheckedUpdateWithoutLeaderInput = {
@@ -782,6 +893,7 @@ export type YouthGroupUncheckedUpdateWithoutLeaderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.YouthGroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   events?: Prisma.YouthEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutYouthGroupNestedInput
 }
 
 export type YouthGroupUncheckedUpdateManyWithoutLeaderInput = {
@@ -803,11 +915,13 @@ export type YouthGroupUncheckedUpdateManyWithoutLeaderInput = {
 export type YouthGroupCountOutputType = {
   members: number
   events: number
+  leadershipAssignments: number
 }
 
 export type YouthGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | YouthGroupCountOutputTypeCountMembersArgs
   events?: boolean | YouthGroupCountOutputTypeCountEventsArgs
+  leadershipAssignments?: boolean | YouthGroupCountOutputTypeCountLeadershipAssignmentsArgs
 }
 
 /**
@@ -834,6 +948,13 @@ export type YouthGroupCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.YouthEventWhereInput
 }
 
+/**
+ * YouthGroupCountOutputType without action
+ */
+export type YouthGroupCountOutputTypeCountLeadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadershipAssignmentWhereInput
+}
+
 
 export type YouthGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -848,6 +969,7 @@ export type YouthGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   leader?: boolean | Prisma.YouthGroup$leaderArgs<ExtArgs>
   members?: boolean | Prisma.YouthGroup$membersArgs<ExtArgs>
   events?: boolean | Prisma.YouthGroup$eventsArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.YouthGroup$leadershipAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.YouthGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["youthGroup"]>
 
@@ -894,6 +1016,7 @@ export type YouthGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   leader?: boolean | Prisma.YouthGroup$leaderArgs<ExtArgs>
   members?: boolean | Prisma.YouthGroup$membersArgs<ExtArgs>
   events?: boolean | Prisma.YouthGroup$eventsArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.YouthGroup$leadershipAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.YouthGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type YouthGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -909,6 +1032,7 @@ export type $YouthGroupPayload<ExtArgs extends runtime.Types.Extensions.Internal
     leader: Prisma.$UserPayload<ExtArgs> | null
     members: Prisma.$YouthGroupMemberPayload<ExtArgs>[]
     events: Prisma.$YouthEventPayload<ExtArgs>[]
+    leadershipAssignments: Prisma.$LeadershipAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1317,6 +1441,7 @@ export interface Prisma__YouthGroupClient<T, Null = never, ExtArgs extends runti
   leader<T extends Prisma.YouthGroup$leaderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.YouthGroup$leaderArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   members<T extends Prisma.YouthGroup$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.YouthGroup$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$YouthGroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.YouthGroup$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.YouthGroup$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$YouthEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadershipAssignments<T extends Prisma.YouthGroup$leadershipAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.YouthGroup$leadershipAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadershipAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1815,6 +1940,30 @@ export type YouthGroup$eventsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.YouthEventScalarFieldEnum | Prisma.YouthEventScalarFieldEnum[]
+}
+
+/**
+ * YouthGroup.leadershipAssignments
+ */
+export type YouthGroup$leadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeadershipAssignment
+   */
+  select?: Prisma.LeadershipAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeadershipAssignment
+   */
+  omit?: Prisma.LeadershipAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadershipAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LeadershipAssignmentWhereInput
+  orderBy?: Prisma.LeadershipAssignmentOrderByWithRelationInput | Prisma.LeadershipAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LeadershipAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadershipAssignmentScalarFieldEnum | Prisma.LeadershipAssignmentScalarFieldEnum[]
 }
 
 /**

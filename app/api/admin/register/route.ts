@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
+import { createCognitoUser } from "@/lib/cognito";
 
 // POST - Create admin user (only if no admin exists)
 export async function POST(request: NextRequest) {
@@ -27,25 +27,54 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (password.length < 6) {
+    if (password.length < 8) {
       return NextResponse.json(
-        { error: "Password must be at least 6 characters" },
+        { error: "Password must be at least 8 characters" },
         { status: 400 }
       );
     }
 
-    // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
+    // Check if user already exists in database
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
 
-    // Create admin user
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "User with this email already exists" },
+        { status: 409 }
+      );
+    }
+
+    // Create user in Cognito first
+    try {
+      await createCognitoUser(email, password, firstName, lastName);
+    } catch (error: any) {
+      // If user already exists in Cognito, continue (might be from previous attempt)
+      if (
+        error.message?.includes("already exists") ||
+        error.message?.includes("UsernameExistsException") ||
+        error.name === "UsernameExistsException"
+      ) {
+        console.log(`User already exists in Cognito: ${email}`);
+      } else {
+        console.error("Error creating user in Cognito:", error);
+        return NextResponse.json(
+          { error: `Failed to create user in Cognito: ${error.message}` },
+          { status: 500 }
+        );
+      }
+    }
+
+    // Create admin user in database
     const admin = await prisma.user.create({
       data: {
         email,
         firstName,
         lastName,
-        passwordHash,
         role: "ADMIN",
         status: "ACTIVE",
+        canLogin: true,
         emailVerified: true,
       },
       select: {

@@ -83,7 +83,7 @@ export function TotalMembersWidget({ widgetId }: TotalMembersWidgetProps) {
           </span>
           <span className="ml-2">new this month</span>
         </p>
-        <Link href="/dashboard/users" className="mt-3 block">
+        <Link href="/dashboard/people" className="mt-3 block">
           <Button 
             variant="ghost" 
             size="sm" 

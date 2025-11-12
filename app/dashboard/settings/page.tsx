@@ -36,6 +36,7 @@ import {
   LayoutDashboard,
   Info,
   Plug,
+  Tag,
 } from "lucide-react";
 import { GuestQRCode } from "@/components/guest-qr-code";
 import Link from "next/link";
@@ -133,6 +134,8 @@ export default function SettingsPage() {
     shortcode: "",
     passkey: "",
     callbackUrl: "",
+    paybillNumber: "",
+    paybillAccountName: "",
   });
   const [smsSettings, setSmsSettings] = useState({
     apiKey: "",
@@ -242,14 +245,19 @@ export default function SettingsPage() {
       // Save to Redux
       dispatch(setMpesaSettings(mpesaSettings));
       
-      // Save to database
+      // Save to database - flatten settings for ChurchSetting model
+      const settingsToSave: Record<string, any> = {
+        mpesa: mpesaSettings,
+        // Also save paybill settings separately for easy access
+        mpesa_paybill_number: mpesaSettings.paybillNumber,
+        mpesa_paybill_account_name: mpesaSettings.paybillAccountName,
+      };
+      
       const res = await fetch("/api/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          settings: {
-            mpesa: mpesaSettings,
-          },
+          settings: settingsToSave,
         }),
       });
 
@@ -498,6 +506,14 @@ export default function SettingsPage() {
           <TabsTrigger value="cloudinary">
             <Image className="w-4 h-4 mr-2" />
             Cloudinary
+          </TabsTrigger>
+          <TabsTrigger value="categories">
+            <Tag className="w-4 h-4 mr-2" />
+            Categories
+          </TabsTrigger>
+          <TabsTrigger value="fund-categories">
+            <DollarSign className="w-4 h-4 mr-2" />
+            Fund Categories
           </TabsTrigger>
         </TabsList>
 
@@ -1079,6 +1095,63 @@ export default function SettingsPage() {
               </Button>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>M-Pesa Paybill Configuration</CardTitle>
+              <CardDescription>
+                Configure M-Pesa paybill details for manual giving instructions
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label htmlFor="paybillNumber">Paybill Number</Label>
+                <Input
+                  id="paybillNumber"
+                  value={mpesaSettings.paybillNumber}
+                  onChange={(e) =>
+                    setMpesaSettings({ ...mpesaSettings, paybillNumber: e.target.value })
+                  }
+                  placeholder="e.g., 123456"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  The M-Pesa paybill number for your church (configured with Safaricom)
+                </p>
+              </div>
+              <div>
+                <Label htmlFor="paybillAccountName">Default Account Name</Label>
+                <Input
+                  id="paybillAccountName"
+                  value={mpesaSettings.paybillAccountName}
+                  onChange={(e) =>
+                    setMpesaSettings({ ...mpesaSettings, paybillAccountName: e.target.value })
+                  }
+                  placeholder="e.g., EASTGATE CHAPEL"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Default account name to suggest when users make paybill payments
+                </p>
+              </div>
+              <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <h3 className="font-semibold mb-2">Paybill Instructions Preview</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  Users will see these instructions when selecting paybill payment:
+                </p>
+                <ol className="text-xs space-y-1 list-decimal list-inside text-gray-700 dark:text-gray-300">
+                  <li>Go to M-Pesa on your phone</li>
+                  <li>Select "Lipa na M-Pesa"</li>
+                  <li>Select "Paybill"</li>
+                  <li>Enter Business Number: <strong>{mpesaSettings.paybillNumber || "[Paybill Number]"}</strong></li>
+                  <li>Enter Account Number: <strong>{mpesaSettings.paybillAccountName || "[Account Name]"}</strong></li>
+                  <li>Enter Amount: <strong>KES [Amount]</strong></li>
+                  <li>Enter your M-Pesa PIN</li>
+                </ol>
+              </div>
+              <Button onClick={handleSaveMpesa} disabled={loading}>
+                {loading ? "Saving..." : "Save Paybill Settings"}
+              </Button>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* SMS Settings */}
@@ -1289,6 +1362,72 @@ export default function SettingsPage() {
               <Button onClick={handleSaveCloudinary} disabled={loading}>
                 {loading ? "Saving..." : "Save Cloudinary Settings"}
               </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Categories Tab */}
+        <TabsContent value="categories" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Tag className="w-5 h-5" />
+                Giving Categories Management
+              </CardTitle>
+              <CardDescription>
+                Manage giving categories for donations and contributions
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/dashboard/settings/categories">
+                <Button>
+                  <Tag className="w-4 h-4 mr-2" />
+                  Manage Categories
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Mail className="w-5 h-5" />
+                Email Templates
+              </CardTitle>
+              <CardDescription>
+                Create and manage email templates for communications
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/dashboard/settings/email-templates">
+                <Button variant="outline">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Manage Email Templates
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Fund Categories Tab */}
+        <TabsContent value="fund-categories" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <DollarSign className="w-5 h-5" />
+                Fund Categories Management
+              </CardTitle>
+              <CardDescription>
+                Manage fund categories for group paybill giving (e.g., TTH, WLFR, BLDG)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/dashboard/settings/fund-categories">
+                <Button variant="outline">
+                  <DollarSign className="w-4 h-4 mr-2" />
+                  Manage Fund Categories
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </TabsContent>

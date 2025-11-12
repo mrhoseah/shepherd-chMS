@@ -23,7 +23,7 @@ export function GuestFollowUpToggle({
   const handleToggle = async (checked: boolean) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/users/${guestId}`, {
+      const response = await fetch(`/api/people/${guestId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ enableFollowUps: checked }),

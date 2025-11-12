@@ -48,10 +48,10 @@ export function AddFamilyMemberDialog({
 
     try {
       const res = await fetch(
-        `/api/users?search=${encodeURIComponent(searchQuery)}&limit=10`
+        `/api/people?search=${encodeURIComponent(searchQuery)}&limit=10`
       );
       const data = await res.json();
-      setSearchResults(data.users || []);
+      setSearchResults(data.people || data.users || []);
     } catch (error) {
       console.error("Error searching members:", error);
     }
@@ -74,7 +74,7 @@ export function AddFamilyMemberDialog({
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/users/${userId}/family`, {
+      const res = await fetch(`/api/people/${userId}/family`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

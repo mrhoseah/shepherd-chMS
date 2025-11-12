@@ -3,37 +3,43 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-// GET - List all message templates
+// GET - Get all communication templates
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
-    const category = searchParams.get("category");
     const type = searchParams.get("type");
+    const method = searchParams.get("method");
+    const isActive = searchParams.get("isActive");
 
     const where: any = {};
-    if (category) {
-      where.category = category;
-    }
-    if (type) {
-      where.type = type;
-    }
+    if (type) where.type = type;
+    if (method) where.method = method;
+    if (isActive !== null) where.isActive = isActive === "true";
 
-    const templates = await prisma.messageTemplate.findMany({
+    const templates = await prisma.communicationTemplate.findMany({
       where,
+      include: {
+        createdBy: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
       orderBy: [
-        { category: "asc" },
         { isDefault: "desc" },
-        { name: "asc" },
+        { createdAt: "desc" },
       ],
     });
 
     return NextResponse.json({ templates });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error fetching templates:", error);
     return NextResponse.json(
       { error: "Failed to fetch templates" },
@@ -42,47 +48,63 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST - Create a new message template
+// POST - Create a new communication template
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await request.json();
-    const { name, category, type, subject, content, variables, trigger, isDefault } = body;
+    const { name, type, method, subject, content, variables, isActive, isDefault } = body;
 
-    if (!name || !category || !type || !content) {
+    if (!name || !type || !method || !content) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Name, type, method, and content are required" },
         { status: 400 }
       );
     }
 
-    // If setting as default, unset other defaults in same category
+    // If this is set as default, unset other defaults for this type/method
     if (isDefault) {
-      await prisma.messageTemplate.updateMany({
-        where: { category, isDefault: true },
-        data: { isDefault: false },
+      await prisma.communicationTemplate.updateMany({
+        where: {
+          type,
+          method,
+          isDefault: true,
+        },
+        data: {
+          isDefault: false,
+        },
       });
     }
 
-    const template = await prisma.messageTemplate.create({
+    const template = await prisma.communicationTemplate.create({
       data: {
         name,
-        category,
         type,
-        subject,
+        method,
+        subject: subject || null,
         content,
-        variables: variables || {},
-        trigger,
+        variables: variables || null,
+        isActive: isActive !== undefined ? isActive : true,
         isDefault: isDefault || false,
+        createdById: session.user.id,
+      },
+      include: {
+        createdBy: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
     });
 
-    return NextResponse.json({ template }, { status: 201 });
-  } catch (error: any) {
+    return NextResponse.json(template, { status: 201 });
+  } catch (error) {
     console.error("Error creating template:", error);
     return NextResponse.json(
       { error: "Failed to create template" },
@@ -90,4 +112,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

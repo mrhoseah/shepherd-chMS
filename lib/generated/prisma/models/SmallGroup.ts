@@ -51,6 +51,8 @@ export type SmallGroupMinAggregateOutputType = {
   longitude: number | null
   useRotation: boolean | null
   isActive: boolean | null
+  groupGivingEnabled: boolean | null
+  groupCode: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +72,8 @@ export type SmallGroupMaxAggregateOutputType = {
   longitude: number | null
   useRotation: boolean | null
   isActive: boolean | null
+  groupGivingEnabled: boolean | null
+  groupCode: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -89,6 +93,8 @@ export type SmallGroupCountAggregateOutputType = {
   longitude: number
   useRotation: number
   isActive: number
+  groupGivingEnabled: number
+  groupCode: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -120,6 +126,8 @@ export type SmallGroupMinAggregateInputType = {
   longitude?: true
   useRotation?: true
   isActive?: true
+  groupGivingEnabled?: true
+  groupCode?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -139,6 +147,8 @@ export type SmallGroupMaxAggregateInputType = {
   longitude?: true
   useRotation?: true
   isActive?: true
+  groupGivingEnabled?: true
+  groupCode?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -158,6 +168,8 @@ export type SmallGroupCountAggregateInputType = {
   longitude?: true
   useRotation?: true
   isActive?: true
+  groupGivingEnabled?: true
+  groupCode?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -264,6 +276,8 @@ export type SmallGroupGroupByOutputType = {
   longitude: number | null
   useRotation: boolean
   isActive: boolean
+  groupGivingEnabled: boolean
+  groupCode: string | null
   createdAt: Date
   updatedAt: Date
   _count: SmallGroupCountAggregateOutputType | null
@@ -306,6 +320,8 @@ export type SmallGroupWhereInput = {
   longitude?: Prisma.FloatNullableFilter<"SmallGroup"> | number | null
   useRotation?: Prisma.BoolFilter<"SmallGroup"> | boolean
   isActive?: Prisma.BoolFilter<"SmallGroup"> | boolean
+  groupGivingEnabled?: Prisma.BoolFilter<"SmallGroup"> | boolean
+  groupCode?: Prisma.StringNullableFilter<"SmallGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SmallGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SmallGroup"> | Date | string
   campus?: Prisma.XOR<Prisma.CampusNullableScalarRelationFilter, Prisma.CampusWhereInput> | null
@@ -316,6 +332,9 @@ export type SmallGroupWhereInput = {
   meetings?: Prisma.GroupMeetingListRelationFilter
   discussions?: Prisma.GroupDiscussionListRelationFilter
   meetingRotations?: Prisma.GroupMeetingRotationListRelationFilter
+  masterEvents?: Prisma.MasterEventListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
+  donations?: Prisma.DonationListRelationFilter
 }
 
 export type SmallGroupOrderByWithRelationInput = {
@@ -333,6 +352,8 @@ export type SmallGroupOrderByWithRelationInput = {
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   useRotation?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  groupGivingEnabled?: Prisma.SortOrder
+  groupCode?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campus?: Prisma.CampusOrderByWithRelationInput
@@ -343,10 +364,14 @@ export type SmallGroupOrderByWithRelationInput = {
   meetings?: Prisma.GroupMeetingOrderByRelationAggregateInput
   discussions?: Prisma.GroupDiscussionOrderByRelationAggregateInput
   meetingRotations?: Prisma.GroupMeetingRotationOrderByRelationAggregateInput
+  masterEvents?: Prisma.MasterEventOrderByRelationAggregateInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentOrderByRelationAggregateInput
+  donations?: Prisma.DonationOrderByRelationAggregateInput
 }
 
 export type SmallGroupWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  groupCode?: string
   AND?: Prisma.SmallGroupWhereInput | Prisma.SmallGroupWhereInput[]
   OR?: Prisma.SmallGroupWhereInput[]
   NOT?: Prisma.SmallGroupWhereInput | Prisma.SmallGroupWhereInput[]
@@ -363,6 +388,7 @@ export type SmallGroupWhereUniqueInput = Prisma.AtLeast<{
   longitude?: Prisma.FloatNullableFilter<"SmallGroup"> | number | null
   useRotation?: Prisma.BoolFilter<"SmallGroup"> | boolean
   isActive?: Prisma.BoolFilter<"SmallGroup"> | boolean
+  groupGivingEnabled?: Prisma.BoolFilter<"SmallGroup"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SmallGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SmallGroup"> | Date | string
   campus?: Prisma.XOR<Prisma.CampusNullableScalarRelationFilter, Prisma.CampusWhereInput> | null
@@ -373,7 +399,10 @@ export type SmallGroupWhereUniqueInput = Prisma.AtLeast<{
   meetings?: Prisma.GroupMeetingListRelationFilter
   discussions?: Prisma.GroupDiscussionListRelationFilter
   meetingRotations?: Prisma.GroupMeetingRotationListRelationFilter
-}, "id">
+  masterEvents?: Prisma.MasterEventListRelationFilter
+  leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
+  donations?: Prisma.DonationListRelationFilter
+}, "id" | "groupCode">
 
 export type SmallGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -390,6 +419,8 @@ export type SmallGroupOrderByWithAggregationInput = {
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   useRotation?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  groupGivingEnabled?: Prisma.SortOrder
+  groupCode?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SmallGroupCountOrderByAggregateInput
@@ -417,6 +448,8 @@ export type SmallGroupScalarWhereWithAggregatesInput = {
   longitude?: Prisma.FloatNullableWithAggregatesFilter<"SmallGroup"> | number | null
   useRotation?: Prisma.BoolWithAggregatesFilter<"SmallGroup"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"SmallGroup"> | boolean
+  groupGivingEnabled?: Prisma.BoolWithAggregatesFilter<"SmallGroup"> | boolean
+  groupCode?: Prisma.StringNullableWithAggregatesFilter<"SmallGroup"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SmallGroup"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SmallGroup"> | Date | string
 }
@@ -433,6 +466,8 @@ export type SmallGroupCreateInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -443,6 +478,9 @@ export type SmallGroupCreateInput = {
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateInput = {
@@ -460,6 +498,8 @@ export type SmallGroupUncheckedCreateInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
@@ -467,6 +507,9 @@ export type SmallGroupUncheckedCreateInput = {
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUpdateInput = {
@@ -481,6 +524,8 @@ export type SmallGroupUpdateInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -491,6 +536,9 @@ export type SmallGroupUpdateInput = {
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateInput = {
@@ -508,6 +556,8 @@ export type SmallGroupUncheckedUpdateInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
@@ -515,6 +565,9 @@ export type SmallGroupUncheckedUpdateInput = {
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupCreateManyInput = {
@@ -532,6 +585,8 @@ export type SmallGroupCreateManyInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -548,6 +603,8 @@ export type SmallGroupUpdateManyMutationInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -567,6 +624,8 @@ export type SmallGroupUncheckedUpdateManyInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -601,6 +660,8 @@ export type SmallGroupCountOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   useRotation?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  groupGivingEnabled?: Prisma.SortOrder
+  groupCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -625,6 +686,8 @@ export type SmallGroupMaxOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   useRotation?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  groupGivingEnabled?: Prisma.SortOrder
+  groupCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -644,6 +707,8 @@ export type SmallGroupMinOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   useRotation?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  groupGivingEnabled?: Prisma.SortOrder
+  groupCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -864,6 +929,54 @@ export type SmallGroupUpdateOneRequiredWithoutDiscussionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SmallGroupUpdateToOneWithWhereWithoutDiscussionsInput, Prisma.SmallGroupUpdateWithoutDiscussionsInput>, Prisma.SmallGroupUncheckedUpdateWithoutDiscussionsInput>
 }
 
+export type SmallGroupCreateNestedOneWithoutMasterEventsInput = {
+  create?: Prisma.XOR<Prisma.SmallGroupCreateWithoutMasterEventsInput, Prisma.SmallGroupUncheckedCreateWithoutMasterEventsInput>
+  connectOrCreate?: Prisma.SmallGroupCreateOrConnectWithoutMasterEventsInput
+  connect?: Prisma.SmallGroupWhereUniqueInput
+}
+
+export type SmallGroupUpdateOneWithoutMasterEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.SmallGroupCreateWithoutMasterEventsInput, Prisma.SmallGroupUncheckedCreateWithoutMasterEventsInput>
+  connectOrCreate?: Prisma.SmallGroupCreateOrConnectWithoutMasterEventsInput
+  upsert?: Prisma.SmallGroupUpsertWithoutMasterEventsInput
+  disconnect?: Prisma.SmallGroupWhereInput | boolean
+  delete?: Prisma.SmallGroupWhereInput | boolean
+  connect?: Prisma.SmallGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SmallGroupUpdateToOneWithWhereWithoutMasterEventsInput, Prisma.SmallGroupUpdateWithoutMasterEventsInput>, Prisma.SmallGroupUncheckedUpdateWithoutMasterEventsInput>
+}
+
+export type SmallGroupCreateNestedOneWithoutDonationsInput = {
+  create?: Prisma.XOR<Prisma.SmallGroupCreateWithoutDonationsInput, Prisma.SmallGroupUncheckedCreateWithoutDonationsInput>
+  connectOrCreate?: Prisma.SmallGroupCreateOrConnectWithoutDonationsInput
+  connect?: Prisma.SmallGroupWhereUniqueInput
+}
+
+export type SmallGroupUpdateOneWithoutDonationsNestedInput = {
+  create?: Prisma.XOR<Prisma.SmallGroupCreateWithoutDonationsInput, Prisma.SmallGroupUncheckedCreateWithoutDonationsInput>
+  connectOrCreate?: Prisma.SmallGroupCreateOrConnectWithoutDonationsInput
+  upsert?: Prisma.SmallGroupUpsertWithoutDonationsInput
+  disconnect?: Prisma.SmallGroupWhereInput | boolean
+  delete?: Prisma.SmallGroupWhereInput | boolean
+  connect?: Prisma.SmallGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SmallGroupUpdateToOneWithWhereWithoutDonationsInput, Prisma.SmallGroupUpdateWithoutDonationsInput>, Prisma.SmallGroupUncheckedUpdateWithoutDonationsInput>
+}
+
+export type SmallGroupCreateNestedOneWithoutLeadershipAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.SmallGroupCreateWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.SmallGroupCreateOrConnectWithoutLeadershipAssignmentsInput
+  connect?: Prisma.SmallGroupWhereUniqueInput
+}
+
+export type SmallGroupUpdateOneWithoutLeadershipAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.SmallGroupCreateWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+  connectOrCreate?: Prisma.SmallGroupCreateOrConnectWithoutLeadershipAssignmentsInput
+  upsert?: Prisma.SmallGroupUpsertWithoutLeadershipAssignmentsInput
+  disconnect?: Prisma.SmallGroupWhereInput | boolean
+  delete?: Prisma.SmallGroupWhereInput | boolean
+  connect?: Prisma.SmallGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SmallGroupUpdateToOneWithWhereWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUpdateWithoutLeadershipAssignmentsInput>, Prisma.SmallGroupUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
 export type SmallGroupCreateWithoutLeaderInput = {
   id?: string
   name: string
@@ -876,6 +989,8 @@ export type SmallGroupCreateWithoutLeaderInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -885,6 +1000,9 @@ export type SmallGroupCreateWithoutLeaderInput = {
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutLeaderInput = {
@@ -901,6 +1019,8 @@ export type SmallGroupUncheckedCreateWithoutLeaderInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
@@ -908,6 +1028,9 @@ export type SmallGroupUncheckedCreateWithoutLeaderInput = {
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutLeaderInput = {
@@ -954,6 +1077,8 @@ export type SmallGroupScalarWhereInput = {
   longitude?: Prisma.FloatNullableFilter<"SmallGroup"> | number | null
   useRotation?: Prisma.BoolFilter<"SmallGroup"> | boolean
   isActive?: Prisma.BoolFilter<"SmallGroup"> | boolean
+  groupGivingEnabled?: Prisma.BoolFilter<"SmallGroup"> | boolean
+  groupCode?: Prisma.StringNullableFilter<"SmallGroup"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SmallGroup"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SmallGroup"> | Date | string
 }
@@ -970,6 +1095,8 @@ export type SmallGroupCreateWithoutCampusInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.SmallGroupCreateNestedOneWithoutSubgroupsInput
@@ -979,6 +1106,9 @@ export type SmallGroupCreateWithoutCampusInput = {
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutCampusInput = {
@@ -995,6 +1125,8 @@ export type SmallGroupUncheckedCreateWithoutCampusInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
@@ -1002,6 +1134,9 @@ export type SmallGroupUncheckedCreateWithoutCampusInput = {
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutCampusInput = {
@@ -1042,6 +1177,8 @@ export type SmallGroupCreateWithoutSubgroupsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -1051,6 +1188,9 @@ export type SmallGroupCreateWithoutSubgroupsInput = {
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutSubgroupsInput = {
@@ -1068,12 +1208,17 @@ export type SmallGroupUncheckedCreateWithoutSubgroupsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutSubgroupsInput = {
@@ -1093,6 +1238,8 @@ export type SmallGroupCreateWithoutParentInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -1102,6 +1249,9 @@ export type SmallGroupCreateWithoutParentInput = {
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutParentInput = {
@@ -1118,6 +1268,8 @@ export type SmallGroupUncheckedCreateWithoutParentInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
@@ -1125,6 +1277,9 @@ export type SmallGroupUncheckedCreateWithoutParentInput = {
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutParentInput = {
@@ -1160,6 +1315,8 @@ export type SmallGroupUpdateWithoutSubgroupsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1169,6 +1326,9 @@ export type SmallGroupUpdateWithoutSubgroupsInput = {
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutSubgroupsInput = {
@@ -1186,12 +1346,17 @@ export type SmallGroupUncheckedUpdateWithoutSubgroupsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUpsertWithWhereUniqueWithoutParentInput = {
@@ -1222,6 +1387,8 @@ export type SmallGroupCreateWithoutMembersInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -1231,6 +1398,9 @@ export type SmallGroupCreateWithoutMembersInput = {
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutMembersInput = {
@@ -1248,12 +1418,17 @@ export type SmallGroupUncheckedCreateWithoutMembersInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutMembersInput = {
@@ -1284,6 +1459,8 @@ export type SmallGroupUpdateWithoutMembersInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1293,6 +1470,9 @@ export type SmallGroupUpdateWithoutMembersInput = {
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutMembersInput = {
@@ -1310,12 +1490,17 @@ export type SmallGroupUncheckedUpdateWithoutMembersInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupCreateWithoutMeetingsInput = {
@@ -1330,6 +1515,8 @@ export type SmallGroupCreateWithoutMeetingsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -1339,6 +1526,9 @@ export type SmallGroupCreateWithoutMeetingsInput = {
   members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutMeetingsInput = {
@@ -1356,12 +1546,17 @@ export type SmallGroupUncheckedCreateWithoutMeetingsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
   members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutMeetingsInput = {
@@ -1392,6 +1587,8 @@ export type SmallGroupUpdateWithoutMeetingsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1401,6 +1598,9 @@ export type SmallGroupUpdateWithoutMeetingsInput = {
   members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutMeetingsInput = {
@@ -1418,12 +1618,17 @@ export type SmallGroupUncheckedUpdateWithoutMeetingsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
   members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupCreateWithoutMeetingRotationsInput = {
@@ -1438,6 +1643,8 @@ export type SmallGroupCreateWithoutMeetingRotationsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -1447,6 +1654,9 @@ export type SmallGroupCreateWithoutMeetingRotationsInput = {
   members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutMeetingRotationsInput = {
@@ -1464,12 +1674,17 @@ export type SmallGroupUncheckedCreateWithoutMeetingRotationsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
   members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutMeetingRotationsInput = {
@@ -1500,6 +1715,8 @@ export type SmallGroupUpdateWithoutMeetingRotationsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1509,6 +1726,9 @@ export type SmallGroupUpdateWithoutMeetingRotationsInput = {
   members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutMeetingRotationsInput = {
@@ -1526,12 +1746,17 @@ export type SmallGroupUncheckedUpdateWithoutMeetingRotationsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
   members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupCreateWithoutDiscussionsInput = {
@@ -1546,6 +1771,8 @@ export type SmallGroupCreateWithoutDiscussionsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
@@ -1555,6 +1782,9 @@ export type SmallGroupCreateWithoutDiscussionsInput = {
   members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
   meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupUncheckedCreateWithoutDiscussionsInput = {
@@ -1572,12 +1802,17 @@ export type SmallGroupUncheckedCreateWithoutDiscussionsInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
   members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
   meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type SmallGroupCreateOrConnectWithoutDiscussionsInput = {
@@ -1608,6 +1843,8 @@ export type SmallGroupUpdateWithoutDiscussionsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1617,6 +1854,9 @@ export type SmallGroupUpdateWithoutDiscussionsInput = {
   members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutDiscussionsInput = {
@@ -1634,12 +1874,401 @@ export type SmallGroupUncheckedUpdateWithoutDiscussionsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
   members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type SmallGroupCreateWithoutMasterEventsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  type?: string | null
+  meetingDay?: string | null
+  meetingTime?: string | null
+  meetingLocation?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  useRotation?: boolean
+  isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
+  parent?: Prisma.SmallGroupCreateNestedOneWithoutSubgroupsInput
+  subgroups?: Prisma.SmallGroupCreateNestedManyWithoutParentInput
+  leader?: Prisma.UserCreateNestedOneWithoutGroupLeadershipInput
+  members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
+  meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
+  discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
+  meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
+}
+
+export type SmallGroupUncheckedCreateWithoutMasterEventsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  type?: string | null
+  campusId?: string | null
+  parentId?: string | null
+  leaderId?: string | null
+  meetingDay?: string | null
+  meetingTime?: string | null
+  meetingLocation?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  useRotation?: boolean
+  isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
+  members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
+  discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
+  meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type SmallGroupCreateOrConnectWithoutMasterEventsInput = {
+  where: Prisma.SmallGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.SmallGroupCreateWithoutMasterEventsInput, Prisma.SmallGroupUncheckedCreateWithoutMasterEventsInput>
+}
+
+export type SmallGroupUpsertWithoutMasterEventsInput = {
+  update: Prisma.XOR<Prisma.SmallGroupUpdateWithoutMasterEventsInput, Prisma.SmallGroupUncheckedUpdateWithoutMasterEventsInput>
+  create: Prisma.XOR<Prisma.SmallGroupCreateWithoutMasterEventsInput, Prisma.SmallGroupUncheckedCreateWithoutMasterEventsInput>
+  where?: Prisma.SmallGroupWhereInput
+}
+
+export type SmallGroupUpdateToOneWithWhereWithoutMasterEventsInput = {
+  where?: Prisma.SmallGroupWhereInput
+  data: Prisma.XOR<Prisma.SmallGroupUpdateWithoutMasterEventsInput, Prisma.SmallGroupUncheckedUpdateWithoutMasterEventsInput>
+}
+
+export type SmallGroupUpdateWithoutMasterEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
+  parent?: Prisma.SmallGroupUpdateOneWithoutSubgroupsNestedInput
+  subgroups?: Prisma.SmallGroupUpdateManyWithoutParentNestedInput
+  leader?: Prisma.UserUpdateOneWithoutGroupLeadershipNestedInput
+  members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
+  meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
+  discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
+  meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
+}
+
+export type SmallGroupUncheckedUpdateWithoutMasterEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
+  members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
+  discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
+  meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type SmallGroupCreateWithoutDonationsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  type?: string | null
+  meetingDay?: string | null
+  meetingTime?: string | null
+  meetingLocation?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  useRotation?: boolean
+  isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
+  parent?: Prisma.SmallGroupCreateNestedOneWithoutSubgroupsInput
+  subgroups?: Prisma.SmallGroupCreateNestedManyWithoutParentInput
+  leader?: Prisma.UserCreateNestedOneWithoutGroupLeadershipInput
+  members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
+  meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
+  discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
+  meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutGroupInput
+}
+
+export type SmallGroupUncheckedCreateWithoutDonationsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  type?: string | null
+  campusId?: string | null
+  parentId?: string | null
+  leaderId?: string | null
+  meetingDay?: string | null
+  meetingTime?: string | null
+  meetingLocation?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  useRotation?: boolean
+  isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
+  members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
+  discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
+  meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type SmallGroupCreateOrConnectWithoutDonationsInput = {
+  where: Prisma.SmallGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.SmallGroupCreateWithoutDonationsInput, Prisma.SmallGroupUncheckedCreateWithoutDonationsInput>
+}
+
+export type SmallGroupUpsertWithoutDonationsInput = {
+  update: Prisma.XOR<Prisma.SmallGroupUpdateWithoutDonationsInput, Prisma.SmallGroupUncheckedUpdateWithoutDonationsInput>
+  create: Prisma.XOR<Prisma.SmallGroupCreateWithoutDonationsInput, Prisma.SmallGroupUncheckedCreateWithoutDonationsInput>
+  where?: Prisma.SmallGroupWhereInput
+}
+
+export type SmallGroupUpdateToOneWithWhereWithoutDonationsInput = {
+  where?: Prisma.SmallGroupWhereInput
+  data: Prisma.XOR<Prisma.SmallGroupUpdateWithoutDonationsInput, Prisma.SmallGroupUncheckedUpdateWithoutDonationsInput>
+}
+
+export type SmallGroupUpdateWithoutDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
+  parent?: Prisma.SmallGroupUpdateOneWithoutSubgroupsNestedInput
+  subgroups?: Prisma.SmallGroupUpdateManyWithoutParentNestedInput
+  leader?: Prisma.UserUpdateOneWithoutGroupLeadershipNestedInput
+  members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
+  meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
+  discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
+  meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+}
+
+export type SmallGroupUncheckedUpdateWithoutDonationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
+  members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
+  discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
+  meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type SmallGroupCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  type?: string | null
+  meetingDay?: string | null
+  meetingTime?: string | null
+  meetingLocation?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  useRotation?: boolean
+  isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus?: Prisma.CampusCreateNestedOneWithoutGroupsInput
+  parent?: Prisma.SmallGroupCreateNestedOneWithoutSubgroupsInput
+  subgroups?: Prisma.SmallGroupCreateNestedManyWithoutParentInput
+  leader?: Prisma.UserCreateNestedOneWithoutGroupLeadershipInput
+  members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
+  meetings?: Prisma.GroupMeetingCreateNestedManyWithoutGroupInput
+  discussions?: Prisma.GroupDiscussionCreateNestedManyWithoutGroupInput
+  meetingRotations?: Prisma.GroupMeetingRotationCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationCreateNestedManyWithoutGroupInput
+}
+
+export type SmallGroupUncheckedCreateWithoutLeadershipAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  type?: string | null
+  campusId?: string | null
+  parentId?: string | null
+  leaderId?: string | null
+  meetingDay?: string | null
+  meetingTime?: string | null
+  meetingLocation?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  useRotation?: boolean
+  isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subgroups?: Prisma.SmallGroupUncheckedCreateNestedManyWithoutParentInput
+  members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  meetings?: Prisma.GroupMeetingUncheckedCreateNestedManyWithoutGroupInput
+  discussions?: Prisma.GroupDiscussionUncheckedCreateNestedManyWithoutGroupInput
+  meetingRotations?: Prisma.GroupMeetingRotationUncheckedCreateNestedManyWithoutGroupInput
+  masterEvents?: Prisma.MasterEventUncheckedCreateNestedManyWithoutGroupInput
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type SmallGroupCreateOrConnectWithoutLeadershipAssignmentsInput = {
+  where: Prisma.SmallGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.SmallGroupCreateWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+}
+
+export type SmallGroupUpsertWithoutLeadershipAssignmentsInput = {
+  update: Prisma.XOR<Prisma.SmallGroupUpdateWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUncheckedUpdateWithoutLeadershipAssignmentsInput>
+  create: Prisma.XOR<Prisma.SmallGroupCreateWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUncheckedCreateWithoutLeadershipAssignmentsInput>
+  where?: Prisma.SmallGroupWhereInput
+}
+
+export type SmallGroupUpdateToOneWithWhereWithoutLeadershipAssignmentsInput = {
+  where?: Prisma.SmallGroupWhereInput
+  data: Prisma.XOR<Prisma.SmallGroupUpdateWithoutLeadershipAssignmentsInput, Prisma.SmallGroupUncheckedUpdateWithoutLeadershipAssignmentsInput>
+}
+
+export type SmallGroupUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
+  parent?: Prisma.SmallGroupUpdateOneWithoutSubgroupsNestedInput
+  subgroups?: Prisma.SmallGroupUpdateManyWithoutParentNestedInput
+  leader?: Prisma.UserUpdateOneWithoutGroupLeadershipNestedInput
+  members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
+  meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
+  discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
+  meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
+}
+
+export type SmallGroupUncheckedUpdateWithoutLeadershipAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meetingLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
+  members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
+  discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
+  meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupCreateManyLeaderInput = {
@@ -1656,6 +2285,8 @@ export type SmallGroupCreateManyLeaderInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1672,6 +2303,8 @@ export type SmallGroupUpdateWithoutLeaderInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1681,6 +2314,9 @@ export type SmallGroupUpdateWithoutLeaderInput = {
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutLeaderInput = {
@@ -1697,6 +2333,8 @@ export type SmallGroupUncheckedUpdateWithoutLeaderInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
@@ -1704,6 +2342,9 @@ export type SmallGroupUncheckedUpdateWithoutLeaderInput = {
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateManyWithoutLeaderInput = {
@@ -1720,6 +2361,8 @@ export type SmallGroupUncheckedUpdateManyWithoutLeaderInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1738,6 +2381,8 @@ export type SmallGroupCreateManyCampusInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1754,6 +2399,8 @@ export type SmallGroupUpdateWithoutCampusInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.SmallGroupUpdateOneWithoutSubgroupsNestedInput
@@ -1763,6 +2410,9 @@ export type SmallGroupUpdateWithoutCampusInput = {
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutCampusInput = {
@@ -1779,6 +2429,8 @@ export type SmallGroupUncheckedUpdateWithoutCampusInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
@@ -1786,6 +2438,9 @@ export type SmallGroupUncheckedUpdateWithoutCampusInput = {
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateManyWithoutCampusInput = {
@@ -1802,6 +2457,8 @@ export type SmallGroupUncheckedUpdateManyWithoutCampusInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1820,6 +2477,8 @@ export type SmallGroupCreateManyParentInput = {
   longitude?: number | null
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1836,6 +2495,8 @@ export type SmallGroupUpdateWithoutParentInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneWithoutGroupsNestedInput
@@ -1845,6 +2506,9 @@ export type SmallGroupUpdateWithoutParentInput = {
   meetings?: Prisma.GroupMeetingUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateWithoutParentInput = {
@@ -1861,6 +2525,8 @@ export type SmallGroupUncheckedUpdateWithoutParentInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subgroups?: Prisma.SmallGroupUncheckedUpdateManyWithoutParentNestedInput
@@ -1868,6 +2534,9 @@ export type SmallGroupUncheckedUpdateWithoutParentInput = {
   meetings?: Prisma.GroupMeetingUncheckedUpdateManyWithoutGroupNestedInput
   discussions?: Prisma.GroupDiscussionUncheckedUpdateManyWithoutGroupNestedInput
   meetingRotations?: Prisma.GroupMeetingRotationUncheckedUpdateManyWithoutGroupNestedInput
+  masterEvents?: Prisma.MasterEventUncheckedUpdateManyWithoutGroupNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type SmallGroupUncheckedUpdateManyWithoutParentInput = {
@@ -1884,6 +2553,8 @@ export type SmallGroupUncheckedUpdateManyWithoutParentInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   useRotation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupGivingEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  groupCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1899,6 +2570,9 @@ export type SmallGroupCountOutputType = {
   meetings: number
   discussions: number
   meetingRotations: number
+  masterEvents: number
+  leadershipAssignments: number
+  donations: number
 }
 
 export type SmallGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1907,6 +2581,9 @@ export type SmallGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extens
   meetings?: boolean | SmallGroupCountOutputTypeCountMeetingsArgs
   discussions?: boolean | SmallGroupCountOutputTypeCountDiscussionsArgs
   meetingRotations?: boolean | SmallGroupCountOutputTypeCountMeetingRotationsArgs
+  masterEvents?: boolean | SmallGroupCountOutputTypeCountMasterEventsArgs
+  leadershipAssignments?: boolean | SmallGroupCountOutputTypeCountLeadershipAssignmentsArgs
+  donations?: boolean | SmallGroupCountOutputTypeCountDonationsArgs
 }
 
 /**
@@ -1954,6 +2631,27 @@ export type SmallGroupCountOutputTypeCountMeetingRotationsArgs<ExtArgs extends r
   where?: Prisma.GroupMeetingRotationWhereInput
 }
 
+/**
+ * SmallGroupCountOutputType without action
+ */
+export type SmallGroupCountOutputTypeCountMasterEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MasterEventWhereInput
+}
+
+/**
+ * SmallGroupCountOutputType without action
+ */
+export type SmallGroupCountOutputTypeCountLeadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadershipAssignmentWhereInput
+}
+
+/**
+ * SmallGroupCountOutputType without action
+ */
+export type SmallGroupCountOutputTypeCountDonationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DonationWhereInput
+}
+
 
 export type SmallGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1970,6 +2668,8 @@ export type SmallGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   longitude?: boolean
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campus?: boolean | Prisma.SmallGroup$campusArgs<ExtArgs>
@@ -1980,6 +2680,9 @@ export type SmallGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   meetings?: boolean | Prisma.SmallGroup$meetingsArgs<ExtArgs>
   discussions?: boolean | Prisma.SmallGroup$discussionsArgs<ExtArgs>
   meetingRotations?: boolean | Prisma.SmallGroup$meetingRotationsArgs<ExtArgs>
+  masterEvents?: boolean | Prisma.SmallGroup$masterEventsArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.SmallGroup$leadershipAssignmentsArgs<ExtArgs>
+  donations?: boolean | Prisma.SmallGroup$donationsArgs<ExtArgs>
   _count?: boolean | Prisma.SmallGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["smallGroup"]>
 
@@ -1998,6 +2701,8 @@ export type SmallGroupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   longitude?: boolean
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campus?: boolean | Prisma.SmallGroup$campusArgs<ExtArgs>
@@ -2020,6 +2725,8 @@ export type SmallGroupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   longitude?: boolean
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campus?: boolean | Prisma.SmallGroup$campusArgs<ExtArgs>
@@ -2042,11 +2749,13 @@ export type SmallGroupSelectScalar = {
   longitude?: boolean
   useRotation?: boolean
   isActive?: boolean
+  groupGivingEnabled?: boolean
+  groupCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SmallGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "campusId" | "parentId" | "leaderId" | "meetingDay" | "meetingTime" | "meetingLocation" | "latitude" | "longitude" | "useRotation" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["smallGroup"]>
+export type SmallGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "campusId" | "parentId" | "leaderId" | "meetingDay" | "meetingTime" | "meetingLocation" | "latitude" | "longitude" | "useRotation" | "isActive" | "groupGivingEnabled" | "groupCode" | "createdAt" | "updatedAt", ExtArgs["result"]["smallGroup"]>
 export type SmallGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campus?: boolean | Prisma.SmallGroup$campusArgs<ExtArgs>
   parent?: boolean | Prisma.SmallGroup$parentArgs<ExtArgs>
@@ -2056,6 +2765,9 @@ export type SmallGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   meetings?: boolean | Prisma.SmallGroup$meetingsArgs<ExtArgs>
   discussions?: boolean | Prisma.SmallGroup$discussionsArgs<ExtArgs>
   meetingRotations?: boolean | Prisma.SmallGroup$meetingRotationsArgs<ExtArgs>
+  masterEvents?: boolean | Prisma.SmallGroup$masterEventsArgs<ExtArgs>
+  leadershipAssignments?: boolean | Prisma.SmallGroup$leadershipAssignmentsArgs<ExtArgs>
+  donations?: boolean | Prisma.SmallGroup$donationsArgs<ExtArgs>
   _count?: boolean | Prisma.SmallGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SmallGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2080,6 +2792,9 @@ export type $SmallGroupPayload<ExtArgs extends runtime.Types.Extensions.Internal
     meetings: Prisma.$GroupMeetingPayload<ExtArgs>[]
     discussions: Prisma.$GroupDiscussionPayload<ExtArgs>[]
     meetingRotations: Prisma.$GroupMeetingRotationPayload<ExtArgs>[]
+    masterEvents: Prisma.$MasterEventPayload<ExtArgs>[]
+    leadershipAssignments: Prisma.$LeadershipAssignmentPayload<ExtArgs>[]
+    donations: Prisma.$DonationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2096,6 +2811,8 @@ export type $SmallGroupPayload<ExtArgs extends runtime.Types.Extensions.Internal
     longitude: number | null
     useRotation: boolean
     isActive: boolean
+    groupGivingEnabled: boolean
+    groupCode: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["smallGroup"]>
@@ -2500,6 +3217,9 @@ export interface Prisma__SmallGroupClient<T, Null = never, ExtArgs extends runti
   meetings<T extends Prisma.SmallGroup$meetingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SmallGroup$meetingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupMeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   discussions<T extends Prisma.SmallGroup$discussionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SmallGroup$discussionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupDiscussionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   meetingRotations<T extends Prisma.SmallGroup$meetingRotationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SmallGroup$meetingRotationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupMeetingRotationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  masterEvents<T extends Prisma.SmallGroup$masterEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SmallGroup$masterEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MasterEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadershipAssignments<T extends Prisma.SmallGroup$leadershipAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SmallGroup$leadershipAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadershipAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  donations<T extends Prisma.SmallGroup$donationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SmallGroup$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2543,6 +3263,8 @@ export interface SmallGroupFieldRefs {
   readonly longitude: Prisma.FieldRef<"SmallGroup", 'Float'>
   readonly useRotation: Prisma.FieldRef<"SmallGroup", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"SmallGroup", 'Boolean'>
+  readonly groupGivingEnabled: Prisma.FieldRef<"SmallGroup", 'Boolean'>
+  readonly groupCode: Prisma.FieldRef<"SmallGroup", 'String'>
   readonly createdAt: Prisma.FieldRef<"SmallGroup", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SmallGroup", 'DateTime'>
 }
@@ -3115,6 +3837,78 @@ export type SmallGroup$meetingRotationsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.GroupMeetingRotationScalarFieldEnum | Prisma.GroupMeetingRotationScalarFieldEnum[]
+}
+
+/**
+ * SmallGroup.masterEvents
+ */
+export type SmallGroup$masterEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MasterEvent
+   */
+  select?: Prisma.MasterEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MasterEvent
+   */
+  omit?: Prisma.MasterEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MasterEventInclude<ExtArgs> | null
+  where?: Prisma.MasterEventWhereInput
+  orderBy?: Prisma.MasterEventOrderByWithRelationInput | Prisma.MasterEventOrderByWithRelationInput[]
+  cursor?: Prisma.MasterEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MasterEventScalarFieldEnum | Prisma.MasterEventScalarFieldEnum[]
+}
+
+/**
+ * SmallGroup.leadershipAssignments
+ */
+export type SmallGroup$leadershipAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeadershipAssignment
+   */
+  select?: Prisma.LeadershipAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeadershipAssignment
+   */
+  omit?: Prisma.LeadershipAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadershipAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LeadershipAssignmentWhereInput
+  orderBy?: Prisma.LeadershipAssignmentOrderByWithRelationInput | Prisma.LeadershipAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LeadershipAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadershipAssignmentScalarFieldEnum | Prisma.LeadershipAssignmentScalarFieldEnum[]
+}
+
+/**
+ * SmallGroup.donations
+ */
+export type SmallGroup$donationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Donation
+   */
+  select?: Prisma.DonationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Donation
+   */
+  omit?: Prisma.DonationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DonationInclude<ExtArgs> | null
+  where?: Prisma.DonationWhereInput
+  orderBy?: Prisma.DonationOrderByWithRelationInput | Prisma.DonationOrderByWithRelationInput[]
+  cursor?: Prisma.DonationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DonationScalarFieldEnum | Prisma.DonationScalarFieldEnum[]
 }
 
 /**

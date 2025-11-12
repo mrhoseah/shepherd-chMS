@@ -113,9 +113,9 @@ export default function VolunteersPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("/api/users?limit=1000");
+      const res = await fetch("/api/people?limit=1000");
       const data = await res.json();
-      setUsers(data.users || []);
+      setUsers(data.people || data.users || []);
     } catch (error) {
       console.error("Error fetching users:", error);
     }

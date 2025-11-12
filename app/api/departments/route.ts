@@ -38,6 +38,31 @@ export async function GET(request: NextRequest) {
             phone: true,
           },
         },
+        leadershipAssignments: {
+          where: {
+            OR: [
+              { endDate: null },
+              { endDate: { gte: new Date() } },
+            ],
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                phone: true,
+                profileImage: true,
+              },
+            },
+          },
+          orderBy: [
+            { isPrimary: "desc" },
+            { displayOrder: "asc" },
+            { startDate: "desc" },
+          ],
+        },
         _count: {
           select: {
             staff: true,

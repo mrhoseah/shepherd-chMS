@@ -64,6 +64,21 @@ enum GivingCategory {
   OTHER
 }
 
+model FundCategory {
+  id          String   @id @default(cuid())
+  code        String   @unique // Paybill fund code (e.g., "TTH", "WLFR", "BLDG") - uppercase, 3-5 chars
+  name        String   // Display name (e.g., "Tithe", "Welfare Fund")
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  donations   Donation[]
+  
+  @@index([code])
+  @@index([isActive])
+}
+
 enum PaymentMethod {
   MPESA
   PAYPAL
@@ -155,10 +170,9 @@ enum LeaveStatus {
 // ============================================================================
 
 model User {
-  id           String  @id @default(cuid())
-  email        String? @unique
-  phone        String? @unique
-  passwordHash String? // Deprecated: Passwords are stored in Cognito only
+  id    String  @id @default(cuid())
+  email String? @unique
+  phone String? @unique
 
   // Profile
   title         String? // Dr, Rev, Prof, etc.
@@ -241,7 +255,15 @@ model User {
   inventoryTransactions InventoryTransaction[] @relation("InventoryTransactionPerformer")
 
   // Attendance
-  attendances Attendance[]
+  attendances        Attendance[]
+  sessionAttendances SessionAttendee[]  @relation("SessionAttendees")
+  attendanceRecords  AttendanceRecord[] @relation("AttendanceRecords")
+  decisions          Decision[]         @relation("Decisions")
+  proposedDecisions  Decision[]         @relation("DecisionProposer")
+  approvedDecisions  Decision[]         @relation("DecisionApprover")
+  assignedDecisions  Decision[]         @relation("DecisionAssignee")
+  recordedDecisions  Decision[]         @relation("DecisionRecorder")
+  organizedMeetings  Meeting[]          @relation("MeetingOrganizer")
 
   // Giving
   donations Donation[]
@@ -271,12 +293,14 @@ model User {
   childrenLeadership      ChildrenClass[]          @relation("ChildrenLeader")
   childrenParent          ChildrenMinistryMember[] @relation("ChildrenParent")
   youthLeadership         YouthGroup[]             @relation("YouthLeader")
+  leadershipAssignments   LeadershipAssignment[]   @relation("UserLeadershipAssignments")
   outreachOrganizations   Outreach[]               @relation("OutreachOrganizer")
   outreachParticipations  OutreachParticipant[]    @relation("OutreachParticipant")
   testimonyAuthors        OutreachTestimony[]      @relation("TestimonyAuthor")
   projectDonations        ProjectDonation[]        @relation("ProjectDonor")
   projectUpdateAuthors    ProjectUpdate[]          @relation("ProjectUpdateAuthor")
   documentUploads         Document[]               @relation("DocumentUploader")
+  presentations           Presentation[]           @relation("PresentationCreator")
   assetAssignments        Asset[]                  @relation("AssetAssignee")
   leaveApprovals          Leave[]                  @relation("LeaveApprover")
   appraisalReviews        PerformanceAppraisal[]   @relation("AppraisalReviewer")
@@ -292,6 +316,7 @@ model User {
   guestFollowUps          GuestFollowUp[]          @relation("GuestFollowUps")
   followUpsAssigned       GuestFollowUp[]          @relation("FollowUpAssignee")
   followUpsCreated        GuestFollowUp[]          @relation("FollowUpCreator")
+  templatesCreated        CommunicationTemplate[]  @relation("TemplateCreator")
   discipleshipEnrollments DiscipleshipEnrollment[] @relation("DiscipleshipEnrollment")
   mentorRelations         Mentorship[]             @relation("Mentor")
   menteeRelations         Mentorship[]             @relation("Mentee")
@@ -474,22 +499,24 @@ model ActivityLog {
 }
 
 model Campus {
-  id          String       @id @default(cuid())
-  name        String
-  address     String?
-  city        String?
-  state       String?
-  zipCode     String?
-  phone       String?
-  email       String?
-  pastorId    String?
-  pastor      User?        @relation("CampusPastor", fields: [pastorId], references: [id])
-  invitations Invitation[]
-  churchId    String
-  church      Church       @relation(fields: [churchId], references: [id])
-  isActive    Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id              String           @id @default(cuid())
+  name            String
+  address         String?
+  city            String?
+  state           String?
+  zipCode         String?
+  phone           String?
+  email           String?
+  pastorId        String?
+  pastor          User?            @relation("CampusPastor", fields: [pastorId], references: [id])
+  serviceSessions ServiceSession[] @relation("ServiceSessionCampus")
+  masterEvents    MasterEvent[]    @relation("MasterEventCampus")
+  invitations     Invitation[]
+  churchId        String
+  church          Church           @relation(fields: [churchId], references: [id])
+  isActive        Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
   users         User[]
   groups        SmallGroup[]
@@ -525,18 +552,24 @@ model SmallGroup {
   longitude       Float?
   useRotation     Boolean      @default(false) // Whether to use rotational meeting locations
   isActive        Boolean      @default(true)
+  groupGivingEnabled Boolean   @default(false) // Enable giving for group members
+  groupCode       String?      @unique // Paybill group code (e.g., "ZION", "JERICHO") - uppercase, alphanumeric
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 
-  members          GroupMember[]
-  meetings         GroupMeeting[]
-  discussions      GroupDiscussion[]
-  meetingRotations GroupMeetingRotation[]
+  members               GroupMember[]
+  meetings              GroupMeeting[]
+  discussions           GroupDiscussion[]
+  meetingRotations      GroupMeetingRotation[]
+  masterEvents          MasterEvent[]          @relation("MasterEventGroup")
+  leadershipAssignments LeadershipAssignment[] @relation("GroupLeadership")
+  donations             Donation[]             @relation("GroupDonations")
 
   @@index([campusId])
   @@index([leaderId])
   @@index([parentId])
   @@index([type])
+  @@index([groupCode])
 }
 
 model GroupMember {
@@ -823,9 +856,11 @@ model ServicePlan {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  items       ServicePlanItem[]
-  assignments ServiceAssignment[]
-  livestreams Livestream[]        @relation("LivestreamService")
+  items        ServicePlanItem[]
+  assignments  ServiceAssignment[]
+  livestreams  Livestream[]        @relation("LivestreamService")
+  sessions     ServiceSession[]    @relation("SessionServicePlan")
+  masterEvents MasterEvent[]       @relation("MasterEventServicePlan")
 
   @@index([date])
   @@index([campusId])
@@ -964,9 +999,135 @@ model LivestreamAnalytics {
 }
 
 // ============================================================================
-// 8. ATTENDANCE TRACKING
+// 8. ATTENDANCE TRACKING - Universal Two-Tiered System
 // ============================================================================
 
+// Master Event - Level 1: The recurring activity template
+// This defines the "what" - the recurring activity (e.g., "Sunday Worship (9 AM)", "Men's Bible Study")
+model MasterEvent {
+  id          String          @id @default(cuid())
+  name        String // e.g., "Sunday Worship (9 AM)", "Men's Bible Study", "Finance Committee"
+  description String?         @db.Text
+  type        MasterEventType // SERVICE, GROUP, EVENT, MEETING, etc.
+
+  // Recurrence pattern (optional - for recurring activities)
+  recurrencePattern String? // RRULE format or custom pattern
+  isRecurring       Boolean @default(false)
+
+  // Location and context
+  campusId String?
+  campus   Campus?     @relation("MasterEventCampus", fields: [campusId], references: [id])
+  groupId  String? // If this is a group activity
+  group    SmallGroup? @relation("MasterEventGroup", fields: [groupId], references: [id])
+
+  // Default timing (for recurring events)
+  defaultStartTime String? // e.g., "09:00"
+  defaultDuration  Int? // minutes
+
+  // Service plan link (for services)
+  servicePlanId String?
+  servicePlan   ServicePlan? @relation("MasterEventServicePlan", fields: [servicePlanId], references: [id])
+
+  // Metadata
+  isActive  Boolean  @default(true)
+  tags      String[]
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  attendanceSessions AttendanceSession[]
+
+  @@index([type])
+  @@index([campusId])
+  @@index([groupId])
+  @@index([isActive])
+}
+
+enum MasterEventType {
+  SERVICE // Sunday services, midweek services
+  GROUP // Small groups, cell groups, Bible studies
+  EVENT // Special events, conferences, retreats
+  MEETING // Board meetings, committee meetings
+  FELLOWSHIP // Potlucks, social gatherings
+  TRAINING // Training sessions, workshops
+  OUTREACH // Outreach activities
+  OTHER
+}
+
+// Attendance Session - Level 2: The specific instance where people gather
+// This is the actual record of who attended, when it happened, and what decisions were made
+model AttendanceSession {
+  id String @id @default(cuid())
+
+  // Link to Master Event (the template)
+  masterEventId String
+  masterEvent   MasterEvent @relation(fields: [masterEventId], references: [id], onDelete: Cascade)
+
+  // Specific instance details
+  date      DateTime // The actual date this session occurred
+  startTime DateTime // Actual start time
+  endTime   DateTime? // Actual end time
+
+  // Session-specific overrides (if different from master event defaults)
+  name     String? // Override name for this specific instance
+  location String? // Specific location for this instance
+
+  // Joint service handling
+  isJointService Boolean @default(false) // If true, this session is part of a joint service
+
+  // Status
+  isActive        Boolean @default(true)
+  isCancelled     Boolean @default(false)
+  cancelledReason String?
+
+  // Notes and metadata
+  notes    String? @db.Text
+  metadata Json? // Additional flexible data
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  attendees AttendanceRecord[]
+  decisions Decision[]
+  donations Donation[] // Optional link for per-session offerings
+  qrCodes   GivingQRCode[] // QR codes generated for this session
+
+  @@index([masterEventId])
+  @@index([date])
+  @@index([startTime])
+  @@index([isJointService])
+  @@index([isActive])
+}
+
+// Attendance Record - Tracks individual attendance for an Attendance Session
+model AttendanceRecord {
+  id        String            @id @default(cuid())
+  sessionId String
+  session   AttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User              @relation("AttendanceRecords", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Check-in details
+  checkInMethod String? // manual, qr, nfc, app, etc.
+  checkedInAt   DateTime @default(now())
+
+  // Status
+  status AttendanceStatus @default(PRESENT)
+
+  // Notes
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([sessionId, userId]) // Prevent duplicate attendance
+  @@index([sessionId])
+  @@index([userId])
+  @@index([checkedInAt])
+}
+
+// Legacy Attendance model (kept for backward compatibility during migration)
 model Attendance {
   id            String           @id @default(cuid())
   userId        String
@@ -982,6 +1143,235 @@ model Attendance {
   @@index([userId])
   @@index([date])
   @@index([type, referenceId])
+}
+
+// Legacy ServiceSession (kept for backward compatibility - will be migrated to MasterEvent + AttendanceSession)
+model ServiceSession {
+  id             String       @id @default(cuid())
+  date           DateTime
+  startTime      DateTime
+  endTime        DateTime?
+  name           String?
+  campusId       String?
+  campus         Campus?      @relation("ServiceSessionCampus", fields: [campusId], references: [id])
+  servicePlanId  String?
+  servicePlan    ServicePlan? @relation("SessionServicePlan", fields: [servicePlanId], references: [id])
+  isJointService Boolean      @default(false)
+  isActive       Boolean      @default(true)
+  notes          String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  attendees SessionAttendee[]
+
+  @@index([date])
+  @@index([startTime])
+  @@index([campusId])
+  @@index([isJointService])
+}
+
+// Legacy SessionAttendee (kept for backward compatibility)
+model SessionAttendee {
+  id            String         @id @default(cuid())
+  sessionId     String
+  session       ServiceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User           @relation("SessionAttendees", fields: [userId], references: [id], onDelete: Cascade)
+  checkInMethod String?
+  checkedInAt   DateTime       @default(now())
+  notes         String?
+  createdAt     DateTime       @default(now())
+
+  @@unique([sessionId, userId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([checkedInAt])
+}
+
+// Decision - Tracks church administrative/leadership decisions for governance and decision-making
+model Decision {
+  id          String           @id @default(cuid())
+  title       String // Decision title/summary
+  description String?          @db.Text // Detailed description of the decision
+  category    DecisionCategory
+  priority    DecisionPriority @default(NORMAL)
+  status      DecisionStatus   @default(DRAFT)
+
+  // Decision context and data
+  meetingId       String? // If decision was made in a meeting
+  meeting         Meeting?           @relation(fields: [meetingId], references: [id], onDelete: SetNull)
+  linkedSessionId String? // Link to AttendanceSession where decision was made (for spiritual decisions like salvation, dedication)
+  linkedSession   AttendanceSession? @relation(fields: [linkedSessionId], references: [id], onDelete: SetNull)
+  relatedTo       String? // Related entity type (budget, policy, staff, etc.)
+  relatedToId     String? // ID of related entity
+
+  // Decision data and analysis
+  data      Json? // Structured data supporting the decision (metrics, analysis, etc.)
+  options   Json? // Options considered (array of options with pros/cons)
+  rationale String? @db.Text // Reasoning behind the decision
+  impact    String? @db.Text // Expected impact of the decision
+  risks     String? @db.Text // Potential risks identified
+
+  // Financial implications
+  budgetImpact   Decimal? @db.Decimal(10, 2) // Financial impact if applicable
+  budgetCategory String? // Budget category affected
+
+  // Decision makers and stakeholders
+  proposedById String
+  proposedBy   User     @relation("DecisionProposer", fields: [proposedById], references: [id])
+  approvedById String?
+  approvedBy   User?    @relation("DecisionApprover", fields: [approvedById], references: [id])
+  assignedToId String?
+  assignedTo   User?    @relation("DecisionAssignee", fields: [assignedToId], references: [id])
+  recordedById String?
+  recordedBy   User?    @relation("DecisionRecorder", fields: [recordedById], references: [id])
+  // General decisions relation (for stakeholders or general association)
+  userId       String?
+  user         User?    @relation("Decisions", fields: [userId], references: [id])
+  stakeholders String[] // User IDs of stakeholders affected
+
+  // Timeline
+  proposedAt    DateTime  @default(now())
+  reviewedAt    DateTime?
+  approvedAt    DateTime?
+  implementedAt DateTime?
+  effectiveDate DateTime? // When decision takes effect
+
+  // Implementation tracking
+  implementationStatus DecisionImplementationStatus @default(NOT_STARTED)
+  implementationNotes  String?                      @db.Text
+
+  // Review and evaluation
+  reviewDate  DateTime? // Scheduled review date
+  reviewNotes String?   @db.Text
+  outcome     String?   @db.Text // Actual outcome after implementation
+
+  // Attachments and references
+  attachments String[] // File URLs or IDs
+  references  String[] // Related document IDs or URLs
+
+  // Metadata
+  tags       String[] // Tags for categorization
+  isArchived Boolean   @default(false)
+  archivedAt DateTime?
+  notes      String?   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([status])
+  @@index([priority])
+  @@index([proposedById])
+  @@index([approvedById])
+  @@index([assignedToId])
+  @@index([meetingId])
+  @@index([linkedSessionId])
+  @@index([proposedAt])
+  @@index([effectiveDate])
+  @@index([isArchived])
+}
+
+enum DecisionCategory {
+  FINANCIAL
+  STAFFING
+  POLICY
+  STRATEGIC
+  OPERATIONAL
+  FACILITIES
+  MINISTRY
+  GOVERNANCE
+  TECHNOLOGY
+  OUTREACH
+  OTHER
+}
+
+enum DecisionPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum DecisionStatus {
+  DRAFT
+  PROPOSED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  DEFERRED
+  IMPLEMENTED
+  CANCELLED
+}
+
+enum DecisionImplementationStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+  CANCELLED
+}
+
+// Meeting - Board meetings, leadership meetings, etc. where decisions are made
+model Meeting {
+  id          String      @id @default(cuid())
+  title       String
+  type        MeetingType
+  date        DateTime
+  startTime   DateTime
+  endTime     DateTime?
+  location    String?
+  isVirtual   Boolean     @default(false)
+  meetingLink String? // For virtual meetings
+
+  // Participants
+  organizerId       String
+  organizer         User     @relation("MeetingOrganizer", fields: [organizerId], references: [id])
+  attendees         String[] // User IDs of attendees
+  requiredAttendees String[] // User IDs of required attendees
+
+  // Agenda and minutes
+  agenda      String? @db.Text
+  agendaItems Json? // Structured agenda items
+  minutes     String? @db.Text
+  actionItems Json? // Action items from the meeting
+
+  // Decisions made in this meeting
+  decisions Decision[]
+
+  // Status
+  status      MeetingStatus @default(SCHEDULED)
+  isPublished Boolean       @default(false)
+
+  // Attachments
+  attachments String[] // File URLs or IDs
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([date])
+  @@index([type])
+  @@index([organizerId])
+  @@index([status])
+}
+
+enum MeetingType {
+  BOARD
+  LEADERSHIP
+  STAFF
+  COMMITTEE
+  GENERAL
+  STRATEGIC_PLANNING
+  BUDGET
+  OTHER
+}
+
+enum MeetingStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  POSTPONED
 }
 
 // ============================================================================
@@ -1017,29 +1407,48 @@ model Donation {
   recurringDonation   RecurringDonation? @relation(fields: [recurringDonationId], references: [id])
   recurringDonationId String?
   check               Check? // Link to check if payment method is CHECK
+  linkedSessionId     String? // Optional link to AttendanceSession for per-session offerings
+  linkedSession       AttendanceSession? @relation(fields: [linkedSessionId], references: [id], onDelete: SetNull)
+  // Group giving
+  groupId             String? // Link to SmallGroup if donation is made as part of group giving
+  group               SmallGroup? @relation("GroupDonations", fields: [groupId], references: [id], onDelete: SetNull)
+  // Paybill giving
+  paybillAccountRef   String? // Raw account number from M-Pesa webhook (e.g., "JERICHO-TTH")
+  fundCategoryId      String? // Link to FundCategory for paybill donations
+  fundCategory        FundCategory? @relation(fields: [fundCategoryId], references: [id], onDelete: SetNull)
 
   @@index([userId])
+  @@index([linkedSessionId])
   @@index([category])
   @@index([createdAt])
   @@index([status])
   @@index([paymentMethod])
+  @@index([groupId])
+  @@index([fundCategoryId])
+  @@index([paybillAccountRef])
 }
 
 model GivingQRCode {
-  id         String          @id @default(cuid())
-  donationId String?         @unique
-  donation   Donation?
-  amount     Decimal?        @db.Decimal(10, 2)
-  category   GivingCategory?
-  qrCodeData String // Base64 or URL of QR code
-  qrCodeUrl  String? // URL to scan
-  expiresAt  DateTime?
-  isUsed     Boolean         @default(false)
-  usedAt     DateTime?
-  createdAt  DateTime        @default(now())
+  id            String             @id @default(cuid())
+  donationId    String?            @unique
+  donation      Donation?
+  amount        Decimal?           @db.Decimal(10, 2)
+  category      GivingCategory?
+  paymentMethod PaymentMethod      @default(MPESA) // MPESA or PAYPAL
+  qrCodeData    String // Base64 or URL of QR code
+  qrCodeUrl     String? // URL to scan
+  expiresAt     DateTime?
+  isUsed        Boolean            @default(false)
+  usedAt        DateTime?
+  createdAt     DateTime           @default(now())
+  // Link to AttendanceSession for session-specific giving
+  sessionId     String?
+  session       AttendanceSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
 
   @@index([donationId])
   @@index([isUsed])
+  @@index([paymentMethod])
+  @@index([sessionId])
 }
 
 model RecurringDonation {
@@ -1189,21 +1598,30 @@ model Event {
 }
 
 model EventRegistration {
-  id            String   @id @default(cuid())
-  eventId       String
-  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status        String   @default("registered") // registered, confirmed, cancelled, waitlisted
-  paymentStatus String? // pending, paid, refunded
-  paymentAmount Decimal? @db.Decimal(10, 2)
-  notes         String?
-  registeredAt  DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  eventId            String
+  event              Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId             String? // Optional - allows non-user registrations
+  user               User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Registration details for non-users
+  name               String? // Full name for non-user registrations
+  ministry           String? // Ministry/church name
+  country            String? // Country
+  phone              String? // Phone number
+  email              String? // Email address
+  needsAccommodation Boolean  @default(false) // Whether the registrant needs accommodation
+  status             String   @default("registered") // registered, confirmed, cancelled, waitlisted
+  paymentStatus      String? // pending, paid, refunded
+  paymentAmount      Decimal? @db.Decimal(10, 2)
+  notes              String?
+  registeredAt       DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
-  @@unique([eventId, userId])
+  @@unique([eventId, userId]) // Only unique if userId is provided
   @@index([eventId])
   @@index([userId])
+  @@index([email])
+  @@index([phone])
 }
 
 model EventCheckIn {
@@ -1348,8 +1766,9 @@ model ChildrenClass {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members ChildrenMinistryMember[]
-  lessons ChildrenLesson[]
+  members               ChildrenMinistryMember[]
+  lessons               ChildrenLesson[]
+  leadershipAssignments LeadershipAssignment[]   @relation("ChildrenClassLeadership")
 }
 
 model ChildrenMinistryMember {
@@ -1420,8 +1839,9 @@ model YouthGroup {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  members YouthGroupMember[]
-  events  YouthEvent[]
+  members               YouthGroupMember[]
+  events                YouthEvent[]
+  leadershipAssignments LeadershipAssignment[] @relation("YouthGroupLeadership")
 }
 
 model YouthGroupMember {
@@ -1591,6 +2011,54 @@ model Document {
   @@index([uploadedById])
 }
 
+model Presentation {
+  id              String              @id @default(cuid())
+  title           String
+  description     String?
+  isPublic        Boolean             @default(false)
+  currentSlideId  String?
+  presenterUserId String? // User ID of the current presenter
+  showSlideRing   Boolean?            @default(true) // Show blue ring on current slide for viewers
+  viewerSize      String?             @default("responsive") // "responsive" or "1920x1080"
+  backgroundType  String?             @default("interactive") // Canvas background type
+  isPresenting    Boolean?            @default(false) // Whether presenter is currently presenting
+  viewerCountdown Int?                @default(0) // Countdown timer for viewers (seconds)
+  viewerAnimation String?             @default("pulse") // Animation template for waiting screen: "countdown", "pulse", "wave", "spinner", "particles", "gradient"
+  createdById     String
+  createdBy       User                @relation("PresentationCreator", fields: [createdById], references: [id])
+  churchId        String
+  church          Church              @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  slides          PresentationSlide[]
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([createdById])
+  @@index([churchId])
+  @@index([presenterUserId])
+  @@index([createdAt])
+}
+
+model PresentationSlide {
+  id              String       @id @default(cuid())
+  presentationId  String
+  presentation    Presentation @relation(fields: [presentationId], references: [id], onDelete: Cascade)
+  title           String
+  content         String?      @db.Text
+  x               Float        @default(500) // Position on 1000x1000 canvas
+  y               Float        @default(500)
+  width           Float        @default(320) // Slide dimensions
+  height          Float        @default(192)
+  order           Int          @default(0) // Display order
+  backgroundColor String? // Hex color
+  textColor       String? // Hex color
+  metadata        Json? // Additional slide data (images, videos, etc.)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([presentationId])
+  @@index([order])
+}
+
 // ============================================================================
 // 19. ASSET MANAGEMENT
 // ============================================================================
@@ -1649,14 +2117,15 @@ model Department {
   id          String   @id @default(cuid())
   name        String
   description String?
-  leaderId    String?
+  leaderId    String? // Legacy field - kept for backward compatibility
   leader      User?    @relation("DepartmentLeader", fields: [leaderId], references: [id])
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  inventoryItems InventoryItem[]
-  staff          Staff[]
+  inventoryItems        InventoryItem[]
+  staff                 Staff[]
+  leadershipAssignments LeadershipAssignment[] @relation("DepartmentLeadership")
 
   @@index([leaderId])
   @@index([isActive])
@@ -1712,6 +2181,72 @@ enum InventoryTransactionType {
   IN
   OUT
   ADJUSTMENT
+}
+
+// ============================================================================
+// 20. LEADERSHIP ASSIGNMENTS
+// ============================================================================
+
+/**
+ * LeadershipAssignment - Professional leadership system
+ * Supports multiple leaders per entity with titles and roles
+ */
+model LeadershipAssignment {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("UserLeadershipAssignments", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Entity this leadership assignment is for
+  entityType LeadershipEntityType
+  entityId   String // ID of the department, group, children class, or youth group
+
+  // Leadership details
+  title        String // e.g., "Director", "Assistant Director", "Coordinator", "Ministry Leader"
+  isPrimary    Boolean @default(false) // Primary leader designation
+  displayOrder Int     @default(0) // Display order (lower = higher priority)
+
+  // Dates
+  startDate DateTime  @default(now())
+  endDate   DateTime? // Null means currently active
+
+  // Additional info
+  description String? @db.Text
+  notes       String? @db.Text
+
+  // Relations to specific entities (one will be populated based on entityType)
+  departmentId String?
+  department   Department? @relation("DepartmentLeadership", fields: [departmentId], references: [id], onDelete: Cascade)
+
+  groupId String?
+  group   SmallGroup? @relation("GroupLeadership", fields: [groupId], references: [id], onDelete: Cascade)
+
+  childrenClassId String?
+  childrenClass   ChildrenClass? @relation("ChildrenClassLeadership", fields: [childrenClassId], references: [id], onDelete: Cascade)
+
+  youthGroupId String?
+  youthGroup   YouthGroup? @relation("YouthGroupLeadership", fields: [youthGroupId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, entityType, entityId, title]) // Prevent duplicate assignments
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@index([isPrimary])
+  @@index([startDate])
+  @@index([endDate])
+  @@index([departmentId])
+  @@index([groupId])
+  @@index([childrenClassId])
+  @@index([youthGroupId])
+}
+
+enum LeadershipEntityType {
+  DEPARTMENT
+  GROUP
+  CHILDREN_CLASS
+  YOUTH_GROUP
+  MINISTRY // For future use
 }
 
 // ============================================================================
@@ -1878,31 +2413,43 @@ model GuestVisit {
   @@index([eventId])
 }
 
+enum FollowUpPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
 model GuestFollowUp {
-  id           String         @id @default(cuid())
-  guestId      String
-  guest        User           @relation("GuestFollowUps", fields: [guestId], references: [id], onDelete: Cascade)
-  type         FollowUpType
-  method       FollowUpMethod
-  subject      String?
-  content      String
-  scheduledAt  DateTime? // For scheduled follow-ups
-  completedAt  DateTime? // When follow-up was completed
-  status       FollowUpStatus @default(PENDING)
-  assignedToId String?
-  assignedTo   User?          @relation("FollowUpAssignee", fields: [assignedToId], references: [id])
-  createdById  String
-  createdBy    User           @relation("FollowUpCreator", fields: [createdById], references: [id])
-  notes        String?
-  metadata     Json? // Additional data (email sent, SMS sent, etc.)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id            String                 @id @default(cuid())
+  guestId       String
+  guest         User                   @relation("GuestFollowUps", fields: [guestId], references: [id], onDelete: Cascade)
+  type          FollowUpType
+  method        FollowUpMethod
+  subject       String?
+  content       String
+  isAiGenerated Boolean                @default(false) // Whether content was AI-generated
+  templateId    String? // Reference to communication template used
+  template      CommunicationTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  scheduledAt   DateTime? // For scheduled follow-ups
+  completedAt   DateTime? // When follow-up was completed
+  status        FollowUpStatus         @default(PENDING)
+  priority      FollowUpPriority       @default(NORMAL) // Priority level for follow-up
+  assignedToId  String?
+  assignedTo    User?                  @relation("FollowUpAssignee", fields: [assignedToId], references: [id])
+  createdById   String
+  createdBy     User                   @relation("FollowUpCreator", fields: [createdById], references: [id])
+  notes         String?
+  metadata      Json? // Additional data (email sent, SMS sent, response received, etc.)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
 
   @@index([guestId])
   @@index([status])
   @@index([scheduledAt])
   @@index([assignedToId])
   @@index([createdById])
+  @@index([priority])
 }
 
 enum FollowUpType {
@@ -2000,6 +2547,7 @@ model Church {
   budgets        Budget[]
   calendarEvents CalendarEvent[]
   documents      Document[]
+  presentations  Presentation[]
   assets         Asset[]
   settings       ChurchSetting[]
   customFields   CustomField[]
@@ -2023,6 +2571,27 @@ model ChurchSetting {
 
   @@unique([churchId, key])
   @@index([churchId])
+}
+
+// Communication templates for follow-ups
+model CommunicationTemplate {
+  id          String          @id @default(cuid())
+  name        String
+  type        FollowUpType
+  method      FollowUpMethod
+  subject     String? // For email/letter
+  content     String // Template content with variables like {{firstName}}, {{lastName}}, etc.
+  variables   Json? // Available variables for this template
+  isActive    Boolean         @default(true)
+  isDefault   Boolean         @default(false) // Default template for this type/method combination
+  createdById String
+  createdBy   User            @relation("TemplateCreator", fields: [createdById], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  followUps   GuestFollowUp[]
+
+  @@index([type, method])
+  @@index([isActive])
 }
 
 model CustomField {

@@ -42,9 +42,13 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    // Generate public_id without folder prefix (folder will be set separately)
+    const fileName = file.name.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9-_]/g, "_");
+    const publicId = `${Date.now()}-${fileName}`;
+
     // Upload to Cloudinary
     const result = await uploadImage(buffer, folder, {
-      public_id: `${folder}/${Date.now()}-${file.name.replace(/\.[^/.]+$/, "")}`,
+      public_id: publicId,
     });
 
     return NextResponse.json({

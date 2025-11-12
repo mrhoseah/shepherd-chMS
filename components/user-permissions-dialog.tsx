@@ -57,7 +57,7 @@ export function UserPermissionsDialog({
     }
 
     try {
-      const response = await fetch(`/api/users/${userId}/permissions`, {
+      const response = await fetch(`/api/people/${userId}/permissions`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

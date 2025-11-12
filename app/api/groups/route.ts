@@ -42,12 +42,38 @@ export async function GET(request: NextRequest) {
         },
         subgroups: includeSubgroups
           ? {
-              select: {
-                id: true,
-                name: true,
-                type: true,
+              include: {
+                leader: {
+                  select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                  },
+                },
+                leadershipAssignments: {
+                  where: {
+                    OR: [
+                      { endDate: null },
+                      { endDate: { gte: new Date() } },
+                    ],
+                  },
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                        firstName: true,
+                        lastName: true,
+                        email: true,
+                      },
+                    },
+                  },
+                  orderBy: [
+                    { isPrimary: "desc" },
+                    { displayOrder: "asc" },
+                  ],
+                },
                 _count: {
-                  select: { members: true },
+                  select: { members: true, subgroups: true },
                 },
               },
             }
@@ -60,6 +86,31 @@ export async function GET(request: NextRequest) {
             email: true,
             phone: true,
           },
+        },
+        leadershipAssignments: {
+          where: {
+            OR: [
+              { endDate: null },
+              { endDate: { gte: new Date() } },
+            ],
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                phone: true,
+                profileImage: true,
+              },
+            },
+          },
+          orderBy: [
+            { isPrimary: "desc" },
+            { displayOrder: "asc" },
+            { startDate: "desc" },
+          ],
         },
         members: {
           where: {

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { loadState } from "@/lib/store/persist";
 import { initializeSettings } from "@/lib/store/slices/settingsSlice";
 import { initializeCurrency } from "@/lib/store/slices/currencySlice";
+import { ToastProvider } from "@/components/ui/toast";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -28,14 +29,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <Provider store={store}>
-      <SessionProvider>
+      <SessionProvider refetchInterval={5 * 60} refetchOnWindowFocus={true}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ToastProvider>
+            {children}
+          </ToastProvider>
         </ThemeProvider>
       </SessionProvider>
     </Provider>

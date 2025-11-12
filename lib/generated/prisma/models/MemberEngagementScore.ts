@@ -638,14 +638,6 @@ export type MemberEngagementScoreUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.MemberEngagementScoreScalarWhereInput | Prisma.MemberEngagementScoreScalarWhereInput[]
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type MemberEngagementScoreCreateWithoutUserInput = {
   id?: string
   overallScore: number
