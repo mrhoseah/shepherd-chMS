@@ -701,6 +701,9 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Call to Action Section */}
+      <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] opacity-10 bg-cover bg-center mix-blend-overlay" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/90 to-slate-900/50" />
         
@@ -787,5 +790,6 @@ export default async function LandingPage() {
         </div>
       </footer>
     </div>
-  );
+  </>
+);
 }

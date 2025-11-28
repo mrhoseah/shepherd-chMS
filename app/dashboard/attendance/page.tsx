@@ -15,6 +15,7 @@ import {
 import { AttendanceCapture } from "@/components/attendance/attendance-capture";
 import { BiometricDeviceManager } from "@/components/attendance/biometric-device-manager";
 import { BiometricUserMapper } from "@/components/attendance/biometric-user-mapper";
+import { ChildrenMinistryAttendance } from "@/components/attendance/children-ministry-attendance";
 import { PremiumBadge } from "@/components/premium/premium-badge";
 import {
   Calendar,
@@ -316,13 +317,19 @@ export default function AttendancePage() {
     <div className="flex flex-col h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 dark:from-gray-950 dark:via-blue-950/10 dark:to-indigo-950/10 overflow-hidden">
       <Tabs defaultValue="sessions" className="flex-1 flex flex-col overflow-hidden">
         <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b-2 border-gray-200 dark:border-gray-800 shadow-lg">
-          <TabsList className="grid w-full grid-cols-3 bg-transparent p-2 rounded-none">
+          <TabsList className="grid w-full grid-cols-4 bg-transparent p-2 rounded-none">
             <TabsTrigger 
               value="sessions" 
               className="rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 font-semibold"
             >
               <Users className="w-4 h-4 mr-2" />
               Attendance Sessions
+            </TabsTrigger>
+            <TabsTrigger 
+              value="children" 
+              className="rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-600 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 font-semibold"
+            >
+              👶 Children's Ministry
             </TabsTrigger>
             <TabsTrigger 
               value="biometric" 
@@ -706,7 +713,11 @@ export default function AttendancePage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="biometric" className="flex-1 overflow-y-auto m-0 p-6 bg-gray-950 dark:bg-gray-950">
+        <TabsContent value="children" className="flex-1 overflow-hidden m-0 p-6">
+          <ChildrenMinistryAttendance />
+        </TabsContent>
+
+        <TabsContent value="biometric" className="flex-1 overflow-hidden m-0 p-6">
           <BiometricDeviceManager />
         </TabsContent>
 

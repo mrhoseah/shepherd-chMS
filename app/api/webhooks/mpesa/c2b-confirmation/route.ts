@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     // Try to find user by phone number
     const user = await prisma.user.findFirst({
       where: { phone: formattedPhone },
-      select: { id: true },
+      select: { id: true, firstName: true, lastName: true, email: true },
     });
 
     // Parse transaction time
@@ -140,6 +140,20 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Send paybill acknowledgement
+    try {
+      await sendPaybillAcknowledgement(donation, {
+        phone: formattedPhone,
+        firstName: FirstName,
+        middleName: MiddleName,
+        lastName: LastName,
+        user: user,
+      });
+    } catch (error) {
+      console.error("Failed to send paybill acknowledgement:", error);
+      // Don't fail the webhook if acknowledgement fails
+    }
+
     // Trigger workflows if donation is allocated
     if (status === "completed" && donation.userId) {
       Promise.resolve().then(async () => {
@@ -178,6 +192,153 @@ export async function POST(request: NextRequest) {
       { error: "Failed to process confirmation", details: error.message },
       { status: 500 }
     );
+  }
+}
+
+/**
+ * Send paybill acknowledgement to donor
+ */
+async function sendPaybillAcknowledgement(
+  donation: any,
+  donorInfo: {
+    phone: string;
+    firstName?: string;
+    middleName?: string;
+    lastName?: string;
+    user?: { id: string; firstName: string; lastName: string; email: string } | null;
+  }
+) {
+  try {
+    // Get active SMS template for payment confirmation
+    const smsTemplate = await prisma.messageTemplate.findFirst({
+      where: {
+        category: "PAYMENT_CONFIRMATION",
+        type: "SMS",
+        isActive: true,
+        isDefault: true, // Use default template
+      },
+    });
+
+    if (!smsTemplate) {
+      console.log("No active SMS template found for PAYMENT_CONFIRMATION");
+      return;
+    }
+
+    // Prepare template variables
+    const donorName = donorInfo.user
+      ? `${donorInfo.user.firstName} ${donorInfo.user.lastName}`
+      : donorInfo.firstName && donorInfo.lastName
+      ? `${donorInfo.firstName} ${donorInfo.middleName ? donorInfo.middleName + " " : ""}${donorInfo.lastName}`
+      : "Valued Donor";
+
+    const variables: any = {
+      amount: donation.amount.toLocaleString(),
+      transactionId: donation.transactionId,
+      donorName: donorName,
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
+      churchName: "Jericho Temple House of God", // TODO: Get from church settings
+    };
+
+    // Replace variables in SMS content
+    let smsMessage = smsTemplate.content;
+    Object.keys(variables).forEach((key) => {
+      const regex = new RegExp(`{{${key}}}`, "g");
+      smsMessage = smsMessage.replace(regex, variables[key]);
+    });
+
+    // Send SMS acknowledgement
+    const { sendSMS } = await import("@/lib/sms");
+    const smsResult = await sendSMS({
+      to: donorInfo.phone,
+      message: smsMessage,
+    });
+
+    if (smsResult.success) {
+      console.log("Paybill SMS acknowledgement sent successfully");
+
+      // Log SMS in database
+      await prisma.sMSLog.create({
+        data: {
+          churchId: "default", // TODO: Get actual church ID
+          senderId: "system", // System-generated message
+          phoneNumber: donorInfo.phone,
+          message: smsMessage,
+          status: "SENT",
+          messageId: smsResult.messageId,
+          recipientType: "individuals",
+          metadata: {
+            type: "paybill_acknowledgement",
+            donationId: donation.id,
+            transactionId: donation.transactionId,
+          },
+        },
+      });
+    } else {
+      console.error("Failed to send paybill SMS acknowledgement:", smsResult.error);
+
+      // Log failed SMS
+      await prisma.sMSLog.create({
+        data: {
+          churchId: "default", // TODO: Get actual church ID
+          senderId: "system",
+          phoneNumber: donorInfo.phone,
+          message: smsMessage,
+          status: "FAILED",
+          errorMessage: smsResult.error,
+          recipientType: "individuals",
+          metadata: {
+            type: "paybill_acknowledgement",
+            donationId: donation.id,
+            transactionId: donation.transactionId,
+          },
+        },
+      });
+    }
+
+    // Send email acknowledgement if donor has email
+    if (donorInfo.user?.email) {
+      const emailTemplate = await prisma.messageTemplate.findFirst({
+        where: {
+          category: "PAYMENT_CONFIRMATION",
+          type: "EMAIL",
+          isActive: true,
+          isDefault: true,
+        },
+      });
+
+      if (emailTemplate) {
+        // Replace variables in email content
+        let emailSubject = emailTemplate.subject || "Payment Confirmation";
+        let emailContent = emailTemplate.content;
+
+        Object.keys(variables).forEach((key) => {
+          const regex = new RegExp(`{{${key}}}`, "g");
+          emailSubject = emailSubject.replace(regex, variables[key]);
+          emailContent = emailContent.replace(regex, variables[key]);
+        });
+
+        // Send email
+        const { sendEmail } = await import("@/lib/email");
+        const emailResult = await sendEmail({
+          to: donorInfo.user.email,
+          subject: emailSubject,
+          content: emailContent,
+        });
+
+        if (emailResult.success) {
+          console.log("Paybill email acknowledgement sent successfully");
+        } else {
+          console.error("Failed to send paybill email acknowledgement:", emailResult.error);
+        }
+      }
+    }
+
+    // TODO: WhatsApp integration (future enhancement)
+    // When WhatsApp is implemented, add similar logic here
+
+  } catch (error) {
+    console.error("Error sending paybill acknowledgement:", error);
   }
 }
 
