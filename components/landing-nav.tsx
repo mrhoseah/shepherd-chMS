@@ -49,6 +49,17 @@ export function LandingNav() {
               </>
             ) : (
               <>
+                <div className="hidden md:flex items-center space-x-6 mr-4">
+                  <Link href="#features" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
+                    Features
+                  </Link>
+                  <Link href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
+                    Pricing
+                  </Link>
+                  <Link href="#" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
+                    About
+                  </Link>
+                </div>
                 <Link href="/auth/signin">
                   <Button variant="ghost">Sign In</Button>
                 </Link>

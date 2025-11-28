@@ -11,6 +11,25 @@ const nextConfig: NextConfig = {
     'batch',
     'pdf-parse',
   ],
+  
+  // Suppress Turbopack performance measurement warnings in development
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+  
+  // Logging configuration
+  logging: {
+    fetches: {
+      fullUrl: false,
+    },
+  },
 };
 
 export default nextConfig;

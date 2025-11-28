@@ -46,6 +46,7 @@ import {
   CheckCircle2,
   XCircle,
   Search,
+  Settings,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -81,6 +82,7 @@ export default function ChurchesPage() {
   const [editingChurch, setEditingChurch] = useState<ChurchData | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [switchingChurch, setSwitchingChurch] = useState<string | null>(null);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -226,6 +228,42 @@ export default function ChurchesPage() {
         description: error.message,
         variant: "destructive",
       });
+    }
+  };
+
+  const handleManageChurch = async (churchId: string, churchName: string) => {
+    setSwitchingChurch(churchId);
+    
+    try {
+      // Switch church context
+      const response = await fetch("/api/admin/switch-church", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ churchId }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to switch church");
+      }
+
+      toast({
+        title: "Switched Successfully",
+        description: `Now managing ${churchName}`,
+      });
+
+      // Small delay to ensure cookie is set before redirect
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Use window.location for full page reload to ensure cookie is read
+      window.location.href = "/dashboard";
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      setSwitchingChurch(null);
     }
   };
 
@@ -737,6 +775,24 @@ export default function ChurchesPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="default"
+                          size="sm"
+                          onClick={() => handleManageChurch(church.id, church.name)}
+                          disabled={switchingChurch === church.id}
+                        >
+                          {switchingChurch === church.id ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                              Switching...
+                            </>
+                          ) : (
+                            <>
+                              <Settings className="w-4 h-4 mr-1" />
+                              Manage
+                            </>
+                          )}
+                        </Button>
                         <Button
                           variant="ghost"
                           size="sm"

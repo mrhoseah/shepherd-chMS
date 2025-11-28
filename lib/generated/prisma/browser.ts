@@ -43,11 +43,6 @@ export type UserSession = Prisma.UserSessionModel
  */
 export type Invitation = Prisma.InvitationModel
 /**
- * Model RolePermission
- * 
- */
-export type RolePermission = Prisma.RolePermissionModel
-/**
  * Model AuthAccount
  * 
  */
@@ -338,6 +333,41 @@ export type ChildrenAttendance = Prisma.ChildrenAttendanceModel
  */
 export type ChildrenLesson = Prisma.ChildrenLessonModel
 /**
+ * Model ChildProfile
+ * 
+ */
+export type ChildProfile = Prisma.ChildProfileModel
+/**
+ * Model TeacherNote
+ * 
+ */
+export type TeacherNote = Prisma.TeacherNoteModel
+/**
+ * Model ClassroomLog
+ * 
+ */
+export type ClassroomLog = Prisma.ClassroomLogModel
+/**
+ * Model ClassSummary
+ * 
+ */
+export type ClassSummary = Prisma.ClassSummaryModel
+/**
+ * Model ActivityPhoto
+ * 
+ */
+export type ActivityPhoto = Prisma.ActivityPhotoModel
+/**
+ * Model ParentTeacherChat
+ * 
+ */
+export type ParentTeacherChat = Prisma.ParentTeacherChatModel
+/**
+ * Model TeacherAttendance
+ * 
+ */
+export type TeacherAttendance = Prisma.TeacherAttendanceModel
+/**
  * Model YouthGroup
  * 
  */
@@ -480,6 +510,16 @@ export type Church = Prisma.ChurchModel
  */
 export type Subscription = Prisma.SubscriptionModel
 /**
+ * Model SubscriptionPlanTemplate
+ * 
+ */
+export type SubscriptionPlanTemplate = Prisma.SubscriptionPlanTemplateModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
+/**
  * Model ChurchSetting
  * 
  */
@@ -620,6 +660,16 @@ export type Sponsorship = Prisma.SponsorshipModel
  */
 export type SponsorshipApplication = Prisma.SponsorshipApplicationModel
 /**
+ * Model StorageFile
+ * 
+ */
+export type StorageFile = Prisma.StorageFileModel
+/**
+ * Model StorageUsage
+ * 
+ */
+export type StorageUsage = Prisma.StorageUsageModel
+/**
  * Model AuditLog
  * 
  */
@@ -629,6 +679,21 @@ export type AuditLog = Prisma.AuditLogModel
  * 
  */
 export type SystemSetting = Prisma.SystemSettingModel
+/**
+ * Model SeatingLayout
+ * 
+ */
+export type SeatingLayout = Prisma.SeatingLayoutModel
+/**
+ * Model SeatingItem
+ * 
+ */
+export type SeatingItem = Prisma.SeatingItemModel
+/**
+ * Model SeatingTemplate
+ * 
+ */
+export type SeatingTemplate = Prisma.SeatingTemplateModel
 /**
  * Model CasbinRule
  * 

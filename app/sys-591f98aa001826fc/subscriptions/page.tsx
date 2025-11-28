@@ -31,15 +31,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Crown,
+  CreditCard,
   Plus,
   Loader2,
   Edit,
-  Calendar,
-  DollarSign,
-  CheckCircle2,
+  CheckCircle,
   XCircle,
-  AlertCircle,
+  Clock,
+  AlertTriangle,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -48,63 +47,63 @@ interface Subscription {
   churchId: string;
   church: {
     name: string;
-    email: string | null;
   };
   plan: string;
   status: string;
-  billingCycle: string | null;
-  amount: string | null;
-  currency: string;
   startDate: string;
-  endDate: string | null;
-  trialEndDate: string | null;
+  endDate: string;
+  maxMembers: number;
+  maxAdmins: number;
+  maxCampuses: number;
+  maxStorage: number;
+  nextBillingDate: string | null;
+  paymentMethod: string | null;
 }
-
-const planColors: Record<string, string> = {
-  FREE: "bg-gray-500",
-  BASIC: "bg-blue-500",
-  PREMIUM: "bg-purple-500",
-  ENTERPRISE: "bg-yellow-500",
-};
-
-const statusColors: Record<string, string> = {
-  active: "bg-green-500",
-  cancelled: "bg-red-500",
-  expired: "bg-gray-500",
-  trial: "bg-blue-500",
-};
 
 export default function SubscriptionsPage() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [churches, setChurches] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingSub, setEditingSub] = useState<Subscription | null>(null);
+  const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     churchId: "",
     plan: "BASIC",
-    status: "active",
-    billingCycle: "monthly",
-    amount: "",
-    currency: "USD",
+    status: "TRIAL",
     startDate: new Date().toISOString().split("T")[0],
     endDate: "",
-    trialEndDate: "",
+    maxMembers: 100,
+    maxAdmins: 5,
+    maxCampuses: 1,
+    maxStorage: 1,
+    nextBillingDate: "",
+    paymentMethod: "",
   });
 
   useEffect(() => {
-    fetchSubscriptions();
+    fetchData();
   }, []);
 
-  const fetchSubscriptions = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/admin/subscriptions");
-      if (!response.ok) throw new Error("Failed to fetch subscriptions");
-      const data = await response.json();
-      setSubscriptions(data);
+      const [subsResponse, churchesResponse] = await Promise.all([
+        fetch("/api/admin/subscriptions"),
+        fetch("/api/admin/churches"),
+      ]);
+
+      if (!subsResponse.ok || !churchesResponse.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const subsData = await subsResponse.json();
+      const churchesData = await churchesResponse.json();
+
+      setSubscriptions(subsData);
+      setChurches(churchesData);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -121,14 +120,22 @@ export default function SubscriptionsPage() {
     setSubmitting(true);
 
     try {
-      const url = editingSub
-        ? `/api/admin/subscriptions/${editingSub.id}`
+      const url = editingSubscription
+        ? `/api/admin/subscriptions/${editingSubscription.id}`
         : "/api/admin/subscriptions";
 
+      const method = editingSubscription ? "PUT" : "POST";
+
       const response = await fetch(url, {
-        method: editingSub ? "PUT" : "POST",
+        method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          maxMembers: parseInt(formData.maxMembers.toString()),
+          maxAdmins: parseInt(formData.maxAdmins.toString()),
+          maxCampuses: parseInt(formData.maxCampuses.toString()),
+          maxStorage: parseInt(formData.maxStorage.toString()),
+        }),
       });
 
       if (!response.ok) {
@@ -138,12 +145,14 @@ export default function SubscriptionsPage() {
 
       toast({
         title: "Success",
-        description: `Subscription ${editingSub ? "updated" : "created"} successfully`,
+        description: editingSubscription
+          ? "Subscription updated successfully"
+          : "Subscription created successfully",
       });
 
       setDialogOpen(false);
       resetForm();
-      fetchSubscriptions();
+      fetchData();
     } catch (error: any) {
       toast({
         title: "Error",
@@ -155,47 +164,55 @@ export default function SubscriptionsPage() {
     }
   };
 
-  const handleEdit = (sub: Subscription) => {
-    setEditingSub(sub);
+  const handleEdit = (subscription: Subscription) => {
+    setEditingSubscription(subscription);
     setFormData({
-      churchId: sub.churchId,
-      plan: sub.plan,
-      status: sub.status,
-      billingCycle: sub.billingCycle || "monthly",
-      amount: sub.amount || "",
-      currency: sub.currency,
-      startDate: sub.startDate.split("T")[0],
-      endDate: sub.endDate ? sub.endDate.split("T")[0] : "",
-      trialEndDate: sub.trialEndDate ? sub.trialEndDate.split("T")[0] : "",
+      churchId: subscription.churchId,
+      plan: subscription.plan,
+      status: subscription.status,
+      startDate: new Date(subscription.startDate).toISOString().split("T")[0],
+      endDate: new Date(subscription.endDate).toISOString().split("T")[0],
+      maxMembers: subscription.maxMembers,
+      maxAdmins: subscription.maxAdmins,
+      maxCampuses: subscription.maxCampuses,
+      maxStorage: subscription.maxStorage,
+      nextBillingDate: subscription.nextBillingDate
+        ? new Date(subscription.nextBillingDate).toISOString().split("T")[0]
+        : "",
+      paymentMethod: subscription.paymentMethod || "",
     });
     setDialogOpen(true);
   };
 
   const resetForm = () => {
-    setEditingSub(null);
+    setEditingSubscription(null);
     setFormData({
       churchId: "",
       plan: "BASIC",
-      status: "active",
-      billingCycle: "monthly",
-      amount: "",
-      currency: "USD",
+      status: "TRIAL",
       startDate: new Date().toISOString().split("T")[0],
       endDate: "",
-      trialEndDate: "",
+      maxMembers: 100,
+      maxAdmins: 5,
+      maxCampuses: 1,
+      maxStorage: 1,
+      nextBillingDate: "",
+      paymentMethod: "",
     });
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "active":
-        return <CheckCircle2 className="w-4 h-4" />;
-      case "cancelled":
-        return <XCircle className="w-4 h-4" />;
-      case "expired":
-        return <AlertCircle className="w-4 h-4" />;
-      case "trial":
-        return <Calendar className="w-4 h-4" />;
+      case "ACTIVE":
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
+      case "TRIAL":
+        return <Clock className="w-4 h-4 text-blue-500" />;
+      case "PAST_DUE":
+        return <AlertTriangle className="w-4 h-4 text-yellow-500" />;
+      case "CANCELLED":
+      case "EXPIRED":
+      case "SUSPENDED":
+        return <XCircle className="w-4 h-4 text-red-500" />;
       default:
         return null;
     }
@@ -209,61 +226,59 @@ export default function SubscriptionsPage() {
     );
   }
 
-  const stats = {
-    active: subscriptions.filter((s) => s.status === "active").length,
-    trial: subscriptions.filter((s) => s.status === "trial").length,
-    cancelled: subscriptions.filter((s) => s.status === "cancelled").length,
-  };
-
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Crown className="w-8 h-8" />
+            <CreditCard className="w-8 h-8" />
             Subscription Management
           </h1>
           <p className="text-gray-500 mt-1">
-            Manage church subscription plans and billing
+            Manage church subscriptions and billing
           </p>
         </div>
-        <Dialog open={dialogOpen} onOpenChange={(open) => {
-          setDialogOpen(open);
-          if (!open) resetForm();
-        }}>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button onClick={resetForm}>
               <Plus className="w-4 h-4 mr-2" />
-              Add Subscription
+              New Subscription
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleSubmit}>
               <DialogHeader>
                 <DialogTitle>
-                  {editingSub ? "Edit Subscription" : "Add New Subscription"}
+                  {editingSubscription ? "Edit Subscription" : "Create Subscription"}
                 </DialogTitle>
                 <DialogDescription>
-                  {editingSub
-                    ? "Update church subscription details"
+                  {editingSubscription
+                    ? "Update subscription details and limits"
                     : "Create a new subscription for a church"}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
-                {!editingSub && (
-                  <div className="space-y-2">
-                    <Label htmlFor="churchId">Church ID *</Label>
-                    <Input
-                      id="churchId"
-                      value={formData.churchId}
-                      onChange={(e) =>
-                        setFormData({ ...formData, churchId: e.target.value })
-                      }
-                      required
-                      placeholder="Enter church ID"
-                    />
-                  </div>
-                )}
+                <div className="space-y-2">
+                  <Label htmlFor="churchId">Church *</Label>
+                  <Select
+                    value={formData.churchId}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, churchId: value })
+                    }
+                    disabled={!!editingSubscription}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select church" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {churches.map((church) => (
+                        <SelectItem key={church.id} value={church.id}>
+                          {church.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -280,11 +295,13 @@ export default function SubscriptionsPage() {
                       <SelectContent>
                         <SelectItem value="FREE">Free</SelectItem>
                         <SelectItem value="BASIC">Basic</SelectItem>
-                        <SelectItem value="PREMIUM">Premium</SelectItem>
+                        <SelectItem value="STANDARD">Standard</SelectItem>
+                        <SelectItem value="PRO">Pro</SelectItem>
                         <SelectItem value="ENTERPRISE">Enterprise</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
+
                   <div className="space-y-2">
                     <Label htmlFor="status">Status *</Label>
                     <Select
@@ -297,69 +314,18 @@ export default function SubscriptionsPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="trial">Trial</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                        <SelectItem value="expired">Expired</SelectItem>
+                        <SelectItem value="TRIAL">Trial</SelectItem>
+                        <SelectItem value="ACTIVE">Active</SelectItem>
+                        <SelectItem value="PAST_DUE">Past Due</SelectItem>
+                        <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                        <SelectItem value="EXPIRED">Expired</SelectItem>
+                        <SelectItem value="SUSPENDED">Suspended</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="billingCycle">Billing Cycle</Label>
-                    <Select
-                      value={formData.billingCycle}
-                      onValueChange={(value) =>
-                        setFormData({ ...formData, billingCycle: value })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="monthly">Monthly</SelectItem>
-                        <SelectItem value="yearly">Yearly</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="currency">Currency</Label>
-                    <Select
-                      value={formData.currency}
-                      onValueChange={(value) =>
-                        setFormData({ ...formData, currency: value })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="USD">USD</SelectItem>
-                        <SelectItem value="KES">KES</SelectItem>
-                        <SelectItem value="EUR">EUR</SelectItem>
-                        <SelectItem value="GBP">GBP</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="amount">Amount</Label>
-                  <Input
-                    id="amount"
-                    type="number"
-                    step="0.01"
-                    value={formData.amount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, amount: e.target.value })
-                    }
-                    placeholder="0.00"
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="startDate">Start Date *</Label>
                     <Input
@@ -372,8 +338,9 @@ export default function SubscriptionsPage() {
                       required
                     />
                   </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="endDate">End Date</Label>
+                    <Label htmlFor="endDate">End Date *</Label>
                     <Input
                       id="endDate"
                       type="date"
@@ -381,18 +348,116 @@ export default function SubscriptionsPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, endDate: e.target.value })
                       }
+                      required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="trialEndDate">Trial End</Label>
-                    <Input
-                      id="trialEndDate"
-                      type="date"
-                      value={formData.trialEndDate}
-                      onChange={(e) =>
-                        setFormData({ ...formData, trialEndDate: e.target.value })
-                      }
-                    />
+                </div>
+
+                <div className="border-t pt-4">
+                  <h3 className="font-semibold mb-3">Subscription Limits</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="maxMembers">Max Members *</Label>
+                      <Input
+                        id="maxMembers"
+                        type="number"
+                        value={formData.maxMembers}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            maxMembers: parseInt(e.target.value),
+                          })
+                        }
+                        required
+                        min="0"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="maxAdmins">Max Admins *</Label>
+                      <Input
+                        id="maxAdmins"
+                        type="number"
+                        value={formData.maxAdmins}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            maxAdmins: parseInt(e.target.value),
+                          })
+                        }
+                        required
+                        min="1"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="maxCampuses">Max Campuses *</Label>
+                      <Input
+                        id="maxCampuses"
+                        type="number"
+                        value={formData.maxCampuses}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            maxCampuses: parseInt(e.target.value),
+                          })
+                        }
+                        required
+                        min="1"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="maxStorage">Max Storage (GB) *</Label>
+                      <Input
+                        id="maxStorage"
+                        type="number"
+                        value={formData.maxStorage}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            maxStorage: parseInt(e.target.value),
+                          })
+                        }
+                        required
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t pt-4">
+                  <h3 className="font-semibold mb-3">Billing Information</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="nextBillingDate">Next Billing Date</Label>
+                      <Input
+                        id="nextBillingDate"
+                        type="date"
+                        value={formData.nextBillingDate}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            nextBillingDate: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="paymentMethod">Payment Method</Label>
+                      <Input
+                        id="paymentMethod"
+                        value={formData.paymentMethod}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            paymentMethod: e.target.value,
+                          })
+                        }
+                        placeholder="e.g., M-PESA, Card ending in 1234"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -414,7 +479,10 @@ export default function SubscriptionsPage() {
                       Saving...
                     </>
                   ) : (
-                    <>{editingSub ? "Update" : "Create"}</>
+                    <>
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      {editingSubscription ? "Update" : "Create"}
+                    </>
                   )}
                 </Button>
               </DialogFooter>
@@ -423,56 +491,12 @@ export default function SubscriptionsPage() {
         </Dialog>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
-              Total Subscriptions
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{subscriptions.length}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
-              Active
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.active}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
-              Trial
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{stats.trial}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
-              Cancelled
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.cancelled}</div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Subscriptions Table */}
       <Card>
         <CardHeader>
-          <CardTitle>All Subscriptions</CardTitle>
+          <CardTitle>Active Subscriptions</CardTitle>
           <CardDescription>
-            {subscriptions.length} subscription{subscriptions.length !== 1 ? "s" : ""}
+            View and manage all church subscriptions
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -482,70 +506,64 @@ export default function SubscriptionsPage() {
                 <TableHead>Church</TableHead>
                 <TableHead>Plan</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Limits</TableHead>
                 <TableHead>Billing</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Start Date</TableHead>
-                <TableHead>End Date</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {subscriptions.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                  <TableCell colSpan={6} className="text-center py-8 text-gray-500">
                     No subscriptions found
                   </TableCell>
                 </TableRow>
               ) : (
-                subscriptions.map((sub) => (
-                  <TableRow key={sub.id}>
+                subscriptions.map((subscription) => (
+                  <TableRow key={subscription.id}>
                     <TableCell>
                       <div>
-                        <p className="font-medium">{sub.church.name}</p>
-                        {sub.church.email && (
-                          <p className="text-xs text-gray-500">{sub.church.email}</p>
-                        )}
+                        <p className="font-medium">{subscription.church.name}</p>
+                        <p className="text-xs text-gray-500">
+                          {new Date(subscription.startDate).toLocaleDateString()} -{" "}
+                          {new Date(subscription.endDate).toLocaleDateString()}
+                        </p>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge className={planColors[sub.plan]}>
-                        {sub.plan}
-                      </Badge>
+                      <Badge>{subscription.plan}</Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge className={statusColors[sub.status]}>
-                        <span className="flex items-center gap-1">
-                          {getStatusIcon(sub.status)}
-                          {sub.status}
-                        </span>
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(subscription.status)}
+                        <span className="text-sm">{subscription.status}</span>
+                      </div>
                     </TableCell>
-                    <TableCell>
-                      {sub.billingCycle || "—"}
+                    <TableCell className="text-sm">
+                      <div className="space-y-1">
+                        <p>Members: {subscription.maxMembers}</p>
+                        <p>Admins: {subscription.maxAdmins}</p>
+                        <p>Campuses: {subscription.maxCampuses}</p>
+                        <p>Storage: {subscription.maxStorage}GB</p>
+                      </div>
                     </TableCell>
-                    <TableCell>
-                      {sub.amount ? (
-                        <span className="flex items-center gap-1">
-                          <DollarSign className="w-3 h-3" />
-                          {parseFloat(sub.amount).toFixed(2)} {sub.currency}
-                        </span>
+                    <TableCell className="text-sm">
+                      {subscription.nextBillingDate ? (
+                        <div>
+                          <p>Next: {new Date(subscription.nextBillingDate).toLocaleDateString()}</p>
+                          {subscription.paymentMethod && (
+                            <p className="text-xs text-gray-500">{subscription.paymentMethod}</p>
+                          )}
+                        </div>
                       ) : (
-                        "—"
+                        <span className="text-gray-400">No billing</span>
                       )}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-500">
-                      {new Date(sub.startDate).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-500">
-                      {sub.endDate
-                        ? new Date(sub.endDate).toLocaleDateString()
-                        : "—"}
                     </TableCell>
                     <TableCell className="text-right">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleEdit(sub)}
+                        onClick={() => handleEdit(subscription)}
                       >
                         <Edit className="w-4 h-4" />
                       </Button>

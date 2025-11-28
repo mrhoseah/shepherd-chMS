@@ -376,6 +376,26 @@ model User {
   // Sponsorship
   approvedSponsorships Sponsorship[] @relation("SponsorshipApprovedBy")
 
+  // Storage
+  storageUploads StorageFile[] @relation("StorageUploads")
+
+  // Parent-Child Tracking
+  childProfiles         ChildProfile[]        @relation("ChildProfile")
+  parentProfiles        ChildProfile[]        @relation("ParentProfile")
+  teacherNotes          TeacherNote[]         @relation("TeacherNotes")
+  classroomLogs         ClassroomLog[]        @relation("ClassroomLogs")
+  classSummaries        ClassSummary[]        @relation("ClassSummaries")
+  activityPhotos        ActivityPhoto[]       @relation("ActivityPhotos")
+  parentChats           ParentTeacherChat[]   @relation("ParentChats")
+  teacherChats          ParentTeacherChat[]   @relation("TeacherChats")
+  chatsSent             ParentTeacherChat[]   @relation("ChatSender")
+  teacherAttendance     TeacherAttendance[]   @relation("TeacherAttendanceRecords")
+
+  // Seating Arrangements
+  seatingLayoutsCreated SeatingLayout[] @relation("SeatingLayoutCreatedBy")
+  seatingLayoutsUpdated SeatingLayout[] @relation("SeatingLayoutUpdatedBy")
+  seatingTemplatesCreated SeatingTemplate[]
+
   // Timestamps
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -427,18 +447,18 @@ model Invitation {
   firstName String
   lastName  String
   role      UserRole @default(GUEST)
+  campusId  String?
+  campus    Campus?  @relation(fields: [campusId], references: [id])
+  churchId  String? // For church-level invitations
   
-  // Church or System level
-  invitationType String   @default("church") // "church" or "system"
-  churchId       String? // For church invitations
-  campusId       String?
-  campus         Campus?  @relation(fields: [campusId], references: [id])
+  // Invitation type
+  invitationType InvitationType @default(CHURCH_MEMBER) // church_member, church_admin, system_admin
+  permissions    Json? // Specific permissions for EDITOR/VIEWER roles
 
   // Invitation details
   invitedById String? // Admin who sent the invitation
   invitedBy   User?   @relation("UserInvitations", fields: [invitedById], references: [id])
   message     String? // Optional message from inviter
-  permissions Json?   // Specific permissions override (optional)
 
   // Status tracking
   status        InvitationStatus @default(PENDING)
@@ -458,8 +478,14 @@ model Invitation {
   @@index([status])
   @@index([invitedById])
   @@index([expiresAt])
-  @@index([invitationType])
   @@index([churchId])
+  @@index([invitationType])
+}
+
+enum InvitationType {
+  CHURCH_MEMBER // Regular church member/guest
+  CHURCH_ADMIN // Church admin, editor, viewer
+  SYSTEM_ADMIN // System-level admin (SUPERADMIN, SYSTEM_ADMIN, SYSTEM_SUPPORT)
 }
 
 enum InvitationStatus {
@@ -467,22 +493,6 @@ enum InvitationStatus {
   ACCEPTED
   EXPIRED
   CANCELLED
-}
-
-// Role permissions and capabilities
-model RolePermission {
-  id          String   @id @default(cuid())
-  role        UserRole
-  resource    String // e.g., "members", "events", "finance", "settings"
-  action      String // e.g., "create", "read", "update", "delete"
-  scope       String   @default("church") // "church", "campus", "system"
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@unique([role, resource, action, scope])
-  @@index([role])
-  @@index([resource])
 }
 
 // ============================================================================
@@ -1883,6 +1893,11 @@ model ChildrenClass {
   members               ChildrenMinistryMember[]
   lessons               ChildrenLesson[]
   leadershipAssignments LeadershipAssignment[]   @relation("ChildrenClassLeadership")
+  teacherNotes          TeacherNote[]
+  classroomLogs         ClassroomLog[]
+  classSummaries        ClassSummary[]
+  activityPhotos        ActivityPhoto[]
+  teacherAttendance     TeacherAttendance[]
 }
 
 model ChildrenMinistryMember {
@@ -1935,6 +1950,242 @@ model ChildrenLesson {
   updatedAt DateTime      @updatedAt
 
   @@index([classId])
+}
+
+// ============================================================================
+// PARENT-CHILD TRACKING & TEACHER NOTES
+// ============================================================================
+
+enum NoteVisibility {
+  PARENT_ONLY          // Only the parent can see
+  STAFF_ONLY           // Only staff/teachers can see
+  PARENT_AND_STAFF     // Both can see
+  PASTORAL_CONFIDENTIAL // Only pastoral staff
+}
+
+enum NotePriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model ChildProfile {
+  id       String @id @default(cuid())
+  childId  String @unique
+  child    User   @relation("ChildProfile", fields: [childId], references: [id], onDelete: Cascade)
+  parentId String
+  parent   User   @relation("ParentProfile", fields: [parentId], references: [id], onDelete: Cascade)
+  
+  // Emergency & Medical Information (Parent Input)
+  allergies            String[] // e.g., ["Peanuts", "Bee stings"]
+  medications          String[] // e.g., ["Insulin - 11:30 AM"]
+  medicalConditions    String[] // e.g., ["Asthma", "Diabetes"]
+  emergencyInstructions String? // Special instructions for emergencies
+  
+  // Authorized Pickups (Parent Managed)
+  authorizedPickups    Json[] // Array of {name, relationship, phone, photo?, idRequired}
+  unauthorizedPersons  String[] // Names of people NOT allowed to pick up
+  
+  // Behavioral & Development Notes (Parent Input - Temporary)
+  parentDailyNotes     String? // Temporary notes for the day
+  
+  // Preferences
+  photoVideoConsent    Boolean @default(false)
+  communicationConsent Boolean @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  teacherNotes      TeacherNote[]
+  classroomLogs     ClassroomLog[]
+  activityPhotos    ActivityPhoto[]
+  parentTeacherChats ParentTeacherChat[]
+
+  @@index([childId])
+  @@index([parentId])
+}
+
+model TeacherNote {
+  id             String         @id @default(cuid())
+  childProfileId String
+  childProfile   ChildProfile   @relation(fields: [childProfileId], references: [id], onDelete: Cascade)
+  teacherId      String
+  teacher        User           @relation("TeacherNotes", fields: [teacherId], references: [id], onDelete: Cascade)
+  classId        String?
+  class          ChildrenClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  
+  // Note Content
+  title          String
+  content        String
+  category       String // "behavior", "achievement", "concern", "general", "medical_observation"
+  tags           String[] // Quick tags for filtering
+  
+  // Security & Visibility
+  visibility     NoteVisibility @default(STAFF_ONLY)
+  priority       NotePriority   @default(NORMAL)
+  isConfidential Boolean        @default(false) // If true, only pastoral staff can see
+  
+  // Metadata
+  date           DateTime       @default(now())
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([childProfileId])
+  @@index([teacherId])
+  @@index([classId])
+  @@index([date])
+  @@index([visibility])
+}
+
+model ClassroomLog {
+  id             String        @id @default(cuid())
+  childProfileId String
+  childProfile   ChildProfile  @relation(fields: [childProfileId], references: [id], onDelete: Cascade)
+  teacherId      String
+  teacher        User          @relation("ClassroomLogs", fields: [teacherId], references: [id], onDelete: Cascade)
+  classId        String
+  class          ChildrenClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  sessionDate    DateTime
+  
+  // Quick Tags (Low-friction recording)
+  behaviorTags   String[] // e.g., ["Shared well", "Distracted", "Helpful"]
+  engagementLevel Int?     @default(3) // 1-5 scale
+  
+  // Attendance
+  checkedInAt    DateTime?
+  checkedOutAt   DateTime?
+  isPresent      Boolean   @default(true)
+  isVisitor      Boolean   @default(false)
+  
+  // Quick Notes
+  notes          String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([childProfileId])
+  @@index([teacherId])
+  @@index([classId])
+  @@index([sessionDate])
+}
+
+model ClassSummary {
+  id        String        @id @default(cuid())
+  classId   String
+  class     ChildrenClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  teacherId String
+  teacher   User          @relation("ClassSummaries", fields: [teacherId], references: [id], onDelete: Cascade)
+  date      DateTime
+  
+  // Lesson Content
+  lessonTitle   String
+  lessonSummary String
+  memoryVerse   String?
+  activities    String[] // List of activities done
+  
+  // Sent to all parents
+  sentAt        DateTime?
+  recipientCount Int?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classId])
+  @@index([teacherId])
+  @@index([date])
+}
+
+model ActivityPhoto {
+  id             String       @id @default(cuid())
+  childProfileId String
+  childProfile   ChildProfile @relation(fields: [childProfileId], references: [id], onDelete: Cascade)
+  teacherId      String
+  teacher        User         @relation("ActivityPhotos", fields: [teacherId], references: [id], onDelete: Cascade)
+  classId        String?
+  class          ChildrenClass? @relation(fields: [classId], references: [id], onDelete: SetNull)
+  
+  // Photo Details
+  s3Key          String // Storage key
+  url            String // Presigned or CDN URL
+  caption        String?
+  activityName   String? // e.g., "Craft Time", "Worship"
+  
+  // Security
+  isApproved     Boolean  @default(false) // Must be approved by director
+  approvedBy     String?
+  approvedAt     DateTime?
+  
+  date           DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([childProfileId])
+  @@index([teacherId])
+  @@index([classId])
+  @@index([date])
+}
+
+model ParentTeacherChat {
+  id             String       @id @default(cuid())
+  childProfileId String
+  childProfile   ChildProfile @relation(fields: [childProfileId], references: [id], onDelete: Cascade)
+  parentId       String
+  parent         User         @relation("ParentChats", fields: [parentId], references: [id], onDelete: Cascade)
+  teacherId      String?
+  teacher        User?        @relation("TeacherChats", fields: [teacherId], references: [id], onDelete: SetNull)
+  
+  // Message Content
+  message        String
+  senderId       String // Either parent or teacher
+  sender         User   @relation("ChatSender", fields: [senderId], references: [id], onDelete: Cascade)
+  
+  // Message Type
+  messageType    String @default("text") // "text", "alert", "system"
+  isUrgent       Boolean @default(false)
+  
+  // Status
+  isRead         Boolean   @default(false)
+  readAt         DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([childProfileId])
+  @@index([parentId])
+  @@index([teacherId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+model TeacherAttendance {
+  id        String        @id @default(cuid())
+  teacherId String
+  teacher   User          @relation("TeacherAttendanceRecords", fields: [teacherId], references: [id], onDelete: Cascade)
+  classId   String
+  class     ChildrenClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  date      DateTime
+  
+  // Time Tracking
+  checkInAt  DateTime?
+  checkOutAt DateTime?
+  
+  // Status
+  status     String @default("present") // "present", "absent", "late", "substitute"
+  notes      String?
+  
+  // Roster Stats (populated after class)
+  totalChildren    Int?
+  presentChildren  Int?
+  newVisitors      Int?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([teacherId, classId, date])
+  @@index([teacherId])
+  @@index([classId])
+  @@index([date])
 }
 
 // ============================================================================
@@ -2678,6 +2929,10 @@ model Church {
   subscription     Subscription?
   smsLogs          SMSLog[]
   sponsorship      Sponsorship?
+  storageFiles     StorageFile[]
+  storageUsage     StorageUsage?
+  seatingLayouts   SeatingLayout[]
+  seatingTemplates SeatingTemplate[]
 
   @@index([isActive])
 }
@@ -2715,6 +2970,7 @@ enum PremiumFeature {
   VIDEO_CONFERENCING
   ADVANCED_SCHEDULING
   MEMBER_DIRECTORY_PRO
+  AI_SEATING_GENERATOR
 }
 
 model Subscription {
@@ -2723,22 +2979,113 @@ model Subscription {
   church               Church           @relation(fields: [churchId], references: [id], onDelete: Cascade)
   plan                 SubscriptionPlan @default(FREE)
   features             PremiumFeature[] // Array of enabled premium features
-  status               String           @default("active") // active, cancelled, expired, trial
+  status               SubscriptionStatus @default(TRIAL) // trial, active, past_due, cancelled, expired
   billingCycle         String? // monthly, yearly
   amount               Decimal?         @db.Decimal(10, 2)
   currency             String           @default("USD")
+  
+  // Limits based on plan
+  maxMembers           Int?             // Max members allowed
+  maxAdmins            Int?             // Max admin users
+  maxCampuses          Int?             // Max campuses
+  maxStorage           Int?             // Storage in GB
+  
+  // Dates
   startDate            DateTime         @default(now())
   endDate              DateTime?
   trialEndDate         DateTime?
   cancelledAt          DateTime?
+  nextBillingDate      DateTime?
+  
+  // Payment integration
   stripeCustomerId     String?
   stripeSubscriptionId String?
+  paymentMethod        String?          // card, mpesa, bank_transfer
+  
+  // Notes and metadata
+  notes                String?
+  metadata             Json?
+  
   createdAt            DateTime         @default(now())
   updatedAt            DateTime         @updatedAt
 
   @@index([churchId])
   @@index([status])
   @@index([plan])
+  @@index([nextBillingDate])
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+  SUSPENDED
+}
+
+// ============================================================================
+// SUBSCRIPTION PLAN TEMPLATES
+// ============================================================================
+
+model SubscriptionPlanTemplate {
+  id                String           @id @default(cuid())
+  name              String           @unique // e.g., "Basic", "Standard", "Premium"
+  displayName       String           // User-friendly name
+  description       String?          // Plan description
+  plan              SubscriptionPlan // FREE, BASIC, STANDARD, PRO, ENTERPRISE
+  
+  // Pricing (in Kenya Shillings)
+  monthlyPrice      Decimal          @db.Decimal(10, 2)
+  yearlyPrice       Decimal          @db.Decimal(10, 2)
+  currency          String           @default("KES")
+  
+  // Plan Limits
+  maxMembers        Int
+  maxAdmins         Int
+  maxCampuses       Int
+  maxStorage        Int              // Storage in GB
+  
+  // Features (stored as JSON array)
+  features          Json             // Array of feature descriptions
+  premiumFeatures   PremiumFeature[] // Enabled premium features enum
+  
+  // Plan Properties
+  isActive          Boolean          @default(true)
+  isPopular         Boolean          @default(false) // Highlight as popular choice
+  sortOrder         Int              @default(0)     // Display order
+  
+  // Trial
+  trialDays         Int              @default(14)
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@index([plan])
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+// ============================================================================
+// ROLE PERMISSIONS SYSTEM
+// ============================================================================
+
+model RolePermission {
+  id          String   @id @default(cuid())
+  role        UserRole
+  resource    String   // e.g., "members", "events", "donations", "settings"
+  action      String   // e.g., "create", "read", "update", "delete", "export"
+  allowed     Boolean  @default(true)
+  churchId    String?  // Null for system-level roles
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([role, resource, action, churchId])
+  @@index([role])
+  @@index([churchId])
 }
 
 model ChurchSetting {
@@ -3401,6 +3748,93 @@ model SponsorshipApplication {
 }
 
 // ============================================================================
+// STORAGE MANAGEMENT (S3 Integration with Plan-based Limits)
+// ============================================================================
+
+model StorageFile {
+  id            String   @id @default(cuid())
+  churchId      String
+  church        Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  
+  // File metadata
+  fileName      String
+  originalName  String
+  mimeType      String
+  fileSize      BigInt   // Size in bytes
+  s3Key         String   // S3 object key
+  s3Bucket      String   // S3 bucket name
+  url           String   // Presigned URL or CloudFront URL
+  
+  // File categorization
+  category      FileCategory @default(OTHER)
+  entityType    String?  // e.g., "member", "event", "document"
+  entityId      String?  // ID of related entity
+  
+  // Uploader info
+  uploadedById  String
+  uploadedBy    User     @relation("StorageUploads", fields: [uploadedById], references: [id], onDelete: Restrict)
+  
+  // Metadata
+  metadata      Json?    // Additional file metadata
+  tags          String[] // Searchable tags
+  
+  // Status
+  isPublic      Boolean  @default(false)
+  isDeleted     Boolean  @default(false)
+  deletedAt     DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([churchId])
+  @@index([uploadedById])
+  @@index([category])
+  @@index([entityType, entityId])
+  @@index([isDeleted])
+  @@index([createdAt])
+}
+
+enum FileCategory {
+  PROFILE_PHOTO
+  DOCUMENT
+  PRESENTATION
+  IMAGE
+  VIDEO
+  AUDIO
+  ATTACHMENT
+  LOGO
+  BANNER
+  OTHER
+}
+
+model StorageUsage {
+  id            String   @id @default(cuid())
+  churchId      String   @unique
+  church        Church   @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  
+  // Usage statistics (in bytes)
+  totalUsed     BigInt   @default(0)
+  documentsUsed BigInt   @default(0)
+  imagesUsed    BigInt   @default(0)
+  videosUsed    BigInt   @default(0)
+  otherUsed     BigInt   @default(0)
+  
+  // File counts
+  totalFiles    Int      @default(0)
+  
+  // Quota from subscription plan (in GB)
+  quotaGB       Int      @default(5)
+  
+  // Last calculation
+  lastCalculated DateTime @default(now())
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([churchId])
+}
+
+// ============================================================================
 // AUDIT LOGGING (System Admin Actions)
 // ============================================================================
 
@@ -3467,6 +3901,122 @@ model SystemSetting {
   updatedAt   DateTime    @updatedAt
 
   @@index([key])
+  @@index([category])
+  @@index([isPublic])
+}
+
+// ============================================================================
+// SEATING ARRANGEMENTS
+// ============================================================================
+
+enum FurnitureType {
+  PEW                 // Church pew/bench (row seating)
+  CHAIR               // Single chair
+  CHAIR_GROUP         // Group of chairs (4+)
+  ROUND_TABLE         // Round table with chairs
+  HALF_CIRCLE_TABLE   // Half-circle/crescent table
+  RECTANGULAR_TABLE   // Rectangular banquet table
+  SQUARE_TABLE        // Square table
+  PULPIT              // Pulpit/lectern (no seating)
+  PODIUM              // Podium (no seating)
+  SOUND_DESK          // Sound/tech desk (no seating)
+  CAMERA_TRIPOD       // Camera position (no seating)
+  STAGE               // Stage area (no seating)
+  ALTAR               // Altar area (no seating)
+  BAPTISMAL           // Baptismal font/pool (no seating)
+}
+
+model SeatingLayout {
+  id          String   @id @default(cuid())
+  churchId    String
+  name        String // e.g., "Main Sanctuary", "Fellowship Hall", "Youth Room"
+  description String?
+  
+  // Canvas dimensions (in pixels)
+  canvasWidth  Int @default(1200)
+  canvasHeight Int @default(900)
+  
+  // Metadata
+  totalCapacity Int @default(0) // Auto-calculated from items
+  isActive      Boolean @default(true)
+  isDefault     Boolean @default(false) // One default layout per church
+  
+  // Relations
+  church Church @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  items  SeatingItem[]
+  
+  createdById String
+  createdBy   User   @relation("SeatingLayoutCreatedBy", fields: [createdById], references: [id])
+  updatedById String?
+  updatedBy   User?  @relation("SeatingLayoutUpdatedBy", fields: [updatedById], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([churchId, name])
+  @@index([churchId])
+  @@index([isActive])
+  @@index([isDefault])
+}
+
+model SeatingItem {
+  id       String @id @default(cuid())
+  layoutId String
+  
+  // Furniture details
+  type     FurnitureType
+  label    String? // Optional custom label (e.g., "VIP Section", "Row A")
+  
+  // Position and orientation (in pixels)
+  x        Float // X coordinate on canvas
+  y        Float // Y coordinate on canvas
+  rotation Int   @default(0) // Rotation in degrees (0, 90, 180, 270)
+  
+  // Dimensions (in pixels, varies by type)
+  width  Int
+  height Int
+  
+  // Seating capacity
+  capacity Int @default(0) // Number of seats (0 for non-seating items)
+  
+  // Visual styling
+  color    String? // Optional custom color (hex)
+  metadata Json?   // Additional properties (icons, custom fields)
+  
+  // Relations
+  layout SeatingLayout @relation(fields: [layoutId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([layoutId])
+  @@index([type])
+}
+
+model SeatingTemplate {
+  id          String @id @default(cuid())
+  name        String // e.g., "Theater Style", "Circular Seating", "Banquet Setup"
+  description String?
+  category    String // e.g., "WORSHIP", "CONFERENCE", "SOCIAL", "CUSTOM"
+  
+  // Template layout data (JSON array of SeatingItem-like objects)
+  templateData Json // Stores items configuration for quick application
+  
+  // Metadata
+  totalCapacity Int      @default(0)
+  isPublic      Boolean  @default(false) // Available to all churches
+  churchId      String? // Null for public templates
+  
+  // Relations
+  church Church? @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([churchId])
   @@index([category])
   @@index([isPublic])
 }

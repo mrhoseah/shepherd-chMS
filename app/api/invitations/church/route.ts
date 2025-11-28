@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { sendInvitationEmail } from "@/lib/invitation-email";
+import { sendEmail } from "@/lib/email";
 import crypto from "crypto";
 
 // GET - Fetch church invitations
@@ -13,29 +13,20 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Get user's campus and church
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { role: true, campusId: true, campus: { select: { churchId: true } } },
+      select: { campusId: true, campus: { select: { churchId: true } } },
     });
 
-    // Must be ADMIN or higher
-    if (!["ADMIN", "SUPERADMIN"].includes(user?.role || "")) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
-
-    // Get church ID from user's campus
-    const churchId = user?.campus?.churchId;
-    if (!churchId && user?.role !== "SUPERADMIN") {
-      return NextResponse.json(
-        { error: "User not associated with a church" },
-        { status: 400 }
-      );
+    if (!user?.campus?.churchId) {
+      return NextResponse.json({ error: "No church found" }, { status: 404 });
     }
 
     const invitations = await prisma.invitation.findMany({
       where: {
-        invitationType: "church",
-        churchId: churchId,
+        churchId: user.campus.churchId,
+        invitationType: "CHURCH_ADMIN",
       },
       include: {
         invitedBy: {
@@ -58,7 +49,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST - Create church invitation
+// POST - Send invitation
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -66,22 +57,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Check if user is ADMIN
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { 
-        role: true, 
-        campusId: true, 
-        campus: { 
-          select: { churchId: true, church: { select: { name: true } } } 
-        },
+      select: {
+        role: true,
+        campusId: true,
+        campus: { select: { churchId: true, church: { select: { name: true } } } },
         firstName: true,
         lastName: true,
       },
     });
 
-    // Must be ADMIN or higher
-    if (!["ADMIN", "SUPERADMIN"].includes(user?.role || "")) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!user?.campus?.churchId) {
+      return NextResponse.json({ error: "No church found" }, { status: 404 });
+    }
+
+    if (user.role !== "ADMIN" && user.role !== "SUPERADMIN") {
+      return NextResponse.json(
+        { error: "Only admins can send invitations" },
+        { status: 403 }
+      );
     }
 
     const body = await request.json();
@@ -89,31 +85,13 @@ export async function POST(request: NextRequest) {
 
     if (!email || !firstName || !lastName || !role) {
       return NextResponse.json(
-        { error: "Email, first name, last name, and role are required" },
-        { status: 400 }
-      );
-    }
-
-    // Validate role - only allow church roles
-    const allowedRoles = ["ADMIN", "EDITOR", "VIEWER", "PASTOR", "LEADER", "FINANCE", "MEMBER"];
-    if (!allowedRoles.includes(role)) {
-      return NextResponse.json(
-        { error: "Invalid role for church invitation" },
-        { status: 400 }
-      );
-    }
-
-    // Get church ID
-    const churchId = user?.campus?.churchId;
-    if (!churchId && user?.role !== "SUPERADMIN") {
-      return NextResponse.json(
-        { error: "User not associated with a church" },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.user.findFirst({
       where: { email },
     });
 
@@ -124,40 +102,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for existing pending invitation
+    // Check for pending invitation
     const existingInvitation = await prisma.invitation.findFirst({
       where: {
         email,
         status: "PENDING",
-        expiresAt: { gt: new Date() },
+        churchId: user.campus.churchId,
       },
     });
 
     if (existingInvitation) {
       return NextResponse.json(
-        { error: "Active invitation already exists for this email" },
+        { error: "Pending invitation already exists for this email" },
         { status: 400 }
       );
     }
 
-    // Generate unique token
+    // Generate invitation token
     const token = crypto.randomBytes(32).toString("hex");
-
-    // Create invitation (expires in 7 days)
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
+    expiresAt.setDate(expiresAt.getDate() + 7); // 7 days expiry
 
+    // Create invitation
     const invitation = await prisma.invitation.create({
       data: {
         token,
         email,
+        phone,
         firstName,
         lastName,
-        phone,
         role,
-        invitationType: "church",
-        churchId,
-        campusId: user?.campusId,
+        churchId: user.campus.churchId,
+        campusId: user.campusId,
+        invitationType: "CHURCH_ADMIN",
         invitedById: session.user.id,
         message,
         expiresAt,
@@ -165,26 +142,38 @@ export async function POST(request: NextRequest) {
     });
 
     // Send invitation email
-    const inviteUrl = `${process.env.NEXTAUTH_URL || request.headers.get("origin")}/auth/accept-invite/${token}`;
-    
-    try {
-      await sendInvitationEmail(
-        email,
-        {
-          firstName,
-          lastName,
-          role,
-          churchName: user?.campus?.church?.name || "the church",
-          inviterName: `${user?.firstName} ${user?.lastName}`,
-          message,
-          inviteUrl,
-        },
-        churchId
-      );
-    } catch (emailError) {
-      console.error("Error sending invitation email:", emailError);
-      // Don't fail the invitation creation if email fails
-    }
+    const inviteUrl = `${process.env.NEXTAUTH_URL}/auth/accept-invitation/${token}`;
+    await sendEmail({
+      to: email,
+      subject: `Invitation to join ${user.campus.church.name}`,
+      html: `
+        <h2>You've been invited!</h2>
+        <p>Hi ${firstName},</p>
+        <p>${user.firstName} ${user.lastName} has invited you to join ${user.campus.church.name} as a <strong>${role}</strong>.</p>
+        ${message ? `<p><em>"${message}"</em></p>` : ""}
+        <p>Click the link below to accept the invitation:</p>
+        <a href="${inviteUrl}" style="display: inline-block; padding: 12px 24px; background-color: #4F46E5; color: white; text-decoration: none; border-radius: 6px;">Accept Invitation</a>
+        <p>This invitation expires on ${expiresAt.toLocaleDateString()}.</p>
+        <p>If you didn't expect this invitation, you can safely ignore this email.</p>
+      `,
+      churchId: user.campus.churchId,
+    });
+
+    // Log audit
+    await prisma.auditLog.create({
+      data: {
+        userId: session.user.id,
+        userName: `${user.firstName} ${user.lastName}`,
+        action: "INVITE",
+        entity: "Invitation",
+        entityId: invitation.id,
+        entityName: `${firstName} ${lastName} (${email})`,
+        description: `Invited ${firstName} ${lastName} as ${role}`,
+        metadata: { invitation },
+        ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip"),
+        userAgent: request.headers.get("user-agent"),
+      },
+    });
 
     return NextResponse.json(invitation, { status: 201 });
   } catch (error: any) {

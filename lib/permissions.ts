@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
 import { canUserLogin, checkPermission } from "./casbin";
+import { getEffectiveChurchId } from "./admin-church-context";
 
 // Middleware to check if user can access dashboard
 export async function requireLogin() {
@@ -21,6 +22,8 @@ export async function requireLogin() {
     });
 
     const userId = (session.user as any).id;
+    const userRole = (session.user as any).role;
+    
     if (!userId) {
       console.error("❌ requireLogin: User ID not found in session");
       console.error("   Session user object:", session.user);
@@ -39,8 +42,17 @@ export async function requireLogin() {
       };
     }
 
+    // Get effective church ID (includes admin context if set)
+    const effectiveChurchId = await getEffectiveChurchId(userId, userRole);
+
     console.log("✅ requireLogin: User authorized");
-    return { authorized: true, userId, session };
+    return { 
+      authorized: true, 
+      userId, 
+      session,
+      churchId: effectiveChurchId,
+      userRole,
+    };
   } catch (error: any) {
     console.error("❌ requireLogin: Error checking login:", error);
     console.error("   Error message:", error.message);

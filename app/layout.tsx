@@ -7,6 +7,7 @@ import { getAppNameFromDB } from "@/lib/app-config-server";
 import { getChurchPWAConfig } from "@/lib/church-pwa";
 import { ServiceWorkerRegistration } from "./sw-register";
 import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
+import { ErrorSuppression } from "./error-suppression";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,6 +69,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ErrorSuppression />
         <ServiceWorkerRegistration />
         <PWAInstallPrompt />
         <Providers>{children}</Providers>

@@ -29,7 +29,8 @@ export type RolePermissionMinAggregateOutputType = {
   role: $Enums.UserRole | null
   resource: string | null
   action: string | null
-  scope: string | null
+  allowed: boolean | null
+  churchId: string | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -40,7 +41,8 @@ export type RolePermissionMaxAggregateOutputType = {
   role: $Enums.UserRole | null
   resource: string | null
   action: string | null
-  scope: string | null
+  allowed: boolean | null
+  churchId: string | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -51,7 +53,8 @@ export type RolePermissionCountAggregateOutputType = {
   role: number
   resource: number
   action: number
-  scope: number
+  allowed: number
+  churchId: number
   description: number
   createdAt: number
   updatedAt: number
@@ -64,7 +67,8 @@ export type RolePermissionMinAggregateInputType = {
   role?: true
   resource?: true
   action?: true
-  scope?: true
+  allowed?: true
+  churchId?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -75,7 +79,8 @@ export type RolePermissionMaxAggregateInputType = {
   role?: true
   resource?: true
   action?: true
-  scope?: true
+  allowed?: true
+  churchId?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -86,7 +91,8 @@ export type RolePermissionCountAggregateInputType = {
   role?: true
   resource?: true
   action?: true
-  scope?: true
+  allowed?: true
+  churchId?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -170,7 +176,8 @@ export type RolePermissionGroupByOutputType = {
   role: $Enums.UserRole
   resource: string
   action: string
-  scope: string
+  allowed: boolean
+  churchId: string | null
   description: string | null
   createdAt: Date
   updatedAt: Date
@@ -202,7 +209,8 @@ export type RolePermissionWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"RolePermission"> | $Enums.UserRole
   resource?: Prisma.StringFilter<"RolePermission"> | string
   action?: Prisma.StringFilter<"RolePermission"> | string
-  scope?: Prisma.StringFilter<"RolePermission"> | string
+  allowed?: Prisma.BoolFilter<"RolePermission"> | boolean
+  churchId?: Prisma.StringNullableFilter<"RolePermission"> | string | null
   description?: Prisma.StringNullableFilter<"RolePermission"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RolePermission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RolePermission"> | Date | string
@@ -213,7 +221,8 @@ export type RolePermissionOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   resource?: Prisma.SortOrder
   action?: Prisma.SortOrder
-  scope?: Prisma.SortOrder
+  allowed?: Prisma.SortOrder
+  churchId?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -221,25 +230,27 @@ export type RolePermissionOrderByWithRelationInput = {
 
 export type RolePermissionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  role_resource_action_scope?: Prisma.RolePermissionRoleResourceActionScopeCompoundUniqueInput
+  role_resource_action_churchId?: Prisma.RolePermissionRoleResourceActionChurchIdCompoundUniqueInput
   AND?: Prisma.RolePermissionWhereInput | Prisma.RolePermissionWhereInput[]
   OR?: Prisma.RolePermissionWhereInput[]
   NOT?: Prisma.RolePermissionWhereInput | Prisma.RolePermissionWhereInput[]
   role?: Prisma.EnumUserRoleFilter<"RolePermission"> | $Enums.UserRole
   resource?: Prisma.StringFilter<"RolePermission"> | string
   action?: Prisma.StringFilter<"RolePermission"> | string
-  scope?: Prisma.StringFilter<"RolePermission"> | string
+  allowed?: Prisma.BoolFilter<"RolePermission"> | boolean
+  churchId?: Prisma.StringNullableFilter<"RolePermission"> | string | null
   description?: Prisma.StringNullableFilter<"RolePermission"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RolePermission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RolePermission"> | Date | string
-}, "id" | "role_resource_action_scope">
+}, "id" | "role_resource_action_churchId">
 
 export type RolePermissionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   resource?: Prisma.SortOrder
   action?: Prisma.SortOrder
-  scope?: Prisma.SortOrder
+  allowed?: Prisma.SortOrder
+  churchId?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -256,7 +267,8 @@ export type RolePermissionScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"RolePermission"> | $Enums.UserRole
   resource?: Prisma.StringWithAggregatesFilter<"RolePermission"> | string
   action?: Prisma.StringWithAggregatesFilter<"RolePermission"> | string
-  scope?: Prisma.StringWithAggregatesFilter<"RolePermission"> | string
+  allowed?: Prisma.BoolWithAggregatesFilter<"RolePermission"> | boolean
+  churchId?: Prisma.StringNullableWithAggregatesFilter<"RolePermission"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"RolePermission"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RolePermission"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"RolePermission"> | Date | string
@@ -267,7 +279,8 @@ export type RolePermissionCreateInput = {
   role: $Enums.UserRole
   resource: string
   action: string
-  scope?: string
+  allowed?: boolean
+  churchId?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -278,7 +291,8 @@ export type RolePermissionUncheckedCreateInput = {
   role: $Enums.UserRole
   resource: string
   action: string
-  scope?: string
+  allowed?: boolean
+  churchId?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -289,7 +303,8 @@ export type RolePermissionUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   resource?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
-  scope?: Prisma.StringFieldUpdateOperationsInput | string
+  allowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  churchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -300,7 +315,8 @@ export type RolePermissionUncheckedUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   resource?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
-  scope?: Prisma.StringFieldUpdateOperationsInput | string
+  allowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  churchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -311,7 +327,8 @@ export type RolePermissionCreateManyInput = {
   role: $Enums.UserRole
   resource: string
   action: string
-  scope?: string
+  allowed?: boolean
+  churchId?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -322,7 +339,8 @@ export type RolePermissionUpdateManyMutationInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   resource?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
-  scope?: Prisma.StringFieldUpdateOperationsInput | string
+  allowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  churchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -333,17 +351,18 @@ export type RolePermissionUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   resource?: Prisma.StringFieldUpdateOperationsInput | string
   action?: Prisma.StringFieldUpdateOperationsInput | string
-  scope?: Prisma.StringFieldUpdateOperationsInput | string
+  allowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  churchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type RolePermissionRoleResourceActionScopeCompoundUniqueInput = {
+export type RolePermissionRoleResourceActionChurchIdCompoundUniqueInput = {
   role: $Enums.UserRole
   resource: string
   action: string
-  scope: string
+  churchId: string
 }
 
 export type RolePermissionCountOrderByAggregateInput = {
@@ -351,7 +370,8 @@ export type RolePermissionCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   resource?: Prisma.SortOrder
   action?: Prisma.SortOrder
-  scope?: Prisma.SortOrder
+  allowed?: Prisma.SortOrder
+  churchId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -362,7 +382,8 @@ export type RolePermissionMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   resource?: Prisma.SortOrder
   action?: Prisma.SortOrder
-  scope?: Prisma.SortOrder
+  allowed?: Prisma.SortOrder
+  churchId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -373,7 +394,8 @@ export type RolePermissionMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   resource?: Prisma.SortOrder
   action?: Prisma.SortOrder
-  scope?: Prisma.SortOrder
+  allowed?: Prisma.SortOrder
+  churchId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -386,7 +408,8 @@ export type RolePermissionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   role?: boolean
   resource?: boolean
   action?: boolean
-  scope?: boolean
+  allowed?: boolean
+  churchId?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -397,7 +420,8 @@ export type RolePermissionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   role?: boolean
   resource?: boolean
   action?: boolean
-  scope?: boolean
+  allowed?: boolean
+  churchId?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -408,7 +432,8 @@ export type RolePermissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   role?: boolean
   resource?: boolean
   action?: boolean
-  scope?: boolean
+  allowed?: boolean
+  churchId?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -419,13 +444,14 @@ export type RolePermissionSelectScalar = {
   role?: boolean
   resource?: boolean
   action?: boolean
-  scope?: boolean
+  allowed?: boolean
+  churchId?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RolePermissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "role" | "resource" | "action" | "scope" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["rolePermission"]>
+export type RolePermissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "role" | "resource" | "action" | "allowed" | "churchId" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["rolePermission"]>
 
 export type $RolePermissionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RolePermission"
@@ -435,7 +461,8 @@ export type $RolePermissionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     role: $Enums.UserRole
     resource: string
     action: string
-    scope: string
+    allowed: boolean
+    churchId: string | null
     description: string | null
     createdAt: Date
     updatedAt: Date
@@ -866,7 +893,8 @@ export interface RolePermissionFieldRefs {
   readonly role: Prisma.FieldRef<"RolePermission", 'UserRole'>
   readonly resource: Prisma.FieldRef<"RolePermission", 'String'>
   readonly action: Prisma.FieldRef<"RolePermission", 'String'>
-  readonly scope: Prisma.FieldRef<"RolePermission", 'String'>
+  readonly allowed: Prisma.FieldRef<"RolePermission", 'Boolean'>
+  readonly churchId: Prisma.FieldRef<"RolePermission", 'String'>
   readonly description: Prisma.FieldRef<"RolePermission", 'String'>
   readonly createdAt: Prisma.FieldRef<"RolePermission", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"RolePermission", 'DateTime'>

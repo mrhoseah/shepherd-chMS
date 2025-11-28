@@ -13,6 +13,9 @@ declare module "next-auth" {
     accessToken?: string;
     idToken?: string;
     refreshToken?: string;
+    // System admin church context
+    adminChurchId?: string | null;
+    adminChurchName?: string | null;
   }
 
   interface User {
@@ -37,6 +40,9 @@ declare module "next-auth/jwt" {
     accessToken?: string;
     idToken?: string;
     refreshToken?: string;
+    // System admin church context
+    adminChurchId?: string | null;
+    adminChurchName?: string | null;
   }
 }
 

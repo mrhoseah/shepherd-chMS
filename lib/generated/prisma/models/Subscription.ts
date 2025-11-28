@@ -28,26 +28,41 @@ export type AggregateSubscription = {
 
 export type SubscriptionAvgAggregateOutputType = {
   amount: runtime.Decimal | null
+  maxMembers: number | null
+  maxAdmins: number | null
+  maxCampuses: number | null
+  maxStorage: number | null
 }
 
 export type SubscriptionSumAggregateOutputType = {
   amount: runtime.Decimal | null
+  maxMembers: number | null
+  maxAdmins: number | null
+  maxCampuses: number | null
+  maxStorage: number | null
 }
 
 export type SubscriptionMinAggregateOutputType = {
   id: string | null
   churchId: string | null
   plan: $Enums.SubscriptionPlan | null
-  status: string | null
+  status: $Enums.SubscriptionStatus | null
   billingCycle: string | null
   amount: runtime.Decimal | null
   currency: string | null
+  maxMembers: number | null
+  maxAdmins: number | null
+  maxCampuses: number | null
+  maxStorage: number | null
   startDate: Date | null
   endDate: Date | null
   trialEndDate: Date | null
   cancelledAt: Date | null
+  nextBillingDate: Date | null
   stripeCustomerId: string | null
   stripeSubscriptionId: string | null
+  paymentMethod: string | null
+  notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,16 +71,23 @@ export type SubscriptionMaxAggregateOutputType = {
   id: string | null
   churchId: string | null
   plan: $Enums.SubscriptionPlan | null
-  status: string | null
+  status: $Enums.SubscriptionStatus | null
   billingCycle: string | null
   amount: runtime.Decimal | null
   currency: string | null
+  maxMembers: number | null
+  maxAdmins: number | null
+  maxCampuses: number | null
+  maxStorage: number | null
   startDate: Date | null
   endDate: Date | null
   trialEndDate: Date | null
   cancelledAt: Date | null
+  nextBillingDate: Date | null
   stripeCustomerId: string | null
   stripeSubscriptionId: string | null
+  paymentMethod: string | null
+  notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -79,12 +101,20 @@ export type SubscriptionCountAggregateOutputType = {
   billingCycle: number
   amount: number
   currency: number
+  maxMembers: number
+  maxAdmins: number
+  maxCampuses: number
+  maxStorage: number
   startDate: number
   endDate: number
   trialEndDate: number
   cancelledAt: number
+  nextBillingDate: number
   stripeCustomerId: number
   stripeSubscriptionId: number
+  paymentMethod: number
+  notes: number
+  metadata: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,10 +123,18 @@ export type SubscriptionCountAggregateOutputType = {
 
 export type SubscriptionAvgAggregateInputType = {
   amount?: true
+  maxMembers?: true
+  maxAdmins?: true
+  maxCampuses?: true
+  maxStorage?: true
 }
 
 export type SubscriptionSumAggregateInputType = {
   amount?: true
+  maxMembers?: true
+  maxAdmins?: true
+  maxCampuses?: true
+  maxStorage?: true
 }
 
 export type SubscriptionMinAggregateInputType = {
@@ -107,12 +145,19 @@ export type SubscriptionMinAggregateInputType = {
   billingCycle?: true
   amount?: true
   currency?: true
+  maxMembers?: true
+  maxAdmins?: true
+  maxCampuses?: true
+  maxStorage?: true
   startDate?: true
   endDate?: true
   trialEndDate?: true
   cancelledAt?: true
+  nextBillingDate?: true
   stripeCustomerId?: true
   stripeSubscriptionId?: true
+  paymentMethod?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -125,12 +170,19 @@ export type SubscriptionMaxAggregateInputType = {
   billingCycle?: true
   amount?: true
   currency?: true
+  maxMembers?: true
+  maxAdmins?: true
+  maxCampuses?: true
+  maxStorage?: true
   startDate?: true
   endDate?: true
   trialEndDate?: true
   cancelledAt?: true
+  nextBillingDate?: true
   stripeCustomerId?: true
   stripeSubscriptionId?: true
+  paymentMethod?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -144,12 +196,20 @@ export type SubscriptionCountAggregateInputType = {
   billingCycle?: true
   amount?: true
   currency?: true
+  maxMembers?: true
+  maxAdmins?: true
+  maxCampuses?: true
+  maxStorage?: true
   startDate?: true
   endDate?: true
   trialEndDate?: true
   cancelledAt?: true
+  nextBillingDate?: true
   stripeCustomerId?: true
   stripeSubscriptionId?: true
+  paymentMethod?: true
+  notes?: true
+  metadata?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -246,16 +306,24 @@ export type SubscriptionGroupByOutputType = {
   churchId: string
   plan: $Enums.SubscriptionPlan
   features: $Enums.PremiumFeature[]
-  status: string
+  status: $Enums.SubscriptionStatus
   billingCycle: string | null
   amount: runtime.Decimal | null
   currency: string
+  maxMembers: number | null
+  maxAdmins: number | null
+  maxCampuses: number | null
+  maxStorage: number | null
   startDate: Date
   endDate: Date | null
   trialEndDate: Date | null
   cancelledAt: Date | null
+  nextBillingDate: Date | null
   stripeCustomerId: string | null
   stripeSubscriptionId: string | null
+  paymentMethod: string | null
+  notes: string | null
+  metadata: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
   _count: SubscriptionCountAggregateOutputType | null
@@ -288,16 +356,24 @@ export type SubscriptionWhereInput = {
   churchId?: Prisma.StringFilter<"Subscription"> | string
   plan?: Prisma.EnumSubscriptionPlanFilter<"Subscription"> | $Enums.SubscriptionPlan
   features?: Prisma.EnumPremiumFeatureNullableListFilter<"Subscription">
-  status?: Prisma.StringFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
   billingCycle?: Prisma.StringNullableFilter<"Subscription"> | string | null
   amount?: Prisma.DecimalNullableFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFilter<"Subscription"> | string
+  maxMembers?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  maxAdmins?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  maxCampuses?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  maxStorage?: Prisma.IntNullableFilter<"Subscription"> | number | null
   startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   trialEndDate?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
+  nextBillingDate?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   stripeCustomerId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  paymentMethod?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  notes?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"Subscription">
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   church?: Prisma.XOR<Prisma.ChurchScalarRelationFilter, Prisma.ChurchWhereInput>
@@ -312,12 +388,20 @@ export type SubscriptionOrderByWithRelationInput = {
   billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxStorage?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   trialEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextBillingDate?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   church?: Prisma.ChurchOrderByWithRelationInput
@@ -331,16 +415,24 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   plan?: Prisma.EnumSubscriptionPlanFilter<"Subscription"> | $Enums.SubscriptionPlan
   features?: Prisma.EnumPremiumFeatureNullableListFilter<"Subscription">
-  status?: Prisma.StringFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
   billingCycle?: Prisma.StringNullableFilter<"Subscription"> | string | null
   amount?: Prisma.DecimalNullableFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFilter<"Subscription"> | string
+  maxMembers?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  maxAdmins?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  maxCampuses?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  maxStorage?: Prisma.IntNullableFilter<"Subscription"> | number | null
   startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   trialEndDate?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
+  nextBillingDate?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   stripeCustomerId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  paymentMethod?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  notes?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"Subscription">
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   church?: Prisma.XOR<Prisma.ChurchScalarRelationFilter, Prisma.ChurchWhereInput>
@@ -355,12 +447,20 @@ export type SubscriptionOrderByWithAggregationInput = {
   billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxStorage?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   trialEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextBillingDate?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscriptionCountOrderByAggregateInput
@@ -378,16 +478,24 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   churchId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   plan?: Prisma.EnumSubscriptionPlanWithAggregatesFilter<"Subscription"> | $Enums.SubscriptionPlan
   features?: Prisma.EnumPremiumFeatureNullableListFilter<"Subscription">
-  status?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
+  status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"Subscription"> | $Enums.SubscriptionStatus
   billingCycle?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   amount?: Prisma.DecimalNullableWithAggregatesFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
+  maxMembers?: Prisma.IntNullableWithAggregatesFilter<"Subscription"> | number | null
+  maxAdmins?: Prisma.IntNullableWithAggregatesFilter<"Subscription"> | number | null
+  maxCampuses?: Prisma.IntNullableWithAggregatesFilter<"Subscription"> | number | null
+  maxStorage?: Prisma.IntNullableWithAggregatesFilter<"Subscription"> | number | null
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
   trialEndDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
+  nextBillingDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
   stripeCustomerId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   stripeSubscriptionId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
+  paymentMethod?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
+  metadata?: Prisma.JsonNullableWithAggregatesFilter<"Subscription">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
 }
@@ -396,16 +504,24 @@ export type SubscriptionCreateInput = {
   id?: string
   plan?: $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionCreatefeaturesInput | $Enums.PremiumFeature[]
-  status?: string
+  status?: $Enums.SubscriptionStatus
   billingCycle?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: string
+  maxMembers?: number | null
+  maxAdmins?: number | null
+  maxCampuses?: number | null
+  maxStorage?: number | null
   startDate?: Date | string
   endDate?: Date | string | null
   trialEndDate?: Date | string | null
   cancelledAt?: Date | string | null
+  nextBillingDate?: Date | string | null
   stripeCustomerId?: string | null
   stripeSubscriptionId?: string | null
+  paymentMethod?: string | null
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   church: Prisma.ChurchCreateNestedOneWithoutSubscriptionInput
@@ -416,16 +532,24 @@ export type SubscriptionUncheckedCreateInput = {
   churchId: string
   plan?: $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionCreatefeaturesInput | $Enums.PremiumFeature[]
-  status?: string
+  status?: $Enums.SubscriptionStatus
   billingCycle?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: string
+  maxMembers?: number | null
+  maxAdmins?: number | null
+  maxCampuses?: number | null
+  maxStorage?: number | null
   startDate?: Date | string
   endDate?: Date | string | null
   trialEndDate?: Date | string | null
   cancelledAt?: Date | string | null
+  nextBillingDate?: Date | string | null
   stripeCustomerId?: string | null
   stripeSubscriptionId?: string | null
+  paymentMethod?: string | null
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -434,16 +558,24 @@ export type SubscriptionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionUpdatefeaturesInput | $Enums.PremiumFeature[]
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   billingCycle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxAdmins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCampuses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStorage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextBillingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   church?: Prisma.ChurchUpdateOneRequiredWithoutSubscriptionNestedInput
@@ -454,16 +586,24 @@ export type SubscriptionUncheckedUpdateInput = {
   churchId?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionUpdatefeaturesInput | $Enums.PremiumFeature[]
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   billingCycle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxAdmins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCampuses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStorage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextBillingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -473,16 +613,24 @@ export type SubscriptionCreateManyInput = {
   churchId: string
   plan?: $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionCreatefeaturesInput | $Enums.PremiumFeature[]
-  status?: string
+  status?: $Enums.SubscriptionStatus
   billingCycle?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: string
+  maxMembers?: number | null
+  maxAdmins?: number | null
+  maxCampuses?: number | null
+  maxStorage?: number | null
   startDate?: Date | string
   endDate?: Date | string | null
   trialEndDate?: Date | string | null
   cancelledAt?: Date | string | null
+  nextBillingDate?: Date | string | null
   stripeCustomerId?: string | null
   stripeSubscriptionId?: string | null
+  paymentMethod?: string | null
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -491,16 +639,24 @@ export type SubscriptionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionUpdatefeaturesInput | $Enums.PremiumFeature[]
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   billingCycle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxAdmins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCampuses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStorage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextBillingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -510,16 +666,24 @@ export type SubscriptionUncheckedUpdateManyInput = {
   churchId?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionUpdatefeaturesInput | $Enums.PremiumFeature[]
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   billingCycle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxAdmins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCampuses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStorage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextBillingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -546,18 +710,30 @@ export type SubscriptionCountOrderByAggregateInput = {
   billingCycle?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrder
+  maxStorage?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   trialEndDate?: Prisma.SortOrder
   cancelledAt?: Prisma.SortOrder
+  nextBillingDate?: Prisma.SortOrder
   stripeCustomerId?: Prisma.SortOrder
   stripeSubscriptionId?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  metadata?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SubscriptionAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrder
+  maxStorage?: Prisma.SortOrder
 }
 
 export type SubscriptionMaxOrderByAggregateInput = {
@@ -568,12 +744,19 @@ export type SubscriptionMaxOrderByAggregateInput = {
   billingCycle?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrder
+  maxStorage?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   trialEndDate?: Prisma.SortOrder
   cancelledAt?: Prisma.SortOrder
+  nextBillingDate?: Prisma.SortOrder
   stripeCustomerId?: Prisma.SortOrder
   stripeSubscriptionId?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -586,18 +769,29 @@ export type SubscriptionMinOrderByAggregateInput = {
   billingCycle?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrder
+  maxStorage?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   trialEndDate?: Prisma.SortOrder
   cancelledAt?: Prisma.SortOrder
+  nextBillingDate?: Prisma.SortOrder
   stripeCustomerId?: Prisma.SortOrder
   stripeSubscriptionId?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SubscriptionSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+  maxMembers?: Prisma.SortOrder
+  maxAdmins?: Prisma.SortOrder
+  maxCampuses?: Prisma.SortOrder
+  maxStorage?: Prisma.SortOrder
 }
 
 export type SubscriptionCreateNestedOneWithoutChurchInput = {
@@ -645,20 +839,32 @@ export type SubscriptionUpdatefeaturesInput = {
   push?: $Enums.PremiumFeature | $Enums.PremiumFeature[]
 }
 
+export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.SubscriptionStatus
+}
+
 export type SubscriptionCreateWithoutChurchInput = {
   id?: string
   plan?: $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionCreatefeaturesInput | $Enums.PremiumFeature[]
-  status?: string
+  status?: $Enums.SubscriptionStatus
   billingCycle?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: string
+  maxMembers?: number | null
+  maxAdmins?: number | null
+  maxCampuses?: number | null
+  maxStorage?: number | null
   startDate?: Date | string
   endDate?: Date | string | null
   trialEndDate?: Date | string | null
   cancelledAt?: Date | string | null
+  nextBillingDate?: Date | string | null
   stripeCustomerId?: string | null
   stripeSubscriptionId?: string | null
+  paymentMethod?: string | null
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -667,16 +873,24 @@ export type SubscriptionUncheckedCreateWithoutChurchInput = {
   id?: string
   plan?: $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionCreatefeaturesInput | $Enums.PremiumFeature[]
-  status?: string
+  status?: $Enums.SubscriptionStatus
   billingCycle?: string | null
   amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: string
+  maxMembers?: number | null
+  maxAdmins?: number | null
+  maxCampuses?: number | null
+  maxStorage?: number | null
   startDate?: Date | string
   endDate?: Date | string | null
   trialEndDate?: Date | string | null
   cancelledAt?: Date | string | null
+  nextBillingDate?: Date | string | null
   stripeCustomerId?: string | null
   stripeSubscriptionId?: string | null
+  paymentMethod?: string | null
+  notes?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -701,16 +915,24 @@ export type SubscriptionUpdateWithoutChurchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionUpdatefeaturesInput | $Enums.PremiumFeature[]
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   billingCycle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxAdmins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCampuses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStorage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextBillingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -719,16 +941,24 @@ export type SubscriptionUncheckedUpdateWithoutChurchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   plan?: Prisma.EnumSubscriptionPlanFieldUpdateOperationsInput | $Enums.SubscriptionPlan
   features?: Prisma.SubscriptionUpdatefeaturesInput | $Enums.PremiumFeature[]
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   billingCycle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxAdmins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCampuses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStorage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   trialEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextBillingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -744,12 +974,20 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   billingCycle?: boolean
   amount?: boolean
   currency?: boolean
+  maxMembers?: boolean
+  maxAdmins?: boolean
+  maxCampuses?: boolean
+  maxStorage?: boolean
   startDate?: boolean
   endDate?: boolean
   trialEndDate?: boolean
   cancelledAt?: boolean
+  nextBillingDate?: boolean
   stripeCustomerId?: boolean
   stripeSubscriptionId?: boolean
+  paymentMethod?: boolean
+  notes?: boolean
+  metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   church?: boolean | Prisma.ChurchDefaultArgs<ExtArgs>
@@ -764,12 +1002,20 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   billingCycle?: boolean
   amount?: boolean
   currency?: boolean
+  maxMembers?: boolean
+  maxAdmins?: boolean
+  maxCampuses?: boolean
+  maxStorage?: boolean
   startDate?: boolean
   endDate?: boolean
   trialEndDate?: boolean
   cancelledAt?: boolean
+  nextBillingDate?: boolean
   stripeCustomerId?: boolean
   stripeSubscriptionId?: boolean
+  paymentMethod?: boolean
+  notes?: boolean
+  metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   church?: boolean | Prisma.ChurchDefaultArgs<ExtArgs>
@@ -784,12 +1030,20 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   billingCycle?: boolean
   amount?: boolean
   currency?: boolean
+  maxMembers?: boolean
+  maxAdmins?: boolean
+  maxCampuses?: boolean
+  maxStorage?: boolean
   startDate?: boolean
   endDate?: boolean
   trialEndDate?: boolean
   cancelledAt?: boolean
+  nextBillingDate?: boolean
   stripeCustomerId?: boolean
   stripeSubscriptionId?: boolean
+  paymentMethod?: boolean
+  notes?: boolean
+  metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   church?: boolean | Prisma.ChurchDefaultArgs<ExtArgs>
@@ -804,17 +1058,25 @@ export type SubscriptionSelectScalar = {
   billingCycle?: boolean
   amount?: boolean
   currency?: boolean
+  maxMembers?: boolean
+  maxAdmins?: boolean
+  maxCampuses?: boolean
+  maxStorage?: boolean
   startDate?: boolean
   endDate?: boolean
   trialEndDate?: boolean
   cancelledAt?: boolean
+  nextBillingDate?: boolean
   stripeCustomerId?: boolean
   stripeSubscriptionId?: boolean
+  paymentMethod?: boolean
+  notes?: boolean
+  metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "churchId" | "plan" | "features" | "status" | "billingCycle" | "amount" | "currency" | "startDate" | "endDate" | "trialEndDate" | "cancelledAt" | "stripeCustomerId" | "stripeSubscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "churchId" | "plan" | "features" | "status" | "billingCycle" | "amount" | "currency" | "maxMembers" | "maxAdmins" | "maxCampuses" | "maxStorage" | "startDate" | "endDate" | "trialEndDate" | "cancelledAt" | "nextBillingDate" | "stripeCustomerId" | "stripeSubscriptionId" | "paymentMethod" | "notes" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   church?: boolean | Prisma.ChurchDefaultArgs<ExtArgs>
 }
@@ -835,16 +1097,24 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     churchId: string
     plan: $Enums.SubscriptionPlan
     features: $Enums.PremiumFeature[]
-    status: string
+    status: $Enums.SubscriptionStatus
     billingCycle: string | null
     amount: runtime.Decimal | null
     currency: string
+    maxMembers: number | null
+    maxAdmins: number | null
+    maxCampuses: number | null
+    maxStorage: number | null
     startDate: Date
     endDate: Date | null
     trialEndDate: Date | null
     cancelledAt: Date | null
+    nextBillingDate: Date | null
     stripeCustomerId: string | null
     stripeSubscriptionId: string | null
+    paymentMethod: string | null
+    notes: string | null
+    metadata: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["subscription"]>
@@ -1275,16 +1545,24 @@ export interface SubscriptionFieldRefs {
   readonly churchId: Prisma.FieldRef<"Subscription", 'String'>
   readonly plan: Prisma.FieldRef<"Subscription", 'SubscriptionPlan'>
   readonly features: Prisma.FieldRef<"Subscription", 'PremiumFeature[]'>
-  readonly status: Prisma.FieldRef<"Subscription", 'String'>
+  readonly status: Prisma.FieldRef<"Subscription", 'SubscriptionStatus'>
   readonly billingCycle: Prisma.FieldRef<"Subscription", 'String'>
   readonly amount: Prisma.FieldRef<"Subscription", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Subscription", 'String'>
+  readonly maxMembers: Prisma.FieldRef<"Subscription", 'Int'>
+  readonly maxAdmins: Prisma.FieldRef<"Subscription", 'Int'>
+  readonly maxCampuses: Prisma.FieldRef<"Subscription", 'Int'>
+  readonly maxStorage: Prisma.FieldRef<"Subscription", 'Int'>
   readonly startDate: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly trialEndDate: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly cancelledAt: Prisma.FieldRef<"Subscription", 'DateTime'>
+  readonly nextBillingDate: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly stripeCustomerId: Prisma.FieldRef<"Subscription", 'String'>
   readonly stripeSubscriptionId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly paymentMethod: Prisma.FieldRef<"Subscription", 'String'>
+  readonly notes: Prisma.FieldRef<"Subscription", 'String'>
+  readonly metadata: Prisma.FieldRef<"Subscription", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscription", 'DateTime'>
 }

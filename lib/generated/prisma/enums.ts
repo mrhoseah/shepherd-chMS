@@ -201,6 +201,15 @@ export const LeaveStatus = {
 export type LeaveStatus = (typeof LeaveStatus)[keyof typeof LeaveStatus]
 
 
+export const InvitationType = {
+  CHURCH_MEMBER: 'CHURCH_MEMBER',
+  CHURCH_ADMIN: 'CHURCH_ADMIN',
+  SYSTEM_ADMIN: 'SYSTEM_ADMIN'
+} as const
+
+export type InvitationType = (typeof InvitationType)[keyof typeof InvitationType]
+
+
 export const InvitationStatus = {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',
@@ -320,6 +329,26 @@ export const MeetingStatus = {
 } as const
 
 export type MeetingStatus = (typeof MeetingStatus)[keyof typeof MeetingStatus]
+
+
+export const NoteVisibility = {
+  PARENT_ONLY: 'PARENT_ONLY',
+  STAFF_ONLY: 'STAFF_ONLY',
+  PARENT_AND_STAFF: 'PARENT_AND_STAFF',
+  PASTORAL_CONFIDENTIAL: 'PASTORAL_CONFIDENTIAL'
+} as const
+
+export type NoteVisibility = (typeof NoteVisibility)[keyof typeof NoteVisibility]
+
+
+export const NotePriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type NotePriority = (typeof NotePriority)[keyof typeof NotePriority]
 
 
 export const InventoryTransactionType = {
@@ -452,10 +481,23 @@ export const PremiumFeature = {
   SMS_MESSAGING: 'SMS_MESSAGING',
   VIDEO_CONFERENCING: 'VIDEO_CONFERENCING',
   ADVANCED_SCHEDULING: 'ADVANCED_SCHEDULING',
-  MEMBER_DIRECTORY_PRO: 'MEMBER_DIRECTORY_PRO'
+  MEMBER_DIRECTORY_PRO: 'MEMBER_DIRECTORY_PRO',
+  AI_SEATING_GENERATOR: 'AI_SEATING_GENERATOR'
 } as const
 
 export type PremiumFeature = (typeof PremiumFeature)[keyof typeof PremiumFeature]
+
+
+export const SubscriptionStatus = {
+  TRIAL: 'TRIAL',
+  ACTIVE: 'ACTIVE',
+  PAST_DUE: 'PAST_DUE',
+  CANCELLED: 'CANCELLED',
+  EXPIRED: 'EXPIRED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
 
 
 export const PrayerRequestStatus = {
@@ -591,6 +633,22 @@ export const SponsorshipStatus = {
 export type SponsorshipStatus = (typeof SponsorshipStatus)[keyof typeof SponsorshipStatus]
 
 
+export const FileCategory = {
+  PROFILE_PHOTO: 'PROFILE_PHOTO',
+  DOCUMENT: 'DOCUMENT',
+  PRESENTATION: 'PRESENTATION',
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  AUDIO: 'AUDIO',
+  ATTACHMENT: 'ATTACHMENT',
+  LOGO: 'LOGO',
+  BANNER: 'BANNER',
+  OTHER: 'OTHER'
+} as const
+
+export type FileCategory = (typeof FileCategory)[keyof typeof FileCategory]
+
+
 export const AuditAction = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
@@ -619,3 +677,23 @@ export const SettingType = {
 } as const
 
 export type SettingType = (typeof SettingType)[keyof typeof SettingType]
+
+
+export const FurnitureType = {
+  PEW: 'PEW',
+  CHAIR: 'CHAIR',
+  CHAIR_GROUP: 'CHAIR_GROUP',
+  ROUND_TABLE: 'ROUND_TABLE',
+  HALF_CIRCLE_TABLE: 'HALF_CIRCLE_TABLE',
+  RECTANGULAR_TABLE: 'RECTANGULAR_TABLE',
+  SQUARE_TABLE: 'SQUARE_TABLE',
+  PULPIT: 'PULPIT',
+  PODIUM: 'PODIUM',
+  SOUND_DESK: 'SOUND_DESK',
+  CAMERA_TRIPOD: 'CAMERA_TRIPOD',
+  STAGE: 'STAGE',
+  ALTAR: 'ALTAR',
+  BAPTISMAL: 'BAPTISMAL'
+} as const
+
+export type FurnitureType = (typeof FurnitureType)[keyof typeof FurnitureType]

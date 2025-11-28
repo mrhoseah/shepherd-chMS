@@ -6,6 +6,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { NotificationsBell } from "@/components/notifications-bell";
 import { SystemAnnouncementsBell } from "@/components/system-announcements-bell";
 import { GlobalSearch } from "@/components/global-search";
+import { ChurchSwitcher } from "@/components/church-switcher";
 
 export function DashboardHeader() {
   return (
@@ -13,6 +14,7 @@ export function DashboardHeader() {
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center gap-4">
           <SidebarTrigger />
+          <ChurchSwitcher />
         </div>
 
         <div className="flex items-center gap-3 flex-1 justify-end">

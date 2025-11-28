@@ -2,192 +2,311 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LandingNav } from "@/components/landing-nav";
 import { getAppNameFromDB } from "@/lib/app-config-server";
+import { prisma } from "@/lib/prisma";
+import { Badge } from "@/components/ui/badge";
 import {
   Users,
   Wallet,
   Calendar,
   HandHeart,
   MessageSquare,
-  Settings,
   ArrowRight,
   CheckCircle2,
   LayoutDashboard,
   Smartphone,
   Play,
   ShieldCheck,
+  Globe2,
+  Star,
+  Check,
+  Sparkles,
   Zap,
-  Globe2
 } from "lucide-react";
 
 export default async function LandingPage() {
   const appName = await getAppNameFromDB();
   
+  // Fetch subscription plans for pricing
+  const plans = await prisma.subscriptionPlanTemplate.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: 'asc' },
+  }).catch(() => []); // Fallback to empty array if DB fails
+  
+  // Structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": appName || "Shepherd ChMS",
+    "description": "All-in-one church management software for modern ministries. Member management, giving, events, presentations, and more.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "KES",
+      "description": "14-day free trial available"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "150"
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100">
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+      
+      <div className="min-h-screen bg-white font-sans selection:bg-blue-100 text-slate-900">
       <LandingNav />
 
-      {/* Modern Hero Section with Dark Gradient */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519681393798-3828fb4090bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80')] opacity-10 bg-cover bg-center mix-blend-overlay" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/80 to-slate-900" />
-        
+      {/* Hero Section - Enhanced with better copy and animations */}
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        {/* Enhanced Animated Background */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+          {/* Additional floating elements */}
+          <div className="absolute top-1/4 right-1/3 w-32 h-32 bg-indigo-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-pulse"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-cyan-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-bounce"></div>
+        </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium text-blue-300 bg-blue-900/30 border border-blue-700/50 mb-8 backdrop-blur-sm">
-            <span className="flex h-2 w-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
-            v2.0 is here: Advanced Presentation Editor
+          {/* Enhanced Badge */}
+          <div className="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-100 mb-8 shadow-sm hover:bg-blue-100 transition-all duration-300 hover:shadow-md cursor-pointer group">
+            <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+            <span className="group-hover:scale-105 transition-transform">✨ New: Advanced Presentation Editor 2.0</span>
+            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-8 leading-tight">
-            The Operating System <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-              for Modern Ministry
+          {/* Improved Headline */}
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1]">
+            Ministry management <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x">
+              reimagined.
             </span>
           </h1>
           
-          <p className="mt-6 text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
-            Manage people, finances, events, and services in one beautiful, integrated platform. 
-            Built for churches that want to focus on <span className="text-white font-medium">people</span>, not paperwork.
+          {/* Enhanced Subheadline */}
+          <p className="mt-6 text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+            The all-in-one operating system for modern churches. 
+            <span className="text-slate-900 font-medium">Streamline operations</span>, 
+            <span className="text-slate-900 font-medium">engage your community</span>, and focus on what matters most—<span className="text-slate-900 font-semibold">people</span>.
           </p>
           
-          <div className="mt-12 flex flex-col sm:flex-row gap-5 justify-center items-center">
+          {/* Enhanced CTA Buttons */}
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/auth/signin">
-              <Button size="lg" className="text-lg px-10 py-7 h-auto rounded-full shadow-2xl shadow-blue-900/20 bg-blue-600 hover:bg-blue-500 transition-all duration-300 hover:scale-105">
-                Get Started for Free
-                <ArrowRight className="ml-2 w-5 h-5" />
+              <Button size="lg" className="text-lg px-8 py-6 h-auto rounded-full shadow-xl shadow-blue-600/20 bg-blue-600 hover:bg-blue-700 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group">
+                <span className="group-hover:scale-105 transition-transform inline-block">Start Free Trial</span>
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link href="#demo">
-              <Button variant="outline" size="lg" className="text-lg px-10 py-7 h-auto rounded-full border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-600 bg-transparent backdrop-blur-sm transition-all duration-300">
-                <Play className="mr-2 w-5 h-5 fill-current" />
-                Watch Demo
+              <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto rounded-full border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-all duration-300 hover:shadow-lg group">
+                <Play className="mr-2 w-5 h-5 fill-slate-700 group-hover:scale-110 transition-transform" />
+                <span className="group-hover:scale-105 transition-transform inline-block">Watch Demo</span>
               </Button>
             </Link>
           </div>
 
-          {/* Floating UI Mockup */}
-          <div className="mt-20 relative mx-auto max-w-6xl transform hover:scale-[1.01] transition-transform duration-700">
-            <div className="rounded-2xl bg-slate-800/50 p-2 ring-1 ring-white/10 backdrop-blur-md lg:rounded-3xl lg:p-4 shadow-2xl">
-              <div className="rounded-xl bg-slate-900 shadow-2xl overflow-hidden aspect-[16/9] border border-slate-800 relative group">
-                {/* Mockup Content */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
-                  <div className="text-center p-8">
-                    <LayoutDashboard className="w-32 h-32 text-slate-700 mx-auto mb-6 group-hover:text-blue-500 transition-colors duration-500" />
-                    <p className="text-slate-500 font-medium text-lg">Interactive Dashboard Preview</p>
+          {/* Trust Indicators */}
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-500">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-green-500" />
+              <span>Bank-grade security</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Globe2 className="w-4 h-4 text-blue-500" />
+              <span>99.9% uptime</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-purple-500" />
+              <span>24/7 support</span>
+            </div>
+          </div>
+
+          {/* 3D Perspective Dashboard Mockup */}
+          <div className="mt-20 relative mx-auto max-w-6xl perspective-1000">
+            <div className="relative rounded-2xl bg-slate-900/5 p-2 ring-1 ring-slate-900/10 backdrop-blur-sm lg:rounded-3xl lg:p-4 shadow-2xl transform rotate-x-12 hover:rotate-x-0 transition-transform duration-1000 ease-out">
+              <div className="rounded-xl bg-white shadow-2xl overflow-hidden aspect-[16/9] border border-slate-200 relative group">
+                {/* Mockup Content Placeholder - In a real app, use an actual screenshot */}
+                <div className="absolute inset-0 bg-slate-50 flex flex-col">
+                  {/* Mock Header */}
+                  <div className="h-12 border-b border-slate-200 bg-white flex items-center px-4 gap-4">
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <div className="h-6 w-64 bg-slate-100 rounded-md"></div>
+                  </div>
+                  {/* Mock Body */}
+                  <div className="flex-1 flex">
+                    <div className="w-64 border-r border-slate-200 bg-white p-4 space-y-4 hidden md:block">
+                      {[1,2,3,4,5].map(i => (
+                        <div key={i} className="h-8 bg-slate-50 rounded-md w-full"></div>
+                      ))}
+                    </div>
+                    <div className="flex-1 p-8 grid grid-cols-3 gap-6">
+                      <div className="col-span-2 h-64 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                        <div className="h-8 w-32 bg-slate-100 rounded mb-4"></div>
+                        <div className="flex items-end gap-2 h-40">
+                          {[40, 70, 45, 90, 60, 80, 50].map((h, i) => (
+                            <div key={i} className="flex-1 bg-blue-500/10 rounded-t-md relative group/bar overflow-hidden">
+                              <div style={{ height: `${h}%` }} className="absolute bottom-0 w-full bg-blue-500 rounded-t-md transition-all duration-500 group-hover/bar:bg-blue-600"></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="h-64 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+                         <div className="h-8 w-32 bg-slate-100 rounded mb-4"></div>
+                         <div className="space-y-3">
+                           {[1,2,3,4].map(i => (
+                             <div key={i} className="flex items-center gap-3">
+                               <div className="w-8 h-8 rounded-full bg-slate-100"></div>
+                               <div className="flex-1 h-2 bg-slate-100 rounded"></div>
+                             </div>
+                           ))}
+                         </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
+                
+                {/* Overlay Content */}
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/5 pointer-events-none">
+                  <div className="text-center p-8 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                    <LayoutDashboard className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+                    <p className="text-slate-900 font-bold text-xl">Interactive Dashboard</p>
+                    <p className="text-slate-500">Real-time insights at your fingertips</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Strip */}
-      <div className="bg-slate-900 border-y border-slate-800">
+      {/* Social Proof Strip */}
+      <div className="border-y border-slate-100 bg-slate-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-800/50">
-            {[
-              { label: "Churches", value: "500+" },
-              { label: "Members", value: "50k+" },
-              { label: "Events", value: "10k+" },
-              { label: "Giving", value: "$5M+" },
-            ].map((stat, i) => (
-              <div key={i} className="px-4">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-sm font-medium text-slate-400 uppercase tracking-wider">{stat.label}</div>
-              </div>
-            ))}
+          <p className="text-center text-sm font-semibold text-slate-500 uppercase tracking-wider mb-8">Trusted by 500+ forward-thinking churches</p>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+             {/* Placeholder Logos */}
+             {['ChurchOne', 'Grace Community', 'LifePoint', 'The Rock', 'City Church'].map((name, i) => (
+               <div key={i} className="text-xl font-bold text-slate-400 flex items-center gap-2">
+                 <div className="w-8 h-8 bg-slate-300 rounded-full"></div>
+                 {name}
+               </div>
+             ))}
           </div>
         </div>
       </div>
 
-      {/* Bento Grid Features */}
-      <section className="py-32 bg-slate-50">
+      {/* Features Grid - Bento Style */}
+      <section id="features" className="py-32 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-3">Features</h2>
-            <p className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+            <Badge variant="outline" className="mb-4 px-4 py-1 border-blue-200 bg-blue-50 text-blue-700">Features</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
               Everything you need to run your church.
-            </p>
+            </h2>
             <p className="text-xl text-slate-600">
               A complete suite of tools designed to help your ministry thrive in the digital age.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[minmax(300px,auto)]">
-            {/* Large Card 1 */}
-            <div className="md:col-span-2 bg-white rounded-3xl p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-500" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
+            {/* People Management - Large Card */}
+            <div className="md:col-span-2 bg-slate-50 rounded-[2rem] p-8 md:p-12 border border-slate-100 relative overflow-hidden group hover:shadow-xl transition-all duration-300">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/50 rounded-full -mr-20 -mt-20 blur-3xl transition-transform group-hover:scale-110 duration-700" />
               <div className="relative z-10">
-                <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-blue-600/20">
-                  <Users className="w-7 h-7 text-white" />
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-slate-100">
+                  <Users className="w-7 h-7 text-blue-600" />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-4">People & Membership</h3>
                 <p className="text-lg text-slate-600 max-w-md mb-8">
-                  Go beyond simple lists. Track spiritual journeys, manage family relationships, and ensure no one falls through the cracks with our advanced people management system.
+                  Go beyond simple lists. Track spiritual journeys, manage family relationships, and ensure no one falls through the cracks.
                 </p>
-                <ul className="space-y-3">
+                <div className="grid grid-cols-2 gap-4">
                   {['Family Grouping', 'Attendance Tracking', 'Custom Fields', 'Member Portal'].map((item, i) => (
-                    <li key={i} className="flex items-center text-slate-700">
-                      <CheckCircle2 className="w-5 h-5 text-blue-500 mr-3" />
-                      {item}
-                    </li>
+                    <div key={i} className="flex items-center text-slate-700 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-100">
+                      <CheckCircle2 className="w-4 h-4 text-blue-500 mr-3" />
+                      <span className="text-sm font-medium">{item}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
 
-            {/* Tall Card */}
-            <div className="md:row-span-2 bg-slate-900 rounded-3xl p-8 md:p-12 shadow-xl shadow-slate-900/20 border border-slate-800 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-800/50 to-slate-900" />
+            {/* Mobile App - Tall Card */}
+            <div className="md:row-span-2 bg-slate-900 rounded-[2rem] p-8 md:p-12 text-white relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-950" />
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl" />
+              
               <div className="relative z-10 h-full flex flex-col">
-                <div className="w-14 h-14 bg-indigo-500 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-indigo-500/20">
+                <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-8 backdrop-blur-sm border border-white/10">
                   <Smartphone className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Mobile First</h3>
-                <p className="text-slate-300 mb-8 flex-grow">
-                  Your ministry doesn't happen behind a desk. Neither should your management. Access everything from our powerful mobile app.
+                <h3 className="text-2xl font-bold mb-4">Mobile First</h3>
+                <p className="text-slate-300 mb-8">
+                  Access everything from our powerful mobile app. Ministry doesn't happen behind a desk.
                 </p>
-                <div className="mt-auto relative">
-                  <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700 transform group-hover:-translate-y-2 transition-transform duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="h-2 w-20 bg-slate-600 rounded-full" />
-                      <div className="h-2 w-8 bg-slate-600 rounded-full" />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-16 bg-slate-700/50 rounded-xl w-full" />
-                      <div className="h-16 bg-slate-700/50 rounded-xl w-full" />
+                
+                {/* Mobile Mockup */}
+                <div className="mt-auto relative mx-auto w-full max-w-[240px]">
+                  <div className="bg-slate-800 rounded-[2.5rem] p-3 border-4 border-slate-700 shadow-2xl transform group-hover:-translate-y-4 transition-transform duration-500">
+                    <div className="bg-slate-900 rounded-[2rem] overflow-hidden aspect-[9/19] relative">
+                      {/* App Header */}
+                      <div className="h-14 bg-slate-800 flex items-center justify-between px-4">
+                        <div className="w-4 h-4 rounded-full bg-slate-600"></div>
+                        <div className="w-20 h-2 rounded-full bg-slate-700"></div>
+                      </div>
+                      {/* App Content */}
+                      <div className="p-4 space-y-3">
+                        <div className="h-24 bg-blue-600 rounded-xl w-full opacity-80"></div>
+                        <div className="h-16 bg-slate-800 rounded-xl w-full"></div>
+                        <div className="h-16 bg-slate-800 rounded-xl w-full"></div>
+                        <div className="h-16 bg-slate-800 rounded-xl w-full"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 group hover:shadow-2xl transition-all duration-300">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6 text-green-600">
+            {/* Giving - Card */}
+            <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50 group hover:-translate-y-1 transition-all duration-300">
+              <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform">
                 <Wallet className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Giving & Finance</h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 text-sm leading-relaxed">
                 Secure online giving, recurring donations, and comprehensive financial reporting.
               </p>
             </div>
 
-            {/* Card 3 */}
-            <div className="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 group hover:shadow-2xl transition-all duration-300">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6 text-orange-600">
+            {/* Events - Card */}
+            <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50 group hover:-translate-y-1 transition-all duration-300">
+              <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-orange-600 group-hover:scale-110 transition-transform">
                 <Calendar className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Events & Calendar</h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 text-sm leading-relaxed">
                 Coordinate facility usage, manage event registrations, and sync calendars effortlessly.
               </p>
             </div>
 
-            {/* Wide Card */}
-            <div className="md:col-span-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-8 md:p-12 shadow-xl shadow-purple-500/20 text-white relative overflow-hidden">
+            {/* Volunteers - Wide Card */}
+            <div className="md:col-span-2 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-[2rem] p-8 md:p-12 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
               <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
                 <div className="flex-1">
@@ -195,23 +314,35 @@ export default async function LandingPage() {
                     <HandHeart className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4">Volunteer Management</h3>
-                  <p className="text-purple-100 mb-6">
+                  <p className="text-violet-100 mb-6">
                     Schedule teams, manage availability, and send automated reminders. Keep your volunteers engaged and appreciated.
                   </p>
-                  <Button variant="secondary" className="bg-white text-purple-600 hover:bg-purple-50">
+                  <Button variant="secondary" className="bg-white text-violet-600 hover:bg-violet-50 border-0">
                     Explore Scheduling
                   </Button>
                 </div>
-                <div className="flex-1 w-full max-w-xs bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/10">
+                
+                {/* Mini Schedule Mockup */}
+                <div className="flex-1 w-full max-w-xs bg-white/10 rounded-2xl p-4 backdrop-blur-md border border-white/10 shadow-lg">
+                  <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-2">
+                    <span className="text-sm font-medium">Sunday Service</span>
+                    <span className="text-xs bg-green-400/20 text-green-300 px-2 py-0.5 rounded-full">Confirmed</span>
+                  </div>
                   <div className="space-y-3">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="flex items-center gap-3 p-2 bg-white/5 rounded-lg">
-                        <div className="w-8 h-8 rounded-full bg-purple-400/30" />
-                        <div className="flex-1">
-                          <div className="h-2 w-20 bg-white/30 rounded mb-1" />
-                          <div className="h-1.5 w-12 bg-white/20 rounded" />
+                    {[
+                      { name: "John Doe", role: "Worship Leader", status: "accepted" },
+                      { name: "Jane Smith", role: "Greeter", status: "pending" },
+                      { name: "Mike Ross", role: "Audio", status: "accepted" }
+                    ].map((person, i) => (
+                      <div key={i} className="flex items-center gap-3 p-2 bg-black/20 rounded-lg">
+                        <div className="w-8 h-8 rounded-full bg-violet-400/30 flex items-center justify-center text-xs font-bold">
+                          {person.name[0]}
                         </div>
-                        <div className="w-4 h-4 rounded-full border-2 border-green-400" />
+                        <div className="flex-1">
+                          <div className="text-sm font-medium">{person.name}</div>
+                          <div className="text-xs text-violet-200">{person.role}</div>
+                        </div>
+                        <div className={`w-2 h-2 rounded-full ${person.status === 'accepted' ? 'bg-green-400' : 'bg-yellow-400'}`} />
                       </div>
                     ))}
                   </div>
@@ -222,12 +353,25 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Feature Highlight: Presentation */}
-      <section className="py-24 bg-white overflow-hidden">
+      {/* Presentation Feature Highlight */}
+      <section className="py-24 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:flex items-center gap-16">
-            <div className="lg:w-1/2 mb-12 lg:mb-0">
-              <div className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium text-orange-600 bg-orange-100 mb-6">
+            <div className="lg:w-1/2 mb-12 lg:mb-0 order-2 lg:order-1">
+              <div className="relative group cursor-pointer">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden aspect-video flex items-center justify-center">
+                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-90 group-hover:scale-105 transition-transform duration-700" />
+                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                   <div className="relative z-10 w-16 h-16 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                     <Play className="w-6 h-6 text-blue-600 fill-current ml-1" />
+                   </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="lg:w-1/2 order-1 lg:order-2">
+              <div className="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium text-orange-600 bg-orange-50 border border-orange-100 mb-6">
                 <Zap className="w-4 h-4 mr-2" />
                 New Feature
               </div>
@@ -245,7 +389,7 @@ export default async function LandingPage() {
                   { title: "Live Mode", desc: "Present directly from the browser with presenter notes." }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold border border-blue-100">
                       {i + 1}
                     </div>
                     <div>
@@ -256,36 +400,32 @@ export default async function LandingPage() {
                 ))}
               </div>
             </div>
-            <div className="lg:w-1/2 relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-200 to-orange-200 rounded-full blur-3xl opacity-30" />
-              <div className="relative bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 p-2 aspect-video flex items-center justify-center group overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-50 group-hover:scale-105 transition-transform duration-700" />
-                <div className="relative z-10 bg-white/10 backdrop-blur-md rounded-full p-4 border border-white/20 cursor-pointer hover:bg-white/20 transition-colors">
-                  <Play className="w-8 h-8 text-white fill-current ml-1" />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Trust/Security Section */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">Trusted by churches worldwide</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-              <ShieldCheck className="w-10 h-10 text-green-500 mx-auto mb-4" />
+      {/* Stats / Trust Section */}
+      <section className="py-20 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="p-6">
+              <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-green-600">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
               <h3 className="font-bold text-lg mb-2">Bank-Grade Security</h3>
               <p className="text-slate-600 text-sm">Your data is encrypted and protected with industry-leading security standards.</p>
             </div>
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-              <Globe2 className="w-10 h-10 text-blue-500 mx-auto mb-4" />
+            <div className="p-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <Globe2 className="w-6 h-6" />
+              </div>
               <h3 className="font-bold text-lg mb-2">99.9% Uptime</h3>
               <p className="text-slate-600 text-sm">Reliable infrastructure ensures your ministry tools are always available.</p>
             </div>
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-              <MessageSquare className="w-10 h-10 text-purple-500 mx-auto mb-4" />
+            <div className="p-6">
+              <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-600">
+                <MessageSquare className="w-6 h-6" />
+              </div>
               <h3 className="font-bold text-lg mb-2">Premium Support</h3>
               <p className="text-slate-600 text-sm">Our dedicated team is here to help you succeed every step of the way.</p>
             </div>
@@ -293,10 +433,276 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 bg-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] opacity-20 bg-cover bg-center mix-blend-overlay fixed-bg" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent" />
+      {/* Pricing Section */}
+      <section id="pricing" className="py-32 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <Badge variant="outline" className="mb-4 px-4 py-1 border-blue-200 bg-blue-50 text-blue-700">Pricing</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              Simple, transparent pricing
+            </h2>
+            <p className="text-xl text-slate-600">
+              Choose the perfect plan for your church. All plans include a 14-day free trial.
+            </p>
+          </div>
+
+          {plans.length === 0 ? (
+            // Loading state for pricing
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200 animate-pulse">
+                  <div className="h-8 bg-slate-200 rounded mb-4"></div>
+                  <div className="h-4 bg-slate-200 rounded mb-8 w-3/4"></div>
+                  <div className="h-12 bg-slate-200 rounded mb-8"></div>
+                  <div className="space-y-3 mb-8">
+                    {[1, 2, 3, 4, 5].map((j) => (
+                      <div key={j} className="h-4 bg-slate-200 rounded"></div>
+                    ))}
+                  </div>
+                  <div className="h-12 bg-slate-200 rounded-full"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {plans.map((plan) => {
+                const isPopular = plan.isPopular;
+                const monthlyPrice = Number(plan.monthlyPrice);
+                const yearlyPrice = Number(plan.yearlyPrice);
+                const features = Array.isArray(plan.features) ? plan.features : [];
+                
+                return (
+                  <div
+                    key={plan.id}
+                    className={`relative rounded-3xl p-8 flex flex-col group cursor-pointer transition-all duration-300 ${
+                      isPopular
+                        ? 'bg-white ring-2 ring-blue-600 shadow-2xl scale-105 z-10 hover:scale-110'
+                        : 'bg-white border border-slate-200 shadow-lg hover:shadow-xl hover:-translate-y-1'
+                    }`}
+                  >
+                    {isPopular && (
+                      <div className="absolute -top-5 left-1/2 -translate-x-1/2">
+                        <Badge className="bg-blue-600 text-white px-4 py-1.5 text-sm font-bold shadow-lg border-0">
+                          <Sparkles className="w-3 h-3 mr-1" />
+                          MOST POPULAR
+                        </Badge>
+                      </div>
+                    )}
+
+                    <div className="mb-8">
+                      <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                        {plan.displayName}
+                      </h3>
+                      <p className="text-sm text-slate-500">
+                        {plan.description}
+                      </p>
+                    </div>
+
+                    <div className="mb-8">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl font-bold text-slate-900">
+                          KES {monthlyPrice.toLocaleString()}
+                        </span>
+                        <span className="text-slate-500">/mo</span>
+                      </div>
+                      <p className="text-xs text-slate-500 mt-2">
+                        Billed annually as KES {yearlyPrice.toLocaleString()}
+                      </p>
+                    </div>
+
+                    <div className="flex-grow">
+                      <div className="font-semibold text-sm uppercase tracking-wide text-slate-900 mb-4">
+                        What's included:
+                      </div>
+                      <ul className="space-y-3 mb-8">
+                        {features.slice(0, 8).map((feature, index) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <Check className="w-5 h-5 flex-shrink-0 text-blue-600 mt-0.5" />
+                            <span className="text-sm text-slate-600">
+                              {String(feature)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <Link href="/auth/signin" className="mt-auto">
+                      <Button
+                        size="lg"
+                        className={`w-full rounded-full py-6 text-lg font-semibold transition-all duration-300 ${
+                          isPopular
+                            ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30'
+                            : 'bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg'
+                        }`}
+                      >
+                        Start Free Trial
+                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              Loved by church leaders
+            </h2>
+            <p className="text-xl text-slate-600">
+              See what pastors and administrators are saying about {appName || "Shepherd"}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Pastor David Kimani",
+                role: "Senior Pastor",
+                church: "Grace Community Church",
+                text: "Shepherd has transformed how we manage our church. The member management and giving features have been game-changers.",
+                rating: 5,
+                avatar: "DK"
+              },
+              {
+                name: "Rev. Sarah Wanjiku",
+                role: "Administrator",
+                church: "New Life Assembly",
+                text: "The presentation editor is absolutely brilliant! We no longer need separate software for creating sermon slides.",
+                rating: 5,
+                avatar: "SW"
+              },
+              {
+                name: "Pastor John Ochieng",
+                role: "Lead Pastor",
+                church: "Faith Center",
+                text: "Best investment we've made for our ministry. The volunteer scheduling feature alone has saved us countless hours.",
+                rating: 5,
+                avatar: "JO"
+              },
+            ].map((testimonial, index) => (
+              <div
+                key={index}
+                className="group bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+              >
+                <div className="flex items-center gap-1 mb-6">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400 group-hover:scale-110 transition-transform" style={{ animationDelay: `${i * 100}ms` }} />
+                  ))}
+                </div>
+                
+                <p className="text-slate-700 mb-6 leading-relaxed font-medium">
+                  "{testimonial.text}"
+                </p>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-900 text-sm">{testimonial.name}</div>
+                    <div className="text-xs text-slate-500">{testimonial.role}, {testimonial.church}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust indicators */}
+          <div className="text-center mt-16">
+            <div className="inline-flex items-center gap-8 bg-slate-50 rounded-full px-8 py-4 border border-slate-200">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-slate-900">150+</div>
+                <div className="text-xs text-slate-500">Churches</div>
+              </div>
+              <div className="w-px h-8 bg-slate-300"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-slate-900">4.9★</div>
+                <div className="text-xs text-slate-500">Rating</div>
+              </div>
+              <div className="w-px h-8 bg-slate-300"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-slate-900">99.9%</div>
+                <div className="text-xs text-slate-500">Uptime</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-32 bg-slate-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-slate-600">
+              Everything you need to know about getting started with {appName || "Shepherd"}
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {[
+              {
+                question: "How long does the free trial last?",
+                answer: "Our 14-day free trial gives you full access to all features. No credit card required to get started."
+              },
+              {
+                question: "Can I import my existing church data?",
+                answer: "Yes! We support importing member data from spreadsheets, other ChMS systems, and most common formats. Our team will help you migrate your data during onboarding."
+              },
+              {
+                question: "Is my church data secure?",
+                answer: "Absolutely. We use bank-grade encryption, regular security audits, and comply with data protection regulations. Your church data is stored securely and never shared."
+              },
+              {
+                question: "What kind of support do you provide?",
+                answer: "We offer 24/7 email support, live chat during business hours, comprehensive documentation, and video tutorials. Premium plans include phone support and dedicated account management."
+              },
+              {
+                question: "Can I cancel anytime?",
+                answer: "Yes, you can cancel your subscription at any time. We don't have long-term contracts or cancellation fees."
+              },
+              {
+                question: "Do you offer training for my staff?",
+                answer: "Yes! We provide free onboarding sessions, video tutorials, and live training webinars. Premium plans include personalized training sessions for your team."
+              }
+            ].map((faq, index) => (
+              <div key={index} className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
+                    {index + 1}
+                  </div>
+                  {faq.question}
+                </h3>
+                <p className="text-slate-600 leading-relaxed pl-11">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-slate-600 mb-6">
+              Still have questions? We're here to help.
+            </p>
+            <Link href="/contact">
+              <Button variant="outline" className="rounded-full px-8 py-3 border-slate-300 text-slate-700 hover:bg-slate-50">
+                Contact Our Team
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] opacity-10 bg-cover bg-center mix-blend-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/90 to-slate-900/50" />
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">
@@ -307,12 +713,12 @@ export default async function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <Link href="/auth/signin">
-              <Button size="lg" className="text-lg px-12 py-8 h-auto bg-white text-slate-900 hover:bg-blue-50 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1">
+              <Button size="lg" className="text-lg px-12 py-8 h-auto bg-blue-600 text-white hover:bg-blue-500 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 border-0">
                 Start Your Free Trial
               </Button>
             </Link>
             <Link href="/contact">
-              <Button variant="outline" size="lg" className="text-lg px-12 py-8 h-auto border-slate-600 text-white hover:bg-slate-800 hover:text-white rounded-full bg-transparent backdrop-blur-sm">
+              <Button variant="outline" size="lg" className="text-lg px-12 py-8 h-auto border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white rounded-full bg-transparent backdrop-blur-sm">
                 Contact Sales
               </Button>
             </Link>
@@ -329,16 +735,16 @@ export default async function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
             <div>
               <h3 className="font-bold text-slate-900 mb-6">Product</h3>
-              <ul className="space-y-4 text-slate-600">
-                <li><Link href="#" className="hover:text-blue-600 transition-colors">Features</Link></li>
-                <li><Link href="#" className="hover:text-blue-600 transition-colors">Pricing</Link></li>
+              <ul className="space-y-4 text-slate-600 text-sm">
+                <li><Link href="#features" className="hover:text-blue-600 transition-colors">Features</Link></li>
+                <li><Link href="#pricing" className="hover:text-blue-600 transition-colors">Pricing</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Security</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Roadmap</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-bold text-slate-900 mb-6">Resources</h3>
-              <ul className="space-y-4 text-slate-600">
+              <ul className="space-y-4 text-slate-600 text-sm">
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Documentation</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">API Reference</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Blog</Link></li>
@@ -347,7 +753,7 @@ export default async function LandingPage() {
             </div>
             <div>
               <h3 className="font-bold text-slate-900 mb-6">Company</h3>
-              <ul className="space-y-4 text-slate-600">
+              <ul className="space-y-4 text-slate-600 text-sm">
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">About Us</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Careers</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Contact</Link></li>
@@ -356,7 +762,7 @@ export default async function LandingPage() {
             </div>
             <div>
               <h3 className="font-bold text-slate-900 mb-6">Legal</h3>
-              <ul className="space-y-4 text-slate-600">
+              <ul className="space-y-4 text-slate-600 text-sm">
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Terms of Service</Link></li>
                 <li><Link href="#" className="hover:text-blue-600 transition-colors">Cookie Policy</Link></li>
@@ -370,11 +776,11 @@ export default async function LandingPage() {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
                 <span className="sr-only">Twitter</span>
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
               </Link>
               <Link href="#" className="text-slate-400 hover:text-slate-600 transition-colors">
                 <span className="sr-only">GitHub</span>
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
               </Link>
             </div>
           </div>

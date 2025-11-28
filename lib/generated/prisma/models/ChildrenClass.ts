@@ -260,6 +260,11 @@ export type ChildrenClassWhereInput = {
   members?: Prisma.ChildrenMinistryMemberListRelationFilter
   lessons?: Prisma.ChildrenLessonListRelationFilter
   leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
+  teacherNotes?: Prisma.TeacherNoteListRelationFilter
+  classroomLogs?: Prisma.ClassroomLogListRelationFilter
+  classSummaries?: Prisma.ClassSummaryListRelationFilter
+  activityPhotos?: Prisma.ActivityPhotoListRelationFilter
+  teacherAttendance?: Prisma.TeacherAttendanceListRelationFilter
 }
 
 export type ChildrenClassOrderByWithRelationInput = {
@@ -276,6 +281,11 @@ export type ChildrenClassOrderByWithRelationInput = {
   members?: Prisma.ChildrenMinistryMemberOrderByRelationAggregateInput
   lessons?: Prisma.ChildrenLessonOrderByRelationAggregateInput
   leadershipAssignments?: Prisma.LeadershipAssignmentOrderByRelationAggregateInput
+  teacherNotes?: Prisma.TeacherNoteOrderByRelationAggregateInput
+  classroomLogs?: Prisma.ClassroomLogOrderByRelationAggregateInput
+  classSummaries?: Prisma.ClassSummaryOrderByRelationAggregateInput
+  activityPhotos?: Prisma.ActivityPhotoOrderByRelationAggregateInput
+  teacherAttendance?: Prisma.TeacherAttendanceOrderByRelationAggregateInput
 }
 
 export type ChildrenClassWhereUniqueInput = Prisma.AtLeast<{
@@ -295,6 +305,11 @@ export type ChildrenClassWhereUniqueInput = Prisma.AtLeast<{
   members?: Prisma.ChildrenMinistryMemberListRelationFilter
   lessons?: Prisma.ChildrenLessonListRelationFilter
   leadershipAssignments?: Prisma.LeadershipAssignmentListRelationFilter
+  teacherNotes?: Prisma.TeacherNoteListRelationFilter
+  classroomLogs?: Prisma.ClassroomLogListRelationFilter
+  classSummaries?: Prisma.ClassSummaryListRelationFilter
+  activityPhotos?: Prisma.ActivityPhotoListRelationFilter
+  teacherAttendance?: Prisma.TeacherAttendanceListRelationFilter
 }, "id">
 
 export type ChildrenClassOrderByWithAggregationInput = {
@@ -342,6 +357,11 @@ export type ChildrenClassCreateInput = {
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassUncheckedCreateInput = {
@@ -357,6 +377,11 @@ export type ChildrenClassUncheckedCreateInput = {
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassUpdateInput = {
@@ -372,6 +397,11 @@ export type ChildrenClassUpdateInput = {
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateInput = {
@@ -387,6 +417,11 @@ export type ChildrenClassUncheckedUpdateInput = {
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassCreateManyInput = {
@@ -562,6 +597,80 @@ export type ChildrenClassUpdateOneRequiredWithoutLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutLessonsInput, Prisma.ChildrenClassUpdateWithoutLessonsInput>, Prisma.ChildrenClassUncheckedUpdateWithoutLessonsInput>
 }
 
+export type ChildrenClassCreateNestedOneWithoutTeacherNotesInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherNotesInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherNotesInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutTeacherNotesInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+}
+
+export type ChildrenClassUpdateOneWithoutTeacherNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherNotesInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherNotesInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutTeacherNotesInput
+  upsert?: Prisma.ChildrenClassUpsertWithoutTeacherNotesInput
+  disconnect?: Prisma.ChildrenClassWhereInput | boolean
+  delete?: Prisma.ChildrenClassWhereInput | boolean
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutTeacherNotesInput, Prisma.ChildrenClassUpdateWithoutTeacherNotesInput>, Prisma.ChildrenClassUncheckedUpdateWithoutTeacherNotesInput>
+}
+
+export type ChildrenClassCreateNestedOneWithoutClassroomLogsInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassroomLogsInput, Prisma.ChildrenClassUncheckedCreateWithoutClassroomLogsInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutClassroomLogsInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+}
+
+export type ChildrenClassUpdateOneRequiredWithoutClassroomLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassroomLogsInput, Prisma.ChildrenClassUncheckedCreateWithoutClassroomLogsInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutClassroomLogsInput
+  upsert?: Prisma.ChildrenClassUpsertWithoutClassroomLogsInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutClassroomLogsInput, Prisma.ChildrenClassUpdateWithoutClassroomLogsInput>, Prisma.ChildrenClassUncheckedUpdateWithoutClassroomLogsInput>
+}
+
+export type ChildrenClassCreateNestedOneWithoutClassSummariesInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassSummariesInput, Prisma.ChildrenClassUncheckedCreateWithoutClassSummariesInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutClassSummariesInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+}
+
+export type ChildrenClassUpdateOneRequiredWithoutClassSummariesNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassSummariesInput, Prisma.ChildrenClassUncheckedCreateWithoutClassSummariesInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutClassSummariesInput
+  upsert?: Prisma.ChildrenClassUpsertWithoutClassSummariesInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutClassSummariesInput, Prisma.ChildrenClassUpdateWithoutClassSummariesInput>, Prisma.ChildrenClassUncheckedUpdateWithoutClassSummariesInput>
+}
+
+export type ChildrenClassCreateNestedOneWithoutActivityPhotosInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutActivityPhotosInput, Prisma.ChildrenClassUncheckedCreateWithoutActivityPhotosInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutActivityPhotosInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+}
+
+export type ChildrenClassUpdateOneWithoutActivityPhotosNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutActivityPhotosInput, Prisma.ChildrenClassUncheckedCreateWithoutActivityPhotosInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutActivityPhotosInput
+  upsert?: Prisma.ChildrenClassUpsertWithoutActivityPhotosInput
+  disconnect?: Prisma.ChildrenClassWhereInput | boolean
+  delete?: Prisma.ChildrenClassWhereInput | boolean
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutActivityPhotosInput, Prisma.ChildrenClassUpdateWithoutActivityPhotosInput>, Prisma.ChildrenClassUncheckedUpdateWithoutActivityPhotosInput>
+}
+
+export type ChildrenClassCreateNestedOneWithoutTeacherAttendanceInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherAttendanceInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherAttendanceInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutTeacherAttendanceInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+}
+
+export type ChildrenClassUpdateOneRequiredWithoutTeacherAttendanceNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherAttendanceInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherAttendanceInput>
+  connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutTeacherAttendanceInput
+  upsert?: Prisma.ChildrenClassUpsertWithoutTeacherAttendanceInput
+  connect?: Prisma.ChildrenClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenClassUpdateToOneWithWhereWithoutTeacherAttendanceInput, Prisma.ChildrenClassUpdateWithoutTeacherAttendanceInput>, Prisma.ChildrenClassUncheckedUpdateWithoutTeacherAttendanceInput>
+}
+
 export type ChildrenClassCreateNestedOneWithoutLeadershipAssignmentsInput = {
   create?: Prisma.XOR<Prisma.ChildrenClassCreateWithoutLeadershipAssignmentsInput, Prisma.ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput>
   connectOrCreate?: Prisma.ChildrenClassCreateOrConnectWithoutLeadershipAssignmentsInput
@@ -590,6 +699,11 @@ export type ChildrenClassCreateWithoutLeaderInput = {
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutLeaderInput = {
@@ -604,6 +718,11 @@ export type ChildrenClassUncheckedCreateWithoutLeaderInput = {
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutLeaderInput = {
@@ -659,6 +778,11 @@ export type ChildrenClassCreateWithoutMembersInput = {
   leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutMembersInput = {
@@ -673,6 +797,11 @@ export type ChildrenClassUncheckedCreateWithoutMembersInput = {
   updatedAt?: Date | string
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutMembersInput = {
@@ -703,6 +832,11 @@ export type ChildrenClassUpdateWithoutMembersInput = {
   leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutMembersInput = {
@@ -717,6 +851,11 @@ export type ChildrenClassUncheckedUpdateWithoutMembersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassCreateWithoutLessonsInput = {
@@ -731,6 +870,11 @@ export type ChildrenClassCreateWithoutLessonsInput = {
   leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutLessonsInput = {
@@ -745,6 +889,11 @@ export type ChildrenClassUncheckedCreateWithoutLessonsInput = {
   updatedAt?: Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutLessonsInput = {
@@ -775,6 +924,11 @@ export type ChildrenClassUpdateWithoutLessonsInput = {
   leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutLessonsInput = {
@@ -789,6 +943,471 @@ export type ChildrenClassUncheckedUpdateWithoutLessonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassCreateWithoutTeacherNotesInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
+  members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassUncheckedCreateWithoutTeacherNotesInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassCreateOrConnectWithoutTeacherNotesInput = {
+  where: Prisma.ChildrenClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherNotesInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherNotesInput>
+}
+
+export type ChildrenClassUpsertWithoutTeacherNotesInput = {
+  update: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutTeacherNotesInput, Prisma.ChildrenClassUncheckedUpdateWithoutTeacherNotesInput>
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherNotesInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherNotesInput>
+  where?: Prisma.ChildrenClassWhereInput
+}
+
+export type ChildrenClassUpdateToOneWithWhereWithoutTeacherNotesInput = {
+  where?: Prisma.ChildrenClassWhereInput
+  data: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutTeacherNotesInput, Prisma.ChildrenClassUncheckedUpdateWithoutTeacherNotesInput>
+}
+
+export type ChildrenClassUpdateWithoutTeacherNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
+  members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassUncheckedUpdateWithoutTeacherNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassCreateWithoutClassroomLogsInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
+  members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassUncheckedCreateWithoutClassroomLogsInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassCreateOrConnectWithoutClassroomLogsInput = {
+  where: Prisma.ChildrenClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassroomLogsInput, Prisma.ChildrenClassUncheckedCreateWithoutClassroomLogsInput>
+}
+
+export type ChildrenClassUpsertWithoutClassroomLogsInput = {
+  update: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutClassroomLogsInput, Prisma.ChildrenClassUncheckedUpdateWithoutClassroomLogsInput>
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassroomLogsInput, Prisma.ChildrenClassUncheckedCreateWithoutClassroomLogsInput>
+  where?: Prisma.ChildrenClassWhereInput
+}
+
+export type ChildrenClassUpdateToOneWithWhereWithoutClassroomLogsInput = {
+  where?: Prisma.ChildrenClassWhereInput
+  data: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutClassroomLogsInput, Prisma.ChildrenClassUncheckedUpdateWithoutClassroomLogsInput>
+}
+
+export type ChildrenClassUpdateWithoutClassroomLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
+  members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassUncheckedUpdateWithoutClassroomLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassCreateWithoutClassSummariesInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
+  members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassUncheckedCreateWithoutClassSummariesInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassCreateOrConnectWithoutClassSummariesInput = {
+  where: Prisma.ChildrenClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassSummariesInput, Prisma.ChildrenClassUncheckedCreateWithoutClassSummariesInput>
+}
+
+export type ChildrenClassUpsertWithoutClassSummariesInput = {
+  update: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutClassSummariesInput, Prisma.ChildrenClassUncheckedUpdateWithoutClassSummariesInput>
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutClassSummariesInput, Prisma.ChildrenClassUncheckedCreateWithoutClassSummariesInput>
+  where?: Prisma.ChildrenClassWhereInput
+}
+
+export type ChildrenClassUpdateToOneWithWhereWithoutClassSummariesInput = {
+  where?: Prisma.ChildrenClassWhereInput
+  data: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutClassSummariesInput, Prisma.ChildrenClassUncheckedUpdateWithoutClassSummariesInput>
+}
+
+export type ChildrenClassUpdateWithoutClassSummariesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
+  members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassUncheckedUpdateWithoutClassSummariesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassCreateWithoutActivityPhotosInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
+  members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassUncheckedCreateWithoutActivityPhotosInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassCreateOrConnectWithoutActivityPhotosInput = {
+  where: Prisma.ChildrenClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutActivityPhotosInput, Prisma.ChildrenClassUncheckedCreateWithoutActivityPhotosInput>
+}
+
+export type ChildrenClassUpsertWithoutActivityPhotosInput = {
+  update: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutActivityPhotosInput, Prisma.ChildrenClassUncheckedUpdateWithoutActivityPhotosInput>
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutActivityPhotosInput, Prisma.ChildrenClassUncheckedCreateWithoutActivityPhotosInput>
+  where?: Prisma.ChildrenClassWhereInput
+}
+
+export type ChildrenClassUpdateToOneWithWhereWithoutActivityPhotosInput = {
+  where?: Prisma.ChildrenClassWhereInput
+  data: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutActivityPhotosInput, Prisma.ChildrenClassUncheckedUpdateWithoutActivityPhotosInput>
+}
+
+export type ChildrenClassUpdateWithoutActivityPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
+  members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassUncheckedUpdateWithoutActivityPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassCreateWithoutTeacherAttendanceInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
+  members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassUncheckedCreateWithoutTeacherAttendanceInput = {
+  id?: string
+  name: string
+  ageMin: number
+  ageMax: number
+  capacity?: number | null
+  leaderId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
+  lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedCreateNestedManyWithoutChildrenClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type ChildrenClassCreateOrConnectWithoutTeacherAttendanceInput = {
+  where: Prisma.ChildrenClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherAttendanceInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherAttendanceInput>
+}
+
+export type ChildrenClassUpsertWithoutTeacherAttendanceInput = {
+  update: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutTeacherAttendanceInput, Prisma.ChildrenClassUncheckedUpdateWithoutTeacherAttendanceInput>
+  create: Prisma.XOR<Prisma.ChildrenClassCreateWithoutTeacherAttendanceInput, Prisma.ChildrenClassUncheckedCreateWithoutTeacherAttendanceInput>
+  where?: Prisma.ChildrenClassWhereInput
+}
+
+export type ChildrenClassUpdateToOneWithWhereWithoutTeacherAttendanceInput = {
+  where?: Prisma.ChildrenClassWhereInput
+  data: Prisma.XOR<Prisma.ChildrenClassUpdateWithoutTeacherAttendanceInput, Prisma.ChildrenClassUncheckedUpdateWithoutTeacherAttendanceInput>
+}
+
+export type ChildrenClassUpdateWithoutTeacherAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
+  members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+}
+
+export type ChildrenClassUncheckedUpdateWithoutTeacherAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ageMin?: Prisma.IntFieldUpdateOperationsInput | number
+  ageMax?: Prisma.IntFieldUpdateOperationsInput | number
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  leaderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
+  lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassCreateWithoutLeadershipAssignmentsInput = {
@@ -803,6 +1422,11 @@ export type ChildrenClassCreateWithoutLeadershipAssignmentsInput = {
   leader?: Prisma.UserCreateNestedOneWithoutChildrenLeadershipInput
   members?: Prisma.ChildrenMinistryMemberCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonCreateNestedManyWithoutClassInput
+  teacherNotes?: Prisma.TeacherNoteCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput = {
@@ -817,6 +1441,11 @@ export type ChildrenClassUncheckedCreateWithoutLeadershipAssignmentsInput = {
   updatedAt?: Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedCreateNestedManyWithoutClassInput
   lessons?: Prisma.ChildrenLessonUncheckedCreateNestedManyWithoutClassInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedCreateNestedManyWithoutClassInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedCreateNestedManyWithoutClassInput
+  classSummaries?: Prisma.ClassSummaryUncheckedCreateNestedManyWithoutClassInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedCreateNestedManyWithoutClassInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type ChildrenClassCreateOrConnectWithoutLeadershipAssignmentsInput = {
@@ -847,6 +1476,11 @@ export type ChildrenClassUpdateWithoutLeadershipAssignmentsInput = {
   leader?: Prisma.UserUpdateOneWithoutChildrenLeadershipNestedInput
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutLeadershipAssignmentsInput = {
@@ -861,6 +1495,11 @@ export type ChildrenClassUncheckedUpdateWithoutLeadershipAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassCreateManyLeaderInput = {
@@ -886,6 +1525,11 @@ export type ChildrenClassUpdateWithoutLeaderInput = {
   members?: Prisma.ChildrenMinistryMemberUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateWithoutLeaderInput = {
@@ -900,6 +1544,11 @@ export type ChildrenClassUncheckedUpdateWithoutLeaderInput = {
   members?: Prisma.ChildrenMinistryMemberUncheckedUpdateManyWithoutClassNestedInput
   lessons?: Prisma.ChildrenLessonUncheckedUpdateManyWithoutClassNestedInput
   leadershipAssignments?: Prisma.LeadershipAssignmentUncheckedUpdateManyWithoutChildrenClassNestedInput
+  teacherNotes?: Prisma.TeacherNoteUncheckedUpdateManyWithoutClassNestedInput
+  classroomLogs?: Prisma.ClassroomLogUncheckedUpdateManyWithoutClassNestedInput
+  classSummaries?: Prisma.ClassSummaryUncheckedUpdateManyWithoutClassNestedInput
+  activityPhotos?: Prisma.ActivityPhotoUncheckedUpdateManyWithoutClassNestedInput
+  teacherAttendance?: Prisma.TeacherAttendanceUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type ChildrenClassUncheckedUpdateManyWithoutLeaderInput = {
@@ -922,12 +1571,22 @@ export type ChildrenClassCountOutputType = {
   members: number
   lessons: number
   leadershipAssignments: number
+  teacherNotes: number
+  classroomLogs: number
+  classSummaries: number
+  activityPhotos: number
+  teacherAttendance: number
 }
 
 export type ChildrenClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | ChildrenClassCountOutputTypeCountMembersArgs
   lessons?: boolean | ChildrenClassCountOutputTypeCountLessonsArgs
   leadershipAssignments?: boolean | ChildrenClassCountOutputTypeCountLeadershipAssignmentsArgs
+  teacherNotes?: boolean | ChildrenClassCountOutputTypeCountTeacherNotesArgs
+  classroomLogs?: boolean | ChildrenClassCountOutputTypeCountClassroomLogsArgs
+  classSummaries?: boolean | ChildrenClassCountOutputTypeCountClassSummariesArgs
+  activityPhotos?: boolean | ChildrenClassCountOutputTypeCountActivityPhotosArgs
+  teacherAttendance?: boolean | ChildrenClassCountOutputTypeCountTeacherAttendanceArgs
 }
 
 /**
@@ -961,6 +1620,41 @@ export type ChildrenClassCountOutputTypeCountLeadershipAssignmentsArgs<ExtArgs e
   where?: Prisma.LeadershipAssignmentWhereInput
 }
 
+/**
+ * ChildrenClassCountOutputType without action
+ */
+export type ChildrenClassCountOutputTypeCountTeacherNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeacherNoteWhereInput
+}
+
+/**
+ * ChildrenClassCountOutputType without action
+ */
+export type ChildrenClassCountOutputTypeCountClassroomLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClassroomLogWhereInput
+}
+
+/**
+ * ChildrenClassCountOutputType without action
+ */
+export type ChildrenClassCountOutputTypeCountClassSummariesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClassSummaryWhereInput
+}
+
+/**
+ * ChildrenClassCountOutputType without action
+ */
+export type ChildrenClassCountOutputTypeCountActivityPhotosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActivityPhotoWhereInput
+}
+
+/**
+ * ChildrenClassCountOutputType without action
+ */
+export type ChildrenClassCountOutputTypeCountTeacherAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeacherAttendanceWhereInput
+}
+
 
 export type ChildrenClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -976,6 +1670,11 @@ export type ChildrenClassSelect<ExtArgs extends runtime.Types.Extensions.Interna
   members?: boolean | Prisma.ChildrenClass$membersArgs<ExtArgs>
   lessons?: boolean | Prisma.ChildrenClass$lessonsArgs<ExtArgs>
   leadershipAssignments?: boolean | Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs>
+  teacherNotes?: boolean | Prisma.ChildrenClass$teacherNotesArgs<ExtArgs>
+  classroomLogs?: boolean | Prisma.ChildrenClass$classroomLogsArgs<ExtArgs>
+  classSummaries?: boolean | Prisma.ChildrenClass$classSummariesArgs<ExtArgs>
+  activityPhotos?: boolean | Prisma.ChildrenClass$activityPhotosArgs<ExtArgs>
+  teacherAttendance?: boolean | Prisma.ChildrenClass$teacherAttendanceArgs<ExtArgs>
   _count?: boolean | Prisma.ChildrenClassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["childrenClass"]>
 
@@ -1023,6 +1722,11 @@ export type ChildrenClassInclude<ExtArgs extends runtime.Types.Extensions.Intern
   members?: boolean | Prisma.ChildrenClass$membersArgs<ExtArgs>
   lessons?: boolean | Prisma.ChildrenClass$lessonsArgs<ExtArgs>
   leadershipAssignments?: boolean | Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs>
+  teacherNotes?: boolean | Prisma.ChildrenClass$teacherNotesArgs<ExtArgs>
+  classroomLogs?: boolean | Prisma.ChildrenClass$classroomLogsArgs<ExtArgs>
+  classSummaries?: boolean | Prisma.ChildrenClass$classSummariesArgs<ExtArgs>
+  activityPhotos?: boolean | Prisma.ChildrenClass$activityPhotosArgs<ExtArgs>
+  teacherAttendance?: boolean | Prisma.ChildrenClass$teacherAttendanceArgs<ExtArgs>
   _count?: boolean | Prisma.ChildrenClassCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChildrenClassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1039,6 +1743,11 @@ export type $ChildrenClassPayload<ExtArgs extends runtime.Types.Extensions.Inter
     members: Prisma.$ChildrenMinistryMemberPayload<ExtArgs>[]
     lessons: Prisma.$ChildrenLessonPayload<ExtArgs>[]
     leadershipAssignments: Prisma.$LeadershipAssignmentPayload<ExtArgs>[]
+    teacherNotes: Prisma.$TeacherNotePayload<ExtArgs>[]
+    classroomLogs: Prisma.$ClassroomLogPayload<ExtArgs>[]
+    classSummaries: Prisma.$ClassSummaryPayload<ExtArgs>[]
+    activityPhotos: Prisma.$ActivityPhotoPayload<ExtArgs>[]
+    teacherAttendance: Prisma.$TeacherAttendancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1448,6 +2157,11 @@ export interface Prisma__ChildrenClassClient<T, Null = never, ExtArgs extends ru
   members<T extends Prisma.ChildrenClass$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChildrenMinistryMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lessons<T extends Prisma.ChildrenClass$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChildrenLessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leadershipAssignments<T extends Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$leadershipAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadershipAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  teacherNotes<T extends Prisma.ChildrenClass$teacherNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$teacherNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  classroomLogs<T extends Prisma.ChildrenClass$classroomLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$classroomLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassroomLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  classSummaries<T extends Prisma.ChildrenClass$classSummariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$classSummariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassSummaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  activityPhotos<T extends Prisma.ChildrenClass$activityPhotosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$activityPhotosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  teacherAttendance<T extends Prisma.ChildrenClass$teacherAttendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChildrenClass$teacherAttendanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1970,6 +2684,126 @@ export type ChildrenClass$leadershipAssignmentsArgs<ExtArgs extends runtime.Type
   take?: number
   skip?: number
   distinct?: Prisma.LeadershipAssignmentScalarFieldEnum | Prisma.LeadershipAssignmentScalarFieldEnum[]
+}
+
+/**
+ * ChildrenClass.teacherNotes
+ */
+export type ChildrenClass$teacherNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeacherNote
+   */
+  select?: Prisma.TeacherNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeacherNote
+   */
+  omit?: Prisma.TeacherNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeacherNoteInclude<ExtArgs> | null
+  where?: Prisma.TeacherNoteWhereInput
+  orderBy?: Prisma.TeacherNoteOrderByWithRelationInput | Prisma.TeacherNoteOrderByWithRelationInput[]
+  cursor?: Prisma.TeacherNoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeacherNoteScalarFieldEnum | Prisma.TeacherNoteScalarFieldEnum[]
+}
+
+/**
+ * ChildrenClass.classroomLogs
+ */
+export type ChildrenClass$classroomLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClassroomLog
+   */
+  select?: Prisma.ClassroomLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClassroomLog
+   */
+  omit?: Prisma.ClassroomLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassroomLogInclude<ExtArgs> | null
+  where?: Prisma.ClassroomLogWhereInput
+  orderBy?: Prisma.ClassroomLogOrderByWithRelationInput | Prisma.ClassroomLogOrderByWithRelationInput[]
+  cursor?: Prisma.ClassroomLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClassroomLogScalarFieldEnum | Prisma.ClassroomLogScalarFieldEnum[]
+}
+
+/**
+ * ChildrenClass.classSummaries
+ */
+export type ChildrenClass$classSummariesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClassSummary
+   */
+  select?: Prisma.ClassSummarySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClassSummary
+   */
+  omit?: Prisma.ClassSummaryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassSummaryInclude<ExtArgs> | null
+  where?: Prisma.ClassSummaryWhereInput
+  orderBy?: Prisma.ClassSummaryOrderByWithRelationInput | Prisma.ClassSummaryOrderByWithRelationInput[]
+  cursor?: Prisma.ClassSummaryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClassSummaryScalarFieldEnum | Prisma.ClassSummaryScalarFieldEnum[]
+}
+
+/**
+ * ChildrenClass.activityPhotos
+ */
+export type ChildrenClass$activityPhotosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActivityPhoto
+   */
+  select?: Prisma.ActivityPhotoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ActivityPhoto
+   */
+  omit?: Prisma.ActivityPhotoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActivityPhotoInclude<ExtArgs> | null
+  where?: Prisma.ActivityPhotoWhereInput
+  orderBy?: Prisma.ActivityPhotoOrderByWithRelationInput | Prisma.ActivityPhotoOrderByWithRelationInput[]
+  cursor?: Prisma.ActivityPhotoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActivityPhotoScalarFieldEnum | Prisma.ActivityPhotoScalarFieldEnum[]
+}
+
+/**
+ * ChildrenClass.teacherAttendance
+ */
+export type ChildrenClass$teacherAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeacherAttendance
+   */
+  select?: Prisma.TeacherAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeacherAttendance
+   */
+  omit?: Prisma.TeacherAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeacherAttendanceInclude<ExtArgs> | null
+  where?: Prisma.TeacherAttendanceWhereInput
+  orderBy?: Prisma.TeacherAttendanceOrderByWithRelationInput | Prisma.TeacherAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.TeacherAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeacherAttendanceScalarFieldEnum | Prisma.TeacherAttendanceScalarFieldEnum[]
 }
 
 /**

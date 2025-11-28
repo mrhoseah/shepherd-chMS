@@ -54,7 +54,6 @@ export const ModelName = {
   SocialLogin: 'SocialLogin',
   UserSession: 'UserSession',
   Invitation: 'Invitation',
-  RolePermission: 'RolePermission',
   AuthAccount: 'AuthAccount',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
@@ -113,6 +112,13 @@ export const ModelName = {
   ChildrenMinistryMember: 'ChildrenMinistryMember',
   ChildrenAttendance: 'ChildrenAttendance',
   ChildrenLesson: 'ChildrenLesson',
+  ChildProfile: 'ChildProfile',
+  TeacherNote: 'TeacherNote',
+  ClassroomLog: 'ClassroomLog',
+  ClassSummary: 'ClassSummary',
+  ActivityPhoto: 'ActivityPhoto',
+  ParentTeacherChat: 'ParentTeacherChat',
+  TeacherAttendance: 'TeacherAttendance',
   YouthGroup: 'YouthGroup',
   YouthGroupMember: 'YouthGroupMember',
   YouthEvent: 'YouthEvent',
@@ -141,6 +147,8 @@ export const ModelName = {
   PerformanceAppraisal: 'PerformanceAppraisal',
   Church: 'Church',
   Subscription: 'Subscription',
+  SubscriptionPlanTemplate: 'SubscriptionPlanTemplate',
+  RolePermission: 'RolePermission',
   ChurchSetting: 'ChurchSetting',
   CommunicationTemplate: 'CommunicationTemplate',
   CustomField: 'CustomField',
@@ -169,8 +177,13 @@ export const ModelName = {
   MemberConnection: 'MemberConnection',
   Sponsorship: 'Sponsorship',
   SponsorshipApplication: 'SponsorshipApplication',
+  StorageFile: 'StorageFile',
+  StorageUsage: 'StorageUsage',
   AuditLog: 'AuditLog',
   SystemSetting: 'SystemSetting',
+  SeatingLayout: 'SeatingLayout',
+  SeatingItem: 'SeatingItem',
+  SeatingTemplate: 'SeatingTemplate',
   CasbinRule: 'CasbinRule'
 } as const
 
@@ -290,12 +303,12 @@ export const InvitationScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   role: 'role',
-  invitationType: 'invitationType',
-  churchId: 'churchId',
   campusId: 'campusId',
+  churchId: 'churchId',
+  invitationType: 'invitationType',
+  permissions: 'permissions',
   invitedById: 'invitedById',
   message: 'message',
-  permissions: 'permissions',
   status: 'status',
   acceptedAt: 'acceptedAt',
   expiresAt: 'expiresAt',
@@ -306,20 +319,6 @@ export const InvitationScalarFieldEnum = {
 } as const
 
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
-
-
-export const RolePermissionScalarFieldEnum = {
-  id: 'id',
-  role: 'role',
-  resource: 'resource',
-  action: 'action',
-  scope: 'scope',
-  description: 'description',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
 
 
 export const AuthAccountScalarFieldEnum = {
@@ -1312,6 +1311,141 @@ export const ChildrenLessonScalarFieldEnum = {
 export type ChildrenLessonScalarFieldEnum = (typeof ChildrenLessonScalarFieldEnum)[keyof typeof ChildrenLessonScalarFieldEnum]
 
 
+export const ChildProfileScalarFieldEnum = {
+  id: 'id',
+  childId: 'childId',
+  parentId: 'parentId',
+  allergies: 'allergies',
+  medications: 'medications',
+  medicalConditions: 'medicalConditions',
+  emergencyInstructions: 'emergencyInstructions',
+  authorizedPickups: 'authorizedPickups',
+  unauthorizedPersons: 'unauthorizedPersons',
+  parentDailyNotes: 'parentDailyNotes',
+  photoVideoConsent: 'photoVideoConsent',
+  communicationConsent: 'communicationConsent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChildProfileScalarFieldEnum = (typeof ChildProfileScalarFieldEnum)[keyof typeof ChildProfileScalarFieldEnum]
+
+
+export const TeacherNoteScalarFieldEnum = {
+  id: 'id',
+  childProfileId: 'childProfileId',
+  teacherId: 'teacherId',
+  classId: 'classId',
+  title: 'title',
+  content: 'content',
+  category: 'category',
+  tags: 'tags',
+  visibility: 'visibility',
+  priority: 'priority',
+  isConfidential: 'isConfidential',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeacherNoteScalarFieldEnum = (typeof TeacherNoteScalarFieldEnum)[keyof typeof TeacherNoteScalarFieldEnum]
+
+
+export const ClassroomLogScalarFieldEnum = {
+  id: 'id',
+  childProfileId: 'childProfileId',
+  teacherId: 'teacherId',
+  classId: 'classId',
+  sessionDate: 'sessionDate',
+  behaviorTags: 'behaviorTags',
+  engagementLevel: 'engagementLevel',
+  checkedInAt: 'checkedInAt',
+  checkedOutAt: 'checkedOutAt',
+  isPresent: 'isPresent',
+  isVisitor: 'isVisitor',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassroomLogScalarFieldEnum = (typeof ClassroomLogScalarFieldEnum)[keyof typeof ClassroomLogScalarFieldEnum]
+
+
+export const ClassSummaryScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  teacherId: 'teacherId',
+  date: 'date',
+  lessonTitle: 'lessonTitle',
+  lessonSummary: 'lessonSummary',
+  memoryVerse: 'memoryVerse',
+  activities: 'activities',
+  sentAt: 'sentAt',
+  recipientCount: 'recipientCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassSummaryScalarFieldEnum = (typeof ClassSummaryScalarFieldEnum)[keyof typeof ClassSummaryScalarFieldEnum]
+
+
+export const ActivityPhotoScalarFieldEnum = {
+  id: 'id',
+  childProfileId: 'childProfileId',
+  teacherId: 'teacherId',
+  classId: 'classId',
+  s3Key: 's3Key',
+  url: 'url',
+  caption: 'caption',
+  activityName: 'activityName',
+  isApproved: 'isApproved',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ActivityPhotoScalarFieldEnum = (typeof ActivityPhotoScalarFieldEnum)[keyof typeof ActivityPhotoScalarFieldEnum]
+
+
+export const ParentTeacherChatScalarFieldEnum = {
+  id: 'id',
+  childProfileId: 'childProfileId',
+  parentId: 'parentId',
+  teacherId: 'teacherId',
+  message: 'message',
+  senderId: 'senderId',
+  messageType: 'messageType',
+  isUrgent: 'isUrgent',
+  isRead: 'isRead',
+  readAt: 'readAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParentTeacherChatScalarFieldEnum = (typeof ParentTeacherChatScalarFieldEnum)[keyof typeof ParentTeacherChatScalarFieldEnum]
+
+
+export const TeacherAttendanceScalarFieldEnum = {
+  id: 'id',
+  teacherId: 'teacherId',
+  classId: 'classId',
+  date: 'date',
+  checkInAt: 'checkInAt',
+  checkOutAt: 'checkOutAt',
+  status: 'status',
+  notes: 'notes',
+  totalChildren: 'totalChildren',
+  presentChildren: 'presentChildren',
+  newVisitors: 'newVisitors',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeacherAttendanceScalarFieldEnum = (typeof TeacherAttendanceScalarFieldEnum)[keyof typeof TeacherAttendanceScalarFieldEnum]
+
+
 export const YouthGroupScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1810,17 +1944,67 @@ export const SubscriptionScalarFieldEnum = {
   billingCycle: 'billingCycle',
   amount: 'amount',
   currency: 'currency',
+  maxMembers: 'maxMembers',
+  maxAdmins: 'maxAdmins',
+  maxCampuses: 'maxCampuses',
+  maxStorage: 'maxStorage',
   startDate: 'startDate',
   endDate: 'endDate',
   trialEndDate: 'trialEndDate',
   cancelledAt: 'cancelledAt',
+  nextBillingDate: 'nextBillingDate',
   stripeCustomerId: 'stripeCustomerId',
   stripeSubscriptionId: 'stripeSubscriptionId',
+  paymentMethod: 'paymentMethod',
+  notes: 'notes',
+  metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const SubscriptionPlanTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  displayName: 'displayName',
+  description: 'description',
+  plan: 'plan',
+  monthlyPrice: 'monthlyPrice',
+  yearlyPrice: 'yearlyPrice',
+  currency: 'currency',
+  maxMembers: 'maxMembers',
+  maxAdmins: 'maxAdmins',
+  maxCampuses: 'maxCampuses',
+  maxStorage: 'maxStorage',
+  features: 'features',
+  premiumFeatures: 'premiumFeatures',
+  isActive: 'isActive',
+  isPopular: 'isPopular',
+  sortOrder: 'sortOrder',
+  trialDays: 'trialDays',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriptionPlanTemplateScalarFieldEnum = (typeof SubscriptionPlanTemplateScalarFieldEnum)[keyof typeof SubscriptionPlanTemplateScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  resource: 'resource',
+  action: 'action',
+  allowed: 'allowed',
+  churchId: 'churchId',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
 
 
 export const ChurchSettingScalarFieldEnum = {
@@ -2247,6 +2431,50 @@ export const SponsorshipApplicationScalarFieldEnum = {
 export type SponsorshipApplicationScalarFieldEnum = (typeof SponsorshipApplicationScalarFieldEnum)[keyof typeof SponsorshipApplicationScalarFieldEnum]
 
 
+export const StorageFileScalarFieldEnum = {
+  id: 'id',
+  churchId: 'churchId',
+  fileName: 'fileName',
+  originalName: 'originalName',
+  mimeType: 'mimeType',
+  fileSize: 'fileSize',
+  s3Key: 's3Key',
+  s3Bucket: 's3Bucket',
+  url: 'url',
+  category: 'category',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  uploadedById: 'uploadedById',
+  metadata: 'metadata',
+  tags: 'tags',
+  isPublic: 'isPublic',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StorageFileScalarFieldEnum = (typeof StorageFileScalarFieldEnum)[keyof typeof StorageFileScalarFieldEnum]
+
+
+export const StorageUsageScalarFieldEnum = {
+  id: 'id',
+  churchId: 'churchId',
+  totalUsed: 'totalUsed',
+  documentsUsed: 'documentsUsed',
+  imagesUsed: 'imagesUsed',
+  videosUsed: 'videosUsed',
+  otherUsed: 'otherUsed',
+  totalFiles: 'totalFiles',
+  quotaGB: 'quotaGB',
+  lastCalculated: 'lastCalculated',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StorageUsageScalarFieldEnum = (typeof StorageUsageScalarFieldEnum)[keyof typeof StorageUsageScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -2280,6 +2508,62 @@ export const SystemSettingScalarFieldEnum = {
 } as const
 
 export type SystemSettingScalarFieldEnum = (typeof SystemSettingScalarFieldEnum)[keyof typeof SystemSettingScalarFieldEnum]
+
+
+export const SeatingLayoutScalarFieldEnum = {
+  id: 'id',
+  churchId: 'churchId',
+  name: 'name',
+  description: 'description',
+  canvasWidth: 'canvasWidth',
+  canvasHeight: 'canvasHeight',
+  totalCapacity: 'totalCapacity',
+  isActive: 'isActive',
+  isDefault: 'isDefault',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SeatingLayoutScalarFieldEnum = (typeof SeatingLayoutScalarFieldEnum)[keyof typeof SeatingLayoutScalarFieldEnum]
+
+
+export const SeatingItemScalarFieldEnum = {
+  id: 'id',
+  layoutId: 'layoutId',
+  type: 'type',
+  label: 'label',
+  x: 'x',
+  y: 'y',
+  rotation: 'rotation',
+  width: 'width',
+  height: 'height',
+  capacity: 'capacity',
+  color: 'color',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SeatingItemScalarFieldEnum = (typeof SeatingItemScalarFieldEnum)[keyof typeof SeatingItemScalarFieldEnum]
+
+
+export const SeatingTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  templateData: 'templateData',
+  totalCapacity: 'totalCapacity',
+  isPublic: 'isPublic',
+  churchId: 'churchId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SeatingTemplateScalarFieldEnum = (typeof SeatingTemplateScalarFieldEnum)[keyof typeof SeatingTemplateScalarFieldEnum]
 
 
 export const CasbinRuleScalarFieldEnum = {

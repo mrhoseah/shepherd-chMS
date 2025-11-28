@@ -3,6 +3,7 @@ import { requireLogin } from "@/lib/permissions";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
+import { SystemAdminIndicator } from "@/components/system-admin-indicator";
 
 export default async function DashboardLayout({
   children,
@@ -26,7 +27,10 @@ export default async function DashboardLayout({
       <AppSidebar />
       <main className="flex-1 flex flex-col overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-950">
         <DashboardHeader />
-        {children}
+        <div className="flex-1 p-6">
+          <SystemAdminIndicator />
+          {children}
+        </div>
       </main>
     </SidebarProvider>
   );
